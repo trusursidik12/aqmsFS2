@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="sticky-top shadow-lg navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-md">
         <a class="navbar-brand" href="<?= base_url() ?>">
-            <img src="<?= base_url('/img/logo.png') ?>" width="30" height="30" class="d-inline-block align-top" alt="">
+            <img src="<?= base_url('/img/logo.png') ?>" width="30" height="30" class="d-inline-block align-top" alt="Logo TRUSUR">
             TRUSUR
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,16 +14,16 @@
                     <a class="nav-link" href="<?= base_url() ?>">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= base_url('configurations') ?>">Configuration</a>
+                    <a class="nav-link" href="<?= base_url('configurations') ?>"><?= lang('Global.Configuration') ?></a>
                 </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= base_url('calibrations') ?>">Calibration</a>
+                    <a class="nav-link" href="<?= base_url('calibrations') ?>"><?= lang('Global.Calibration') ?></a>
                 </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= base_url('exports') ?>">Export</a>
+                    <a class="nav-link" href="<?= base_url('exports') ?>"><?= lang('Global.Export') ?></a>
                 </li>
             </ul>
             <div class="d-flex justify-content-end align-items-center my-2 ml-md-0">

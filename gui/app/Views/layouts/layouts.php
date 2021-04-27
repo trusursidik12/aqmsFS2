@@ -11,11 +11,41 @@
     <!-- Custom CSS -->
 </head>
 
-<body>
+<body id="capture-body">
     <!-- Navbar -->
     <?= $this->include('layouts/navbar') ?>
     <!-- End of Navar -->
     <?= $this->renderSection('content') ?>
+    <div class="modal fade" id="captureModal" tabindex="-1" role="dialog" aria-labelledby="captureModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Result Capture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="overflow-auto" id="capture-result" style="max-height: 56vh;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed" style="left:3vw;bottom:4vh">
+        <button id="btn-capture" class="btn btn-sm btn-info rounded" title="Capture">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-capture" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M4 8v-2a2 2 0 0 1 2 -2h2"></path>
+                <path d="M4 16v2a2 2 0 0 0 2 2h2"></path>
+                <path d="M16 4h2a2 2 0 0 1 2 2v2"></path>
+                <path d="M16 20h2a2 2 0 0 0 2 -2v-2"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        </button>
+    </div>
 
     <?= $this->include('layouts/js') ?>
     <?= $this->renderSection('js') ?>

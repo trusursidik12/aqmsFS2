@@ -82,7 +82,7 @@
         </div>
         <div class="col-md-8">
             <div class="card bg-light px-3 py-2">
-                <h1 class="h4"> <?= lang('Global.Partikulat & Gas') ?>
+                <h1 class="h4"> <?= lang('Global.ParticulatesGases') ?>
                 </h1>
                 <div class="row">
                     <?php for ($i = 1; $i <= 2; $i++) : ?>
@@ -99,7 +99,7 @@
                         </div>
                     <?php endfor; ?>
                     <div class="clearfix"></div>
-                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                    <?php for ($i = 1; $i <= 7; $i++) : ?>
                         <div class="col-md-3 my-2">
                             <div class="bg-info rounded px-3 py-2 overflow-hidden">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -114,11 +114,14 @@
                     <?php endfor; ?>
                 </div>
             </div>
+
+        </div>
+        <div class="col-md-12">
             <div class="card mt-3">
                 <div class="bg-light px-3 py-2">
-                    <h1 class="h4">Graphic</h1>
+                    <h1 class="h4"><?= lang('Global.Graphic') ?></h1>
                     <div class="px-3 py-2 bg-light">
-                        <canvas id="myChart" width="400" height="120"></canvas>
+                        <canvas id="myChart" width="500" height="110"></canvas>
                     </div>
                 </div>
             </div>

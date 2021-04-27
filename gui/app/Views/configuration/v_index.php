@@ -2,10 +2,10 @@
 <?= $this->section('content') ?>
 <div class="container-md py-5">
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 text-light">Configuration</h1>
+        <h1 class="h2 text-light"><?= lang('Global.Configuration') ?></h1>
         <div>
             <a href="#" onclick="return window.history.go(-1);" class="btn btn-sm btn-primary">
-                <i class="fas fa-xs fa-arrow-left"></i> Back
+                <i class="fas fa-xs fa-arrow-left"></i> <?= lang('Global.Back') ?>
             </a>
         </div>
     </div>
@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="bg-light px-3 py-2">
-                        <h2 class="h4">Configuration Instrument</h2>
+                        <h2 class="h4"><?= lang('Global.Configuration Instrument') ?></h2>
                         <div class="alert alert-info">
                             <b>PORTS:</b>
                             <p class="m-0">COM1: Lorem ipsum dolor sit.</p>

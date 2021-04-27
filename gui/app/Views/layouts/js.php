@@ -3,8 +3,8 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
+<script src="<?= base_url('js/html2canvas.min.js') ?>"></script>
 <script>
     /* Check Connection */
     $(document).ready(function() {
@@ -86,5 +86,24 @@
             $('#btn-save').html('Save Changes');
         }
 
+    })
+</script>
+<script>
+    /* Capture */
+    $(document).ready(function() {
+        $(window).scroll(function(event) {
+            let scrollValue = $(window).scrollTop();
+            if (scrollValue > 0) {
+                $('#btn-capture').fadeOut(500);
+            } else {
+                $('#btn-capture').fadeIn(500);
+            }
+        });
+    })
+    $('#btn-capture').click(function() {
+        html2canvas(document.querySelector('#capture-body')).then(canvas => {
+            $('#capture-result').html(canvas);
+            $('#captureModal').modal('show');
+        });
     })
 </script>
