@@ -63,52 +63,52 @@
                     <div class="bg-light px-3 py-2">
                         <h2 class="h4">Detail</h2>
                         <div class="form-group">
-                            <label>Station Name</label>
-                            <input type="text" name="" placeholder="Station Name" id="" class="form-control">
+                            <label><?= lang('Global.Station Name') ?></label>
+                            <input type="text" name="" placeholder="<?= lang('Global.Station Name') ?>" class="form-control">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Serial Number</label>
-                                    <input type="text" name="" placeholder="Serial Number" id="" class="form-control">
+                                    <input type="text" name="" placeholder="Serial Number" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Station ID</label>
-                                    <input type="text" name="" placeholder="Station ID" id="" class="form-control">
+                                    <input type="text" name="" placeholder="Station ID" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>City</label>
-                                    <input type="text" name="" placeholder="City" id="" class="form-control">
+                                    <label><?= lang('Global.City') ?></label>
+                                    <input type="text" name="" placeholder="<?= lang('Global.City') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Province</label>
-                                    <input type="text" name="" placeholder="Province" id="" class="form-control">
+                                    <label><?= lang('Global.Province') ?></label>
+                                    <input type="text" name="" placeholder="<?= lang('Global.Province') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Full Address</label>
-                            <textarea name="" rows="2" placeholder="Full Address" class="form-control"></textarea>
+                            <label><?= lang('Global.Full Address') ?></label>
+                            <textarea name="" rows="2" placeholder="<?= lang('Global.Full Address') ?>" class="form-control"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Longitude</label>
-                                    <input type="text" name="" placeholder="Longitude" id="" class="form-control">
+                                    <input type="text" name="" placeholder="Longitude" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Latitude</label>
-                                    <input type="text" name="" placeholder="Latitude" id="" class="form-control">
+                                    <input type="text" name="" placeholder="Latitude" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -116,81 +116,81 @@
                 </div>
                 <div class="card mt-3">
                     <div class="bg-light px-3 py-2">
-                        <h2 class="h4">Configuration Dashboard</h2>
+                        <h2 class="h4"><?= lang('Global.Configuration') ?> Dashboard</h2>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Interval Pump <small>(minutes)</small></label>
-                                    <input type="text" name="" placeholder="Interval Pump" id="" class="form-control">
+                                    <label class="small"><?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
+                                    <input type="text" name="" placeholder="<?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Collect Data Interval <small>(minutes)</small></label>
-                                    <input type="text" name="" placeholder="Collect Data Interval" id="" class="form-control">
+                                    <label class="small"><?= lang('Global.Collect Data Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
+                                    <input type="text" name="" placeholder="<?= lang('Global.Collect Data Interval') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Graphic Refresh Interval <small>(minutes)</small></label>
-                                    <input type="text" name="" placeholder="Graphic Refresh Interval" id="" class="form-control">
+                                    <label class="small"><?= lang('Global.Graphic Refresh Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
+                                    <input type="text" name="" placeholder="<?= lang('Global.Graphic Refresh Interval') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Labjack AIN's</label>
-                                    <input type="text" name="" placeholder="Graphic Refresh Interval" id="" class="form-control">
+                                    <label class="small">Labjack AIN's</label>
+                                    <input type="text" name="" placeholder="Labjack AIN's" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Pump Controll</label>
+                                    <label class="small d-block"><?= lang('Global.Pump Control') ?></label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="pump_controll" id="pump_controll1" value="1">
-                                        <label class="form-check-label" for="pump_controll1">Show</label>
+                                        <label class="form-check-label" for="pump_controll1"><?= lang('Global.Show') ?></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="pump_controll" id="pump_controll2" value="0">
-                                        <label class="form-check-label" for="pump_controll2">Hide</label>
+                                        <label class="form-check-label" for="pump_controll2"><?= lang('Global.Hide') ?></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Sampling Feature</label>
+                                    <label class="small d-block">Sampling Feature</label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="is_sampling" id="is_sampling1" value="1">
-                                        <label class="form-check-label" for="is_sampling1">Show</label>
+                                        <label class="form-check-label" for="is_sampling1"><?= lang('Global.Show') ?></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="is_sampling" id="is_sampling2" value="0">
-                                        <label class="form-check-label" for="is_sampling2">Hide</label>
+                                        <label class="form-check-label" for="is_sampling2"><?= lang('Global.Hide') ?></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Labjack Force</label>
+                                    <label class="small d-block">Labjack Force</label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="labjack_force_on" id="labjack_force_on1" value="1">
-                                        <label class="form-check-label" for="labjack_force_on1">On</label>
+                                        <label class="form-check-label" for="labjack_force_on1"><?= lang('Global.On') ?></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="labjack_force_on" id="labjack_force_on2" value="0">
-                                        <label class="form-check-label" for="labjack_force_on2">Off</label>
+                                        <label class="form-check-label" for="labjack_force_on2"><?= lang('Global.Off') ?></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Calibration Menu</label>
+                                    <label class="small d-block">Calibration Menu</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="labjack_force_on" id="calibration_menu1" value="1">
-                                        <label class="form-check-label" for="calibration_menu1">Show</label>
+                                        <input class="form-check-input" type="radio" name="calibration_menu" id="calibration_menu1" value="1">
+                                        <label class="form-check-label" for="calibration_menu1"><?= lang('Global.Show') ?></label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="calibration_menu" id="calibration_menu2" value="0">
-                                        <label class="form-check-label" for="calibration_menu2">Hide</label>
+                                        <label class="form-check-label" for="calibration_menu2"><?= lang('Global.Hide') ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@
             </div>
         </div>
         <div class="position-fixed" style="z-index: 999;right:11vw;bottom:20px;">
-            <button type="submit" name="Save" class="btn btn-info" id="btn-save">Save Changes</button>
+            <button type="submit" name="Save" class="btn btn-info" id="btn-save"><?= lang('Global.Save Changes') ?></button>
         </div>
     </form>
 </div>

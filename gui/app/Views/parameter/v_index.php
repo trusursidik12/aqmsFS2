@@ -5,7 +5,7 @@
         <h1 class="h2 text-light">Parameter</h1>
         <div>
             <a href="#" onclick="return window.history.go(-1);" class="btn btn-sm btn-primary">
-                <i class="fas fa-xs fa-arrow-left"></i> Back
+                <i class="fas fa-xs fa-arrow-left"></i> <?= lang('Global.Back') ?>
             </a>
         </div>
     </div>
@@ -19,11 +19,11 @@
                             <div class="d-flex justify-content-between">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="is_view[<?= $i ?>]" value="1">
-                                    <label class="form-check-label" for="is_view[<?= $i ?>]">Show Data</label>
+                                    <label class="form-check-label" for="is_view[<?= $i ?>]"><?= lang('Global.Show') ?> Data</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="is_graph[<?= $i ?>]" value="1">
-                                    <label class="form-check-label" for="is_graph[<?= $i ?>]">Show Graphic</label>
+                                    <label class="form-check-label" for="is_graph[<?= $i ?>]"><?= lang('Global.Show') ?> <?= lang('Global.Graphic') ?></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -33,14 +33,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Unit</label>
-                                        <input type="text" name="unit" placeholder="Unit" class="form-control">
+                                        <label><?= lang('Global.Unit') ?></label>
+                                        <input type="text" name="unit" placeholder="<?= lang('Global.Unit') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Molecular Weight</label>
-                                        <input type="text" name="molecular_mass" placeholder="Molecular Weight" class="form-control">
+                                        <label><?= lang('Global.Molecular Weight') ?></label>
+                                        <input type="text" name="molecular_mass" placeholder="<?= lang('Global.Molecular Weight') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -56,7 +56,7 @@
             <?php endfor; ?>
         </div>
         <div class="position-fixed" style="z-index: 999;right:11vw;bottom:20px;">
-            <button class="btn btn-info" id="btn-save">Save Changes</button>
+            <button class="btn btn-info" id="btn-save"><?= lang('Global.Save Changes') ?></button>
         </div>
     </form>
 

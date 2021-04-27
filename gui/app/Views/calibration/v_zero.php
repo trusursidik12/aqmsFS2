@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div class="container-md py-5">
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 text-light">Zero Calibration</h1>
+        <h1 class="h2 text-light">Span <?= lang('Global.Calibration') ?></h1>
         <div>
             <a href="#" onclick="return window.history.go(-1)" class="btn btn-sm btn-primary">
                 <i class="fas fa-xs fa-arrow-left"></i> Back
@@ -15,20 +15,20 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Voltage Field</label>
+                            <label><?= lang('Global.Voltage Field') ?></label>
                             <select name="" class="form-control"></select>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Span Concentration</label>
-                                    <input type="text" name="" placeholder="Span Concentration" class="form-control">
+                                    <label>Span <?= lang('Global.Concentration') ?></label>
+                                    <input type="text" name="" placeholder="Span <?= lang('Global.Concentration') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label>Zero Voltage</label>
+                                <label>Zero <?= lang('Global.Voltage') ?></label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Zero Voltage">
+                                    <input type="text" class="form-control" placeholder="Zero <?= lang('Global.Voltage') ?>">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-info" type="button" id="button-addon2"><i class="fas fa-check"></i></button>
                                     </div>
@@ -36,15 +36,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Voltage</label>
-                            <input type="text" name="" placeholder="Voltage" class="form-control">
+                            <label><?= lang('Global.Voltage') ?></label>
+                            <input type="text" name="" placeholder="<?= lang('Global.Voltage') ?>" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Formula</label>
                             <input type="text" name="" placeholder="Formula" class="form-control">
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" name="Save" class="btn btn-info" id="btn-save">Save Changes</button>
+                            <button type="submit" name="Save" class="btn btn-info" id="btn-save"><?= lang('Global.Save Changes') ?></button>
                         </div>
                     </div>
                 </div>

@@ -2,10 +2,10 @@
 <?= $this->section('content') ?>
 <div class="container-md py-5">
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 text-light">Export</h1>
+        <h1 class="h2 text-light"><?= lang('Global.Export') ?></h1>
         <div>
             <a href="#" onclick="return window.history.go(-1);" class="btn btn-sm btn-primary">
-                <i class="fas fa-xs fa-arrow-left"></i> Back
+                <i class="fas fa-xs fa-arrow-left"></i> <?= lang('Global.Back') ?>
             </a>
         </div>
     </div>
@@ -17,8 +17,8 @@
                         <table class="table stripped">
                             <thead>
                                 <tr>
-                                    <th>Station</th>
-                                    <th>Timestamp</th>
+                                    <th><?= lang('Global.Station') ?></th>
+                                    <th><?= lang('Global.Timestamp') ?></th>
                                     <th>PM10</th>
                                     <th>PM2.5</th>
                                     <th>SO2</th>

@@ -40,6 +40,18 @@
                         </svg>
                     </span>
                 </div>
+                <div class="ml-1">
+                    <?php if (@session()->get('web_lang') == 'en') : ?>
+                        <a href="<?= base_url('lang/id') ?>" class="btn btn-sm btn-primary" title="Translate to Indonesia">
+                            <img src="<?= base_url('/img/us.svg') ?>" height="20vh" width="20vw">
+                        </a>
+                    <?php else : ?>
+                        <a href="<?= base_url('lang/en') ?>" class="btn btn-sm btn-primary" title="Terjemahkan ke Bahasa Inggris">
+                            <img src="<?= base_url('/img/id.svg') ?>" height="20vh" width="20vw">
+                        </a>
+                    <?php endif; ?>
+
+                </div>
             </div>
         </div>
     </div>
