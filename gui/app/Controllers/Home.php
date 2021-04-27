@@ -10,11 +10,15 @@ class Home extends BaseController
 		parent::__construct();
 	}
 
+	// public function index()
+	// {
+	// 	echo view('v_header');
+	// 	echo view('v_menu');
+	// 	echo view('v_home');
+	// 	echo view('v_footer');
+	// }
 	public function index()
 	{
-		echo view('v_header');
-		echo view('v_menu');
-		echo view('v_home');
-		echo view('v_footer');
+		echo view("v_dashboard");
 	}
 }
