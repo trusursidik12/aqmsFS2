@@ -35,6 +35,8 @@ $routes->get('/', 'Home::index');
 $routes->get('configurations', 'Configuration::index');
 $routes->get('parameters', 'Parameter::index');
 $routes->get('calibrations', 'Calibration::index');
+$routes->get('calibration/zero/{:num}', 'Calibration::zero');
+$routes->get('calibration/span/{:num}', 'Calibration::span');
 $routes->get('exports', 'Export::index');
 
 /**

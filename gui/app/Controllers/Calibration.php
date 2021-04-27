@@ -13,6 +13,24 @@ class Calibration extends BaseController
 	{
 		$data['__modulename'] = 'Calibrations'; /* Title */
 		$data['__routename'] = 'calibration'; /* Route for check menu */
-		echo view("dashboard/v_dashboard", $data);
+		echo view("calibration/v_index", $data);
+	}
+	public function zero($id = null)
+	{
+		if (is_null($id)) {
+			return redirect()->to(base_url('calibrations'));
+		}
+		$data['__modulename'] = 'Zero Calibration'; /* Title */
+		$data['__routename'] = 'calibration'; /* Route for check menu */
+		echo view("calibration/v_zero", $data);
+	}
+	public function span($id = null)
+	{
+		if (is_null($id)) {
+			return redirect()->to(base_url('calibrations'));
+		}
+		$data['__modulename'] = 'Span Calibrations'; /* Title */
+		$data['__routename'] = 'calibration'; /* Route for check menu */
+		echo view("calibration/v_span", $data);
 	}
 }

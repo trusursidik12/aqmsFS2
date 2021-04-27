@@ -13,6 +13,6 @@ class Export extends BaseController
 	{
 		$data['__modulename'] = 'Exports'; /* Title */
 		$data['__routename'] = 'export'; /* Route for check menu */
-		echo view("dashboard/v_dashboard", $data);
+		echo view("export/v_index", $data);
 	}
 }
