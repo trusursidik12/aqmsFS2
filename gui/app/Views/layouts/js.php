@@ -74,14 +74,14 @@
                 },
                 error: function(xhr, status, err) {
                     toastr.error(err.toString());
-
+                    $('#btn-save').html('Save Changes');
                 }
-
             })
 
 
         } catch (err) {
-            alert(err);
+            toastr.error(err.toString());
+            $('#btn-save').html('Save Changes');
         }
 
     })

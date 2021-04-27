@@ -13,6 +13,6 @@ class Configuration extends BaseController
 	{
 		$data['__modulename'] = 'Configurations'; /* Title */
 		$data['__routename'] = 'configuration'; /* Route for check menu */
-		echo view("dashboard/v_dashboard", $data);
+		echo view("configuration/v_index", $data);
 	}
 }
