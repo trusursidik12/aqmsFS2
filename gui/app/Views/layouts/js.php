@@ -101,9 +101,13 @@
         });
     })
     $('#btn-capture').click(function() {
+        $('#btn-capture').hide();
+        $('#btn-save').hide();
         html2canvas(document.querySelector('#capture-body')).then(canvas => {
             $('#capture-result').html(canvas);
             $('#captureModal').modal('show');
+            $('#btn-capture').show();
+            $('#btn-save').show();
         });
     })
 </script>

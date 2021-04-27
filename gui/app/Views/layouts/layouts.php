@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= session()->get('web_lang') ? session()->get('web_lang') : 'en' ?>">
 
 <head>
     <meta charset="UTF-8">
