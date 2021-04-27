@@ -35,5 +35,4 @@ return [
     'Voltage' => 'Tegangan',
     'Voltage Field' => 'Bidang Tegangan',
     'Concentration' => 'Konsentrasi',
-    'Concentration' => 'Konsentrasi',
 ];

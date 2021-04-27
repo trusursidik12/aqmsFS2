@@ -16,6 +16,6 @@ class Language extends BaseController
 		$lang = in_array($code, $supportLang) ? $code : 'id';
 		session()->remove('web_lang');
 		session()->set('web_lang', $lang);
-		return redirect()->to(base_url());
+		return redirect()->back();
 	}
 }
