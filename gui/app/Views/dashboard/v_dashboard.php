@@ -26,7 +26,7 @@
                                     <circle cx="12" cy="11" r="3"></circle>
                                     <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
                                 </svg>
-                            </span>Location
+                            </span><?= lang('Global.Location') ?>
                         </th>
                         <td>DKI Jakarta</td>
                     </tr>
@@ -40,13 +40,14 @@
                                     <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
                                 </svg>
                             </span>
-                            Unit
+                            <?= lang('Global.Unit') ?>
                         </th>
                         <td>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>(PPM)</span>
                                 <button type="button" class="btn btn-sm btn-info">
-                                    Switch
+                                    <?= lang('Global.Switch') ?>
+
                                 </button>
                             </div>
                         </td>
@@ -62,13 +63,15 @@
                                     <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
                                 </svg>
 
-                            </span>Pump
+                            </span> <?= lang('Global.Pump') ?>
+
                         </th>
                         <td>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>(Pump 1)</span>
                                 <button type="button" class="btn btn-sm btn-info">
-                                    Switch
+                                    <?= lang('Global.Switch') ?>
+
                                 </button>
                             </div>
 
@@ -79,7 +82,8 @@
         </div>
         <div class="col-md-8">
             <div class="card bg-light px-3 py-2">
-                <h1 class="h4">Partikulat & Gas</h1>
+                <h1 class="h4"> <?= lang('Global.Partikulat & Gas') ?>
+                </h1>
                 <div class="row">
                     <?php for ($i = 1; $i <= 2; $i++) : ?>
                         <div class="col-md-6 my-2 ">

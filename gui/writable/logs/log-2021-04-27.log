@@ -188,3 +188,205 @@ CRITICAL - 2021-04-27 10:34:47 --> Undefined index: HTTP_REFERER
 #4 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
 #5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
 #6 {main}
+CRITICAL - 2021-04-27 10:47:21 --> Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27)
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 384, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Toolbar.php(384): header('Content-Type: a...')
+#2 C:\laragon\www\aqmsfs2\gui\app\Config\Events.php(44): CodeIgniter\Debug\Toolbar->respond()
+#3 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Events\Events.php(166): call_user_func(Object(Closure))
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(314): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-04-27 10:47:21 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:47:31 --> Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27)
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 384, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Toolbar.php(384): header('Content-Type: a...')
+#2 C:\laragon\www\aqmsfs2\gui\app\Config\Events.php(44): CodeIgniter\Debug\Toolbar->respond()
+#3 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Events\Events.php(166): call_user_func(Object(Closure))
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(314): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-04-27 10:47:31 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:47:47 --> ini_set(): A session is active. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): A se...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:47:47 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:48:01 --> ini_set(): A session is active. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): A se...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:48:01 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:48:34 --> ini_set(): A session is active. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): A se...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:48:41 --> ini_set(): A session is active. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): A se...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:48:41 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:48:44 --> ini_set(): A session is active. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): A se...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:48:50 --> ini_set(): Headers already sent. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): Head...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:48:50 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:49:13 --> ini_set(): Headers already sent. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): Head...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:49:13 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-04-27 10:49:22 --> ini_set(): Headers already sent. You cannot change the session module's ini settings at this time
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): Head...', 'C:\\laragon\\www\\...', 80, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Session\Handlers\FileHandler.php(80): ini_set('session.save_pa...', 'C:\\laragon\\www\\...')
+#2 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(706): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\App), '::1')
+#3 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\BaseService.php(100): CodeIgniter\Config\Services::session(Object(Config\App), false)
+#4 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Config\Services.php(699): CodeIgniter\Config\BaseService::getSharedInstance('session', NULL)
+#5 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Common.php(999): CodeIgniter\Config\Services::session()
+#6 C:\laragon\www\aqmsfs2\gui\app\Controllers\Language.php(15): session()
+#7 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(936): App\Controllers\Language->index()
+#8 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Language))
+#9 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\aqmsfs2\gui\public\index.php(45): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(45): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2021-04-27 10:49:22 --> Uncaught ErrorException: Cannot modify header information - headers already sent by (output started at C:\laragon\www\aqmsfs2\gui\app\Config\Events.php:27) in C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php:137
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'Cannot modify h...', 'C:\\laragon\\www\\...', 137, Array)
+#1 C:\laragon\www\aqmsfs2\gui\vendor\codeigniter4\framework\system\Debug\Exceptions.php(137): header('HTTP/1.1 500 In...', true, 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}

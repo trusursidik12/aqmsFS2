@@ -29,7 +29,7 @@ class BaseController extends Controller
 	{
 		/* Setup language */
 		$this->language = \Config\Services::language();
-		$this->language->setlocale(WEB_LANG);
+		$this->language->setlocale(session()->has('web_lang') ? session()->get('web_lang') : 'en');
 		// $this->users =  new m_a_user();
 		// $this->groups =  new m_a_group();
 		// $this->menus =  new m_a_menu();

@@ -11,4 +11,11 @@ return [
     'Pump' => 'Pompa',
     'Switch' => 'Ganti',
     'Graphic' => 'Grafis',
+    'Station' => 'Stasiun',
+    'Timestamp' => 'Waktu',
+    'Back' => 'Kembali',
+    'Save Changes' => 'Simpan Perubahan',
+    'Save' => 'Simpan',
+    'Purge Open' => 'Buka Pembersihan',
+    'Purge Close' => 'Tutup Pembersihan',
 ];
