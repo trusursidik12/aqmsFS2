@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 $supportLang = ['en', 'id'];
 if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {

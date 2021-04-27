@@ -1,6 +1,6 @@
 <?php
 return [
-    'Dashboard' => 'Dasbor',
+    'Dashboard' => 'Dashboard',
     'Configuration' => 'Konfigurasi',
     'Calibration' => 'Kalibrasi',
     'Export' => 'Expor',

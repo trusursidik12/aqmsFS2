@@ -3,7 +3,8 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
 <script>
     /* Check Connection */
     $(document).ready(function() {
@@ -43,10 +44,11 @@
     /* Date & Time */
     try {
         setInterval(function() {
-            var momentNow = moment();
-            let date = ` ${momentNow.format('dddd').substring(0, 3)}, ${momentNow.format('DD MMMM YYYY')}`;
+            moment.locale('<?= @session()->get('web_lang') ? session()->get('web_lang') : 'en' ?>');
+            let momentNow = moment();
+            let date = ` ${momentNow.format('dddd')}, ${momentNow.format('DD MMMM YYYY')}`;
             let time = momentNow.format('hh:mm:ss A');
-            $('#date').html(`${date.toLocaleString('id')} | ${time}`);
+            $('#date').html(`${date} | ${time}`);
         }, 100);
     } catch (err) {
         console.error(err);
