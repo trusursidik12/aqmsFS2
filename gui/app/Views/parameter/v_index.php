@@ -56,7 +56,7 @@
             <?php endfor; ?>
         </div>
         <div class="position-fixed" style="z-index: 999;right:11vw;bottom:20px;">
-            <button class="btn btn-sm btn-info" id="btn-save">Save Changes</button>
+            <button class="btn btn-info" id="btn-save">Save Changes</button>
         </div>
     </form>
 
