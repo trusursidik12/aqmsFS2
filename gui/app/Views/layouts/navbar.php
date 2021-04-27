@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-md">
-        <a class="navbar-brand" href="/">
-            <img src="/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <a class="navbar-brand" href="<?= base_url() ?>">
+            <img src="<?= base_url('/img/logo.png') ?>" width="30" height="30" class="d-inline-block align-top" alt="">
             TRUSUR
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,26 +10,24 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
+                <li class="nav-item <?= @strtolower($__routename) == 'dashboard' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= base_url() ?>">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/configuration.php">Configuration</a>
+                <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= base_url('configurations') ?>">Configuration</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/parameter.php">Parameter</a>
+                <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/calibration.php">Calibration</a>
+                <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= base_url('calibrations') ?>">Calibration</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/export.php">Export</a>
+                <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>">
+                    <a class="nav-link" href="<?= base_url('exports') ?>">Export</a>
                 </li>
             </ul>
             <div class="d-flex justify-content-end align-items-center my-2 ml-md-0">
-                <span class="small text-dark mr-1" id="date">
-
-                </span>
+                <span class="small text-dark mr-1" id="date"></span> <!-- Date -->
                 <div id="connect">
                     <span class="badge badge-sm badge-danger" title="Internet Not Connected">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-wifi-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

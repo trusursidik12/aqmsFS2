@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class Calibration extends BaseController
 {
 
 	public function __construct()
@@ -11,8 +11,8 @@ class Home extends BaseController
 	}
 	public function index()
 	{
-		$data['__modulename'] = 'Dashboard'; /* Title */
-		$data['__routename'] = 'dashboard'; /* Route for check menu */
+		$data['__modulename'] = 'Calibrations'; /* Title */
+		$data['__routename'] = 'calibration'; /* Route for check menu */
 		echo view("dashboard/v_dashboard", $data);
 	}
 }
