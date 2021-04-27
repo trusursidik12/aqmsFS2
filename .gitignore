@@ -1,0 +1,6 @@
+/gui/writable/cache/*
+/gui/writable/debugbar/*
+/gui/writable/logs/*
+/gui/vendor/*
+/gui/tests/*
+/gui/.env

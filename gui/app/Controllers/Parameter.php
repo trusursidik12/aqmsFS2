@@ -13,6 +13,6 @@ class Parameter extends BaseController
 	{
 		$data['__modulename'] = 'Parameters'; /* Title */
 		$data['__routename'] = 'parameter'; /* Route for check menu */
-		echo view("dashboard/v_dashboard", $data);
+		echo view("parameter/v_index", $data);
 	}
 }
