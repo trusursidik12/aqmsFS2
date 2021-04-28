@@ -34,10 +34,10 @@
     }
 </script>
 <script>
-    eraseCookie('introjs');
+    // eraseCookie('introjs');
     // Run IntroJS
     if (getCookie('introjs') === null) {
-        setCookie('introjs', 1, 365);
+        setCookie('introjs', 1, 7);
         introJs().start();
         console.log('Cookie tidak ada');
     } else {
