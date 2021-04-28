@@ -40,7 +40,7 @@
                             </svg>
                         </span>
                         <?= lang('Global.Location') ?>
-                        <h2 class="h3">DKI Jakarta</h2>
+                        <h2 class="h3" data-intro="Lokasi AQMS">DKI Jakarta</h2>
                     </div>
                     <div>
                         <div id="unit" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
@@ -57,7 +57,7 @@
                             </div>
                             <div>
                                 <span>(PPM)</span>
-                                <button type="button" class="btn btn-sm btn-info">
+                                <button type="button" class="btn btn-sm btn-info" data-intro="Mengubah satuan parameter">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
@@ -78,7 +78,7 @@
                             <div>
                                 <span>(Pump 1)</span>
                                 <span id="pumpTimer" class="small">06:00:00</span>
-                                <button type="button" class="btn btn-sm btn-info">
+                                <button type="button" class="btn btn-sm btn-info" data-intro="Mengubah pompa aktif">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="card bg-light px-3 py-2">
-                                    <h1 class="h4"> <?= lang('Global.ParticulatesGases') ?>
+                                    <h1 class="h4" data-intro="Data Partikulat & Gas"> <?= lang('Global.ParticulatesGases') ?>
                                     </h1>
                                     <div class="row">
                                         <?php for ($i = 1; $i <= 2; $i++) : ?>
@@ -141,7 +141,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="card bg-light px-3 py-2">
-                            <h1 class="h4"> <?= lang('Global.Meteorology') ?>
+                            <h1 class="h4" data-intro="Data Meteorology"> <?= lang('Global.Meteorology') ?>
                             </h1>
                             <div class="row">
                                 <?php for ($i = 1; $i <= 6; $i++) : ?>
