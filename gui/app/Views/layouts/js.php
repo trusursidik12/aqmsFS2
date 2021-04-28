@@ -7,6 +7,11 @@
 <script src="<?= base_url('js/html2canvas.min.js') ?>"></script>
 <script>
     $('#connect').click(function() {
+        $('#regionName').html(`<i class='fa fas fa-xs fa-spin fa-spinner'></i>`);
+        $('#timezone').html(`<i class='fa fas fa-xs fa-spin fa-spinner'></i>`);
+        $('#isp').html(`<i class='fa fas fa-xs fa-spin fa-spinner'></i>`);
+        $('#ipAddress').html(`<i class='fa fas fa-xs fa-spin fa-spinner'></i>`)
+        $('#status').html(`<i class='fa fas fa-xs fa-spin fa-spinner'></i>`);
         $('#ispModal').modal('show');
         try {
             $.ajax({
