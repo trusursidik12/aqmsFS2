@@ -16,16 +16,19 @@
                     let regionName = data?.regionName;
                     let timezone = data?.timezone;
                     let isp = data?.isp;
+                    let ipAddress = data?.query;
                     let asIsp = data?.as;
                     $('#regionName').html(regionName);
                     $('#timezone').html(timezone);
                     $('#isp').html(`${isp} (${asIsp})`);
+                    $('#ipAddress').html(ipAddress)
                     $('#status').html(`<span class="badge badge-success">Connected</span>`);
                 },
                 error: function(xhr, status, err) {
                     $('#regionName').html(`-`);
                     $('#timezone').html(`-`);
                     $('#isp').html(`-`);
+                    $('#ipAddress').html(`-`)
                     $('#status').html(`<span class="badge badge-danger">Disconnect</span>`);
 
                 },

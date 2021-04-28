@@ -56,6 +56,10 @@
                             <td id="isp">-</td>
                         </tr>
                         <tr>
+                            <th>IP Address</th>
+                            <td id="ipAddress">-</td>
+                        </tr>
+                        <tr>
                             <th>Region</th>
                             <td id="regionName">-</td>
                         </tr>
