@@ -76,7 +76,9 @@
 
                                 </span> <?= lang('Global.Pump') ?>
                             </div>
-                            <div><span>(Pump 1)</span>
+                            <div>
+                                <span>(Pump 1)</span>
+                                <span id="pumpTimer">06:00:00</span>
                                 <button type="button" class="btn btn-sm btn-info">
                                     <?= lang('Global.Switch') ?>
 
@@ -141,7 +143,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="card bg-light px-3 py-2">
-                            <h1 class="h4"> Meteorologi
+                            <h1 class="h4"> <?= lang('Global.Meteorology') ?>
                             </h1>
                             <div class="row">
                                 <?php for ($i = 1; $i <= 6; $i++) : ?>

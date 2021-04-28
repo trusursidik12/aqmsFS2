@@ -35,4 +35,5 @@ return [
     'Voltage' => 'Voltage',
     'Voltage Field' => 'Voltage Field',
     'Concentration' => 'Concentration',
+    'Meteorology' => 'Meteorology',
 ];
