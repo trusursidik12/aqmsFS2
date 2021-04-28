@@ -102,13 +102,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Longitude</label>
-                                    <input type="text" name="" placeholder="Longitude" class="form-control">
+                                    <input type="text" name="long" placeholder="Longitude" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Latitude</label>
-                                    <input type="text" name="" placeholder="Latitude" class="form-control">
+                                    <input type="text" name="lat" placeholder="Latitude" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -210,4 +210,25 @@
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>
 <!-- Custom JS Here -->
+<script>
+    // Get Geolocation
+    $(document).ready(function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const latitude = position?.coords?.latitude;
+                const longitude = position?.coords?.longitude;
+                $(`input[name='long']`).val(longitude);
+                $(`input[name='lat']`).val(latitude);
+            }, (error) => {
+                console.log(`Error : ${error.code} - ${error.message}`);
+            }, {
+                enableHightAccuracy: true,
+                maximumAge: 30000,
+                timeout: 27000,
+            });
+        } else {
+            console.log(`Geolocation not support on this browser`);
+        }
+    });
+</script>
 <?= $this->endSection() ?>
