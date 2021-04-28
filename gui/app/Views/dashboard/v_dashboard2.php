@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <div class="card bg-light px-3 py-2 mb-md-0 mb-3 overflow-hidden">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                     <div id="location">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -41,10 +41,9 @@
                         </span>
                         <?= lang('Global.Location') ?>
                         <h2 class="h3">DKI Jakarta</h2>
-
                     </div>
                     <div>
-                        <div id="unit" class="my-2 d-flex justify-content-between align-items-center">
+                        <div id="unit" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
                             <div class="mr-5">
                                 <span class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -63,7 +62,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div id="pump" class="my-2 d-flex justify-content-between align-items-center">
+                        <div id="pump" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
                             <div class="mr-5">
                                 <span class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -73,15 +72,14 @@
                                         <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
                                         <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
                                     </svg>
-
-                                </span> <?= lang('Global.Pump') ?>
+                                </span>
+                                <?= lang('Global.Pump') ?>
                             </div>
                             <div>
                                 <span>(Pump 1)</span>
-                                <span id="pumpTimer">06:00:00</span>
+                                <span id="pumpTimer" class="small">06:00:00</span>
                                 <button type="button" class="btn btn-sm btn-info">
                                     <?= lang('Global.Switch') ?>
-
                                 </button>
                             </div>
                         </div>
@@ -129,7 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 mt-3 mt-md-0">
                                 <div class="card">
                                     <div class="bg-light px-3 py-2">
                                         <h1 class="h4"><?= lang('Global.Graphic') ?></h1>

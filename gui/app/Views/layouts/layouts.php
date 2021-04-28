@@ -34,6 +34,43 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="ispModal" tabindex="-1" role="dialog" aria-labelledby="ispModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Internet Connection Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-stripped">
+                        <tr>
+                            <th>Status</th>
+                            <td id="status">
+                                <span class="badge badge-danger">Disconnect</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ISP</th>
+                            <td id="isp">-</td>
+                        </tr>
+                        <tr>
+                            <th>Region</th>
+                            <td id="regionName">-</td>
+                        </tr>
+                        <tr>
+                            <th>Time Zone</th>
+                            <td id="timezone">-</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="position-fixed" style="left:3vw;bottom:4vh">
         <button id="btn-capture" class="btn btn-sm btn-info rounded" title="Capture">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-capture" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
