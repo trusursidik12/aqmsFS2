@@ -22,7 +22,7 @@ body{
 .badge-success,
 .btn-success,
 .bg-success{
-    background-color: #1cb7a0;
+    background-color: #1cb7a0 !important;
 }
 .bg-danger{
     background-color: #fd6f71;
