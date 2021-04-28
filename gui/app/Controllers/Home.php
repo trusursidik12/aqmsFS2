@@ -13,6 +13,6 @@ class Home extends BaseController
 	{
 		$data['__modulename'] = 'Dashboard'; /* Title */
 		$data['__routename'] = 'dashboard'; /* Route for check menu */
-		echo view("dashboard/v_dashboard", $data);
+		echo view("dashboard/v_dashboard2", $data);
 	}
 }
