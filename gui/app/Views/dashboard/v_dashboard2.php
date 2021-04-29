@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1 class="h2 text-light">Dashboard</h1>
         <div>
-            <button class="btn btn-sm btn-success" id="btn-play" type="button" title="Pause Slider">
+            <button class="btn btn-sm btn-success" id="btn-play" type="button" title="Play Slider">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M7 4v16l13 -8z"></path>
@@ -178,17 +178,30 @@
     })
 </script>
 <script>
+    function play() {
+        $('.carousel').carousel('cycle');
+        $('#btn-play').hide();
+        $('#btn-pause').show();
+    }
+
+    function pause() {
+        $('.carousel').carousel('pause');
+        $('#btn-pause').hide();
+        $('#btn-play').show();
+    }
     $(document).ready(function() {
         $('#btn-play').hide();
         $('#btn-play').click(function() {
-            $('.carousel').carousel('cycle');
-            $(this).hide();
-            $('#btn-pause').show();
+            play();
         });
         $('#btn-pause').click(function() {
-            $('.carousel').carousel('pause');
-            $(this).hide();
-            $('#btn-play').show();
+            pause();
+        });
+        $('#carouselSlider').hover(function() {
+            pause();
+        });
+        $('#carouselSlider').mouseleave(function() {
+            play();
         });
     });
 </script>
