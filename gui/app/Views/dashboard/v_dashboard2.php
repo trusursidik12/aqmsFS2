@@ -94,7 +94,7 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="card bg-light px-3 py-2">
-                                    <h1 class="h4" data-intro="Data Partikulat & Gas"> <?= lang('Global.ParticulatesGases') ?>
+                                    <h1 class="h4"> <?= lang('Global.ParticulatesGases') ?>
                                     </h1>
                                     <div class="row">
                                         <?php for ($i = 1; $i <= 2; $i++) : ?>
@@ -137,7 +137,7 @@
                             </div>
                             <div class="carousel-item">
                                 <div class="card bg-light px-3 py-2">
-                                    <h1 class="h4" data-intro="Data Meteorology"> <?= lang('Global.Meteorology') ?>
+                                    <h1 class="h4"> <?= lang('Global.Meteorology') ?>
                                     </h1>
                                     <div class="row">
                                         <?php for ($i = 1; $i <= 10; $i++) : ?>
@@ -163,7 +163,7 @@
                 <div class="col-md-4 mt-3 mt-md-0">
                     <div class="card">
                         <div class="bg-light px-3 py-2">
-                            <h1 class="h4"><?= lang('Global.Graphic') ?></h1>
+                            <h1 class="h4" data-intro="Grafik Parameter"><?= lang('Global.Graphic') ?></h1>
                             <div class="px-3 py-2 bg-light">
                                 <canvas id="myChart" width="150" height="130"></canvas>
                             </div>

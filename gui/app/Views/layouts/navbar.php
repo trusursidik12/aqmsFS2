@@ -13,16 +13,16 @@
                 <li class="nav-item <?= @strtolower($__routename) == 'dashboard' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= base_url() ?>">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>">
+                <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>" data-intro="Menu Konfigurasi">
                     <a class="nav-link" href="<?= base_url('configurations') ?>"><?= lang('Global.Configuration') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>">
+                <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="Menu Parameter">
                     <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>">
+                <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="Menu Kalibrasi">
                     <a class="nav-link" href="<?= base_url('calibrations') ?>"><?= lang('Global.Calibration') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>">
+                <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="Menu Export Data AQMS">
                     <a class="nav-link" href="<?= base_url('exports') ?>"><?= lang('Global.Export') ?></a>
                 </li>
             </ul>
