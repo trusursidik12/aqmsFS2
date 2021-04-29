@@ -44,6 +44,9 @@
         console.log('Cookie ada');
         // introJs('#layout-content').start();
     }
+    $('#help').click(function() {
+        introJs().start();
+    });
 </script>
 <script>
     $('#connect').click(function() {

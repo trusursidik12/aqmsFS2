@@ -40,7 +40,7 @@
                         </svg>
                     </span>
                 </div>
-                <div class="ml-1" data-intro="Setelan Bahasa">
+                <div class="mx-1" data-intro="Setelan Bahasa">
                     <?php if (@session()->get('web_lang') == 'en') : ?>
                         <a href="<?= base_url('lang/id') ?>" class="btn btn-sm btn-primary" title="Translate to Indonesia">
                             <img src="<?= base_url('/img/us.svg') ?>" height="20vh" width="20vw">
@@ -50,7 +50,16 @@
                             <img src="<?= base_url('/img/id.svg') ?>" height="20vh" width="20vw">
                         </a>
                     <?php endif; ?>
-
+                </div>
+                <div id="help">
+                    <button class="btn btn-sm btn-info" title="Help">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-help" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <line x1="12" y1="17" x2="12" y2="17.01"></line>
+                            <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
