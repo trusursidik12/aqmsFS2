@@ -88,11 +88,11 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div id="carouselSlider" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="carouselSlider" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
                                 <div class="card bg-light px-3 py-2">
                                     <h1 class="h4" data-intro="Data Partikulat & Gas"> <?= lang('Global.ParticulatesGases') ?>
                                     </h1>
@@ -102,10 +102,16 @@
                                                 <div class="bg-info rounded px-3 py-2">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h2 class="h6">PM10</h2>
-                                                        <h2 class="h6">(ug/m3)</h2>
                                                     </div>
-                                                    <div class="d-flex justify-content-end">
-                                                        <h1 class="h1">10</h1>
+                                                    <div class="d-flex justify-content-between align-items-end">
+                                                        <div>
+                                                            <h1 class="h3">10</h1>
+                                                            <h2 class="h6">(ug/m3)</h2>
+                                                        </div>
+                                                        <div>
+                                                            <h1 class="h3">3</h1>
+                                                            <h2 class="h6">(l/mnt)</h2>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,10 +122,12 @@
                                                 <div class="bg-info rounded px-3 py-2 overflow-hidden">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h2 class="h6">SO2</h2>
-                                                        <h2 class="h6">(ug/m3)</h2>
                                                     </div>
                                                     <div class="d-flex justify-content-end">
-                                                        <h1 class="h1">10</h1>
+                                                        <div class="text-right">
+                                                            <h1 class="h3"><?= rand(0, 50) ?></h1>
+                                                            <h2 class="h6">(ug/m3)</h2>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,41 +135,43 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 mt-3 mt-md-0">
-                                <div class="card">
-                                    <div class="bg-light px-3 py-2">
-                                        <h1 class="h4"><?= lang('Global.Graphic') ?></h1>
-                                        <div class="px-3 py-2 bg-light">
-                                            <canvas id="myChart" width="150" height="130"></canvas>
-                                        </div>
+                            <div class="carousel-item">
+                                <div class="card bg-light px-3 py-2">
+                                    <h1 class="h4" data-intro="Data Meteorology"> <?= lang('Global.Meteorology') ?>
+                                    </h1>
+                                    <div class="row">
+                                        <?php for ($i = 1; $i <= 10; $i++) : ?>
+                                            <div class="col-md-3 my-2 ">
+                                                <div class="bg-success rounded px-3 py-2">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h2 class="h6">Temperatur</h2>
+                                                        <h2 class="h6">°</h2>
+                                                    </div>
+                                                    <div class="d-flex justify-content-end">
+                                                        <h1 class="h1"><?= rand(15, 36) ?></h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endfor; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="card bg-light px-3 py-2">
-                            <h1 class="h4" data-intro="Data Meteorology"> <?= lang('Global.Meteorology') ?>
-                            </h1>
-                            <div class="row">
-                                <?php for ($i = 1; $i <= 6; $i++) : ?>
-                                    <div class="col-md-4 my-2 ">
-                                        <div class="bg-success rounded px-3 py-2">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h2 class="h6">Temperatur</h2>
-                                                <h2 class="h6">°</h2>
-                                            </div>
-                                            <div class="d-flex justify-content-end">
-                                                <h1 class="h1">23</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endfor; ?>
+
+                </div>
+                <div class="col-md-4 mt-3 mt-md-0">
+                    <div class="card">
+                        <div class="bg-light px-3 py-2">
+                            <h1 class="h4"><?= lang('Global.Graphic') ?></h1>
+                            <div class="px-3 py-2 bg-light">
+                                <canvas id="myChart" width="150" height="130"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
