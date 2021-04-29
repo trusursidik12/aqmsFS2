@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-    <form action="" method="post">
+    <form action="<?= base_url('configuration') ?>" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -64,19 +64,19 @@
                         <h2 class="h4">Detail</h2>
                         <div class="form-group">
                             <label><?= lang('Global.Station Name') ?></label>
-                            <input type="text" name="" placeholder="<?= lang('Global.Station Name') ?>" class="form-control">
+                            <input type="text" name="sta_nama" placeholder="<?= lang('Global.Station Name') ?>" class="form-control">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Serial Number</label>
-                                    <input type="text" name="" placeholder="Serial Number" class="form-control">
+                                    <input type="text" name="device_id" placeholder="Serial Number" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Station ID</label>
-                                    <input type="text" name="" placeholder="Station ID" class="form-control">
+                                    <input type="text" name="sta_id" placeholder="Station ID" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -84,13 +84,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><?= lang('Global.City') ?></label>
-                                    <input type="text" name="" placeholder="<?= lang('Global.City') ?>" class="form-control">
+                                    <input type="text" name="sta_prov" placeholder="<?= lang('Global.City') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><?= lang('Global.Province') ?></label>
-                                    <input type="text" name="" placeholder="<?= lang('Global.Province') ?>" class="form-control">
+                                    <input type="text" name="sta_alamat" placeholder="<?= lang('Global.Province') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -121,25 +121,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
-                                    <input type="text" name="" placeholder="<?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?>" class="form-control">
+                                    <input type="text" name="pump_interval" placeholder="<?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.Collect Data Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
-                                    <input type="text" name="" placeholder="<?= lang('Global.Collect Data Interval') ?>" class="form-control">
+                                    <input type="text" name="data_interval" placeholder="<?= lang('Global.Collect Data Interval') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.Graphic Refresh Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
-                                    <input type="text" name="" placeholder="<?= lang('Global.Graphic Refresh Interval') ?>" class="form-control">
+                                    <input type="text" name="graph_interval" placeholder="<?= lang('Global.Graphic Refresh Interval') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small">Labjack AIN's</label>
-                                    <input type="text" name="" placeholder="Labjack AIN's" class="form-control">
+                                    <input type="text" name="param_labjack" placeholder="Labjack AIN's" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
