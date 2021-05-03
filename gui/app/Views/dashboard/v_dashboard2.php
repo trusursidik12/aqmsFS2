@@ -1,35 +1,9 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
-<div class="container-md py-5">
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 text-light">Dashboard</h1>
-        <div>
-            <button class="btn btn-sm btn-success" id="btn-play" type="button" title="Play Slider">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M7 4v16l13 -8z"></path>
-                </svg>
-            </button>
-            <button class="btn btn-sm btn-danger" id="btn-pause" type="button" title="Pause Slider">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
-                    <rect x="14" y="5" width="4" height="14" rx="1"></rect>
-                </svg>
-
-            </button>
-            <a href="#" onclick="return location.reload();" class="btn btn-sm btn-primary" title="Refresh">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
-                </svg>
-            </a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 mb-3">
-            <div class="card bg-light px-3 py-2 mb-md-0 mb-3 overflow-hidden">
+<div class="container-md py-2">
+    <div class="row justify-content-start">
+        <div class="col-md-12 mb-2">
+            <div class="card bg-light px-3 py-0 mb-md-0 mb-3 overflow-hidden">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                     <div id="location">
                         <span class="icon">
@@ -40,7 +14,13 @@
                             </svg>
                         </span>
                         <?= lang('Global.Location') ?>
-                        <h2 class="h3" data-intro="Lokasi AQMS">DKI Jakarta</h2>
+                        <div class="">
+                            <h2 class="h3" data-intro="Lokasi AQMS">DKI Jakarta
+                                <!-- Date -->
+                            </h2>
+                            <h2 class="h6 text-dark" id="date"></h2>
+                        </div>
+
                     </div>
                     <div>
                         <div id="unit" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
@@ -87,91 +67,77 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-8">
-                    <div id="carouselSlider" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="card bg-light px-3 py-2">
-                                    <h1 class="h4"> <?= lang('Global.ParticulatesGases') ?>
-                                    </h1>
-                                    <div class="row">
-                                        <?php for ($i = 1; $i <= 2; $i++) : ?>
-                                            <div class="col-md-6 my-2 ">
-                                                <div class="bg-info rounded px-3 py-2">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h2 class="h6">PM10</h2>
-                                                    </div>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div>
-                                                            <h1 class="h3">10</h1>
-                                                            <h2 class="h6">(ug/m3)</h2>
-                                                        </div>
-                                                        <div>
-                                                            <h1 class="h3">3</h1>
-                                                            <h2 class="h6">(l/mnt)</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endfor; ?>
-                                        <div class="clearfix"></div>
-                                        <?php for ($i = 1; $i <= 5; $i++) : ?>
-                                            <div class="col-md-4 my-2">
-                                                <div class="bg-info rounded px-3 py-2 overflow-hidden">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h2 class="h6">SO2</h2>
-                                                    </div>
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="text-right">
-                                                            <h1 class="h3"><?= rand(0, 50) ?></h1>
-                                                            <h2 class="h6">(ug/m3)</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endfor; ?>
-                                    </div>
-                                </div>
+        <div class="col-sm mx-2">
+            <div class="card">
+                <div class="p-2">
+                    <h1 class="h5">Partikulat</h1>
+                    <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
+                        <span class="py-0 font-weight-bold">PM10</span>
+                        <div class="m-0 d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <h3 class="h1 mr-1">10</h3>
+                                <small>µg/m<sup>3</sub></small>
                             </div>
-                            <div class="carousel-item">
-                                <div class="card bg-light px-3 py-2">
-                                    <h1 class="h4"> <?= lang('Global.Meteorology') ?>
-                                    </h1>
-                                    <div class="row">
-                                        <?php for ($i = 1; $i <= 10; $i++) : ?>
-                                            <div class="col-md-3 my-2 ">
-                                                <div class="bg-success rounded px-3 py-2">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <h2 class="h6">Temperatur</h2>
-                                                        <h2 class="h6">°</h2>
-                                                    </div>
-                                                    <div class="d-flex justify-content-end">
-                                                        <h1 class="h1"><?= rand(15, 36) ?></h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endfor; ?>
-                                    </div>
-                                </div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="h6 mr-1">2.0</h3>
+                                <small>l/mnt</small>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div class="col-md-4 mt-3 mt-md-0">
-                    <div class="card">
-                        <div class="bg-light px-3 py-2">
-                            <h1 class="h4" data-intro="Grafik Parameter"><?= lang('Global.Graphic') ?></h1>
-                            <div class="px-3 py-2 bg-light">
-                                <canvas id="myChart" width="150" height="130"></canvas>
+                    <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
+                        <span class="py-0 font-weight-bold">PM2.5</span>
+                        <div class="m-0 d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <h3 class="h1 mr-1">10</h3>
+                                <small>µg/m<sup>3</sub></small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <h3 class="h6 mr-1">2.0</h3>
+                                <small>l/mnt</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <div class="text-center pt-4">
+                <img src="https://www.nicepng.com/png/full/32-321434_compass-rose-002-by-prettywitchery-on-deviantart-need.png" alt="" width="130vw" class="img img-fluid">
+            </div>
+        </div>
+        <div class="col-sm mx-2">
+            <div class="card">
+                <div class="p-2">
+                    <h1 class="h5">Gas</h1>
+                    <?php for ($i = 1; $i <= 5; $i++) : ?>
+                        <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
+                            <span class="py-0 small font-weight-bold">WS-<?= $i ?></span>
+                            <div class="m-0 d-flex justify-content-center">
+                                <div class="d-flex align-items-center">
+                                    <h3 class="h3 mr-1">10</h3>
+                                    <small>µg/m<sup>3</sub></small>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm mx-2">
+            <div class="card">
+                <div class="p-2">
+                    <h1 class="h5">Meteorologi</h1>
+                    <?php for ($i = 1; $i <= 7; $i++) : ?>
+                        <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
+                            <span class="py-0 small font-weight-bold">SO-<?= $i ?></span>
+                            <div class="m-0 d-flex justify-content-center">
+                                <div class="d-flex mt-n2 align-items-center">
+                                    <h3 class="h4 mr-1">10</h3>
+                                    <small>µg/m<sup>3</sup></small>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

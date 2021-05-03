@@ -13,7 +13,7 @@ class SensorValues extends Migration
 			'sensor_reader_id'	=> ['type' => 'INT', 'default' => 0],
 			'pin'				=> ['type' => 'INT', 'default' => 0],
 			'value'				=> ['type' => 'VARCHAR', 'default' => '', 'constraint' => 255],
-			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
+			'xtimestamp'		=> ['type' => 'timestamp', 'null' => false, 'default' => 'current_timestamp() ON UPDATE current_timestamp()']
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('sensor_reader_id');

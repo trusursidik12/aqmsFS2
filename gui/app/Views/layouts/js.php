@@ -127,7 +127,7 @@
         setInterval(function() {
             moment.locale('<?= @session()->get('web_lang') ? session()->get('web_lang') : 'en' ?>');
             let momentNow = moment();
-            let date = ` ${momentNow.format('dddd')}, ${momentNow.format('DD MMMM YYYY')}`;
+            let date = ` ${momentNow.format('dddd').substr(0,3)}, ${momentNow.format('DD')} ${momentNow.format('MMM').substr(0,3)} ${momentNow.format('YYYY')}`;
             let time = momentNow.format('hh:mm:ss A');
             $('#date').html(`${date} | ${time}`);
         }, 100);

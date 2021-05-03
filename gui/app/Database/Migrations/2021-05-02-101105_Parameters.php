@@ -23,7 +23,7 @@ class Parameters extends Migration
 			'voltage2'			=> ['type' => 'double', 'default' => 0],
 			'concentration1'	=> ['type' => 'double', 'default' => 0],
 			'concentration2'	=> ['type' => 'double', 'default' => 0],
-			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
+			'xtimestamp'		=> ['type' => 'timestamp', 'null' => false, 'default' => 'current_timestamp() ON UPDATE current_timestamp()']
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('code');

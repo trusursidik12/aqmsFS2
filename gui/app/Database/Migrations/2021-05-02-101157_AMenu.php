@@ -16,7 +16,7 @@ class AMenu extends Migration
 			'name_en'		=> ['type' => 'VARCHAR', 'constraint' => 100, 'default' => ''],
 			'url'			=> ['type' => 'VARCHAR', 'constraint' => 255, 'default' => ''],
 			'icon'			=> ['type' => 'VARCHAR', 'constraint' => 100, 'default' => ''],
-			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
+			'xtimestamp'		=> ['type' => 'timestamp', 'null' => false, 'default' => 'current_timestamp() ON UPDATE current_timestamp()']
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('parent_id');
