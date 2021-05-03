@@ -5,7 +5,7 @@ namespace App\Commands;
 use App\Models\m_configuration;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use App\Models\m_labjack_value;
+use App\Models\m_sensor_value;
 use App\Models\m_measurement;
 use App\Models\m_measurement_log;
 use App\Models\m_parameter;
@@ -20,7 +20,7 @@ class MeasurementAveraging extends BaseCommand
 	protected $group = 'CodeIgniter';
 
 	protected $parameters;
-	protected $labjack_values;
+	protected $sensor_values;
 	protected $measurement_logs;
 	protected $configurations;
 	protected $lastPutData;
@@ -28,7 +28,7 @@ class MeasurementAveraging extends BaseCommand
 	public function __construct()
 	{
 		$this->parameters =  new m_parameter();
-		$this->labjack_values =  new m_labjack_value();
+		$this->sensor_values =  new m_sensor_value();
 		$this->measurement_logs =  new m_measurement_log();
 		$this->configurations =  new m_configuration();
 		$this->measurements =  new m_measurement();
