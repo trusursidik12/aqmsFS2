@@ -5,7 +5,7 @@ import time
 sys.path.insert(1, '..')
 import db_connect
 
-is_PM_connect = False
+is_HC_connect = False
 
 try:
     mydb = db_connect.connecting()
@@ -13,9 +13,8 @@ try:
     
     mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
     sensor_reader = mycursor.fetchone()
-    print("[V] PM " + sensor_reader[0] + " CONNECTED")
 except Exception as e: 
-    print("[X]  [V] PM  Sensor ID: " + str(sys.argv[1]) + " " + e)
+    print("[X]  [V] HC  Sensor ID: " + str(sys.argv[1]) + " " + e)
     
 def update_sensor_value(sensor_reader_id,value):
     try:
@@ -30,46 +29,45 @@ def update_sensor_value(sensor_reader_id,value):
     except Exception as e2:
         return None
     
-def connect_pm():
-    global is_PM_connect
+def connect_hc():
+    global is_HC_connect
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
         
-        COM_PM = serial.Serial(sensor_reader[0], sensor_reader[1])
-        PM = str(COM_PM.readline())
-        if(PM.count(",") == 6):
-            is_PM_connect = True
-            print("[V] PM " + sensor_reader[0] + " CONNECTED")
-            return COM_PM 
+        COM_HC = serial.Serial(sensor_reader[0], sensor_reader[1])
+        HC = str(COM_HC.readline())
+        if(HC.count(",") == 0 and HC.count("\\r\\n") == 1 and HC.count("b'") == 1):
+            is_HC_connect = True
+            print("[V] HC " + sensor_reader[0] + " CONNECTED")
+            return COM_HC 
         else:
-            is_PM_connect = False
+            is_HC_connect = False
             return None
-            
     except Exception as e: 
         return None
     
 try:
     while True :
         try:
-            if(not is_PM_connect):
-                COM_PM = connect_pm()
+            if(not is_HC_connect):
+                COM_HC = connect_hc()
         
-            PM = str(COM_PM.readline())
-            if(PM.count(",") != 6):
-                PM = "b'000.000,0.0,+0.0,0,0,00,*0\\r\\n'"
-                
-            if((float(PM[2:9]) * 1000) > 700):
-                PM = "b'000.700," + PM[10:len(PM)]
-                
-            update_sensor_value(str(sys.argv[1]),PM.replace("'","''"))
+            HC = str(COM_HC.readline())
+            if(HC.count(",") == 0 and HC.count("\\r\\n") == 1 and HC.count("b'") == 1):
+                HC = HC.split("\\r\\n")[0];
+                HC = HC.split("b'")[1];
+            else:
+                HC = "0"
             
-            #print(PM)
+            update_sensor_value(str(sys.argv[1]),HC)
+            
+            #print(HC)
         except Exception as e2:
             print(e2)
-            is_PM_connect = False
-            print("Reconnect PM Sensor ID: " + str(sys.argv[1]));
-            update_sensor_value(str(sys.argv[1]),0)
+            is_HC_connect = False
+            print("Reconnect HC Sensor ID: " + str(sys.argv[1]));
+            update_sensor_value(str(sys.argv[1]),-1)
         
         time.sleep(1)
         

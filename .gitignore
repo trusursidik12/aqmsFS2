@@ -5,3 +5,4 @@
 /gui/vendor/*
 /gui/tests/*
 /gui/.env
+__pycache__
