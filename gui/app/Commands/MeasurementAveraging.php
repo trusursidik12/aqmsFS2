@@ -107,12 +107,14 @@ class MeasurementAveraging extends BaseCommand
 				@$total[$measurement_log->parameter_id] += $measurement_log->value;
 				@$numdata[$measurement_log->parameter_id]++;
 			}
-			foreach ($this->parameters->findAll() as $parameter) {
+			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if (@$numdata[$parameter->id] > 0) {
 					$measurements = [
 						"parameter_id" => $parameter->id,
 						"value" => $total[$parameter->id] / $numdata[$parameter->id],
 						"sensor_value" => 0,
+						"is_sent_cloud" => 0,
+						"is_sent_klhk" => 0,
 					];
 					$this->measurements->save($measurements);
 				}
