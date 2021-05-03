@@ -36,7 +36,7 @@ class Database extends \CodeIgniter\Database\Config
 		'hostname' => '',
 		'username' => '',
 		'password' => '',
-		'database' => APPPATH . 'Config/db/database.s3db',
+		'database' => APPPATH . 'Database/database.s3db',
 		'DBDriver' => 'SQLite3',
 		'DBPrefix' => '',
 		'pConnect' => false,
