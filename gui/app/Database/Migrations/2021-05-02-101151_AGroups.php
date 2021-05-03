@@ -13,7 +13,7 @@ class AGroups extends Migration
 			'name'			=> ['type' => 'VARCHAR', 'constraint' => 50],
 			'menu_ids'		=> ['type' => 'TEXT', 'default' => ''],
 			'privileges'	=> ['type' => 'TEXT', 'default' => ''],
-			'xtimestamp'		=> ['type' => 'timestamp', 'null' => false, 'default' => 'current_timestamp() ON UPDATE current_timestamp()']
+			'xtimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->createTable('a_groups', TRUE);

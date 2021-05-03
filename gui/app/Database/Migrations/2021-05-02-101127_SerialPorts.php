@@ -13,7 +13,7 @@ class SerialPorts extends Migration
 			'port'			=> ['type' => 'VARCHAR', 'constraint' => 20],
 			'description'	=> ['type' => 'VARCHAR', 'constraint' => 100],
 			'is_used'		=> ['type' => 'tinyint', 'default' => 0],
-			'xtimestamp'		=> ['type' => 'timestamp', 'null' => false, 'default' => 'current_timestamp() ON UPDATE current_timestamp()']
+			'xtimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('ispu_at');

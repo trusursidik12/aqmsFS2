@@ -21,7 +21,6 @@ class Configurations extends Seeder
 			['name' => 'pump_interval', 'content' => '360'],
 			['name' => 'pump_state', 'content' => '1'],
 			['name' => 'pump_last', 'content' => ''],
-			['name' => 'pump_last', 'content' => '1'],
 			['name' => 'pump_speed', 'content' => '80'],
 			['name' => 'selenoid_state', 'content' => 'q'],
 			['name' => 'selenoid_names', 'content' => ''],

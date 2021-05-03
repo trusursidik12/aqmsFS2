@@ -71,31 +71,8 @@
             <div class="card">
                 <div class="p-2">
                     <h1 class="h5">Partikulat</h1>
-                    <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
-                        <span class="py-0 font-weight-bold">PM10</span>
-                        <div class="m-0 d-flex justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <h3 class="h1 mr-1">10</h3>
-                                <small>µg/m<sup>3</sub></small>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <h3 class="h6 mr-1">2.0</h3>
-                                <small>l/mnt</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
-                        <span class="py-0 font-weight-bold">PM2.5</span>
-                        <div class="m-0 d-flex justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <h3 class="h1 mr-1">10</h3>
-                                <small>µg/m<sup>3</sub></small>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <h3 class="h6 mr-1">2.0</h3>
-                                <small>l/mnt</small>
-                            </div>
-                        </div>
+                    <div id="particulate">
+                        <i class="fas fa-spinner fa-spin"></i>
                     </div>
                 </div>
             </div>
@@ -107,17 +84,9 @@
             <div class="card">
                 <div class="p-2">
                     <h1 class="h5">Gas</h1>
-                    <?php for ($i = 1; $i <= 5; $i++) : ?>
-                        <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
-                            <span class="py-0 small font-weight-bold">WS-<?= $i ?></span>
-                            <div class="m-0 d-flex justify-content-center">
-                                <div class="d-flex align-items-center">
-                                    <h3 class="h3 mr-1">10</h3>
-                                    <small>µg/m<sup>3</sub></small>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endfor; ?>
+                    <div id="gas-content">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,17 +94,9 @@
             <div class="card">
                 <div class="p-2">
                     <h1 class="h5">Meteorologi</h1>
-                    <?php for ($i = 1; $i <= 7; $i++) : ?>
-                        <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
-                            <span class="py-0 small font-weight-bold">SO-<?= $i ?></span>
-                            <div class="m-0 d-flex justify-content-center">
-                                <div class="d-flex mt-n2 align-items-center">
-                                    <h3 class="h4 mr-1">10</h3>
-                                    <small>µg/m<sup>3</sup></small>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endfor; ?>
+                    <div id="meteorologi-content">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,7 +105,7 @@
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
-<script>
+<!-- <script>
     /* Carousel Options */
     $('.carousel').carousel({
         interval: 5000,
@@ -180,8 +141,8 @@
             play();
         });
     });
-</script>
-<script>
+</script> -->
+<!-- <script>
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -216,5 +177,113 @@
             }
         }
     });
+</script> -->
+<script>
+    $(document).ready(function() {
+        setInterval(() => {
+            $.ajax({
+                url: '<?= base_url('measurementlog') ?>',
+                dataType: 'json',
+                success: function(data) {
+                    let particulate, pm10, pm10_flow, pm25, pm25_flow;
+                    let gas = ``;
+                    let meteorologi = ``;
+                    if (data !== null) {
+                        data.map(function(value, index) {
+                            console.log(`${value.code} ${value.value}`)
+                            // Cek Gas
+                            if (parseFloat(value?.molecular_mass) > 0) {
+                                gas += `<div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
+                                            <span class="py-0 small font-weight-bold">${value?.caption_id}</span>
+                                            <div class="m-0 d-flex justify-content-center">
+                                                <div class="d-flex align-items-center">
+                                                    <h3 class="h3 mr-1">${value?.value}</h3>
+                                                    <small>${value?.default_unit}</small>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                            }
+                            // Cek Meteorologi, id > 17 & < 31
+                            if (parseFloat(value?.id) > 17 && value?.id < 31) {
+                                meteorologi += `<div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
+                                                    <span class="py-0 small font-weight-bold">${value?.caption_id}</span>
+                                                    <div class="m-0 d-flex justify-content-center">
+                                                        <div class="d-flex mt-n2 align-items-center">
+                                                            <h3 class="h4 mr-1">${value?.value}</h3>
+                                                            <small>${value?.default_unit}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>`;
+                            }
+                            // Get Particulate
+                            switch (value?.code) {
+                                // Particulate
+                                case 'pm10':
+                                    pm10 = value;
+                                    break;
+                                case 'pm10_flow':
+                                    pm10_flow = value;
+                                    break;
+                                case 'pm25':
+                                    pm25 = value;
+                                    break;
+                                case 'pm25_flow':
+                                    pm25_flow = value;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                        particulate = `<div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
+                                        <span class="py-0 font-weight-bold">${cleanStr(pm10?.caption_id)}</span>
+                                        <div class="m-0 d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <h3 class="h1 mr-1">${cleanStr(pm10?.value)}</h3>
+                                                <small>${cleanStr(pm10?.default_unit)}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <h3 class="h6 mr-1">${cleanStr(pm10_flow?.value)}</h3>
+                                                <small>${cleanStr(pm10_flow?.default_unit)}</small>
+                                            </div>
+                                        </div>
+                                    </div>`
+                        particulate += `<div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
+                                        <span class="py-0 font-weight-bold">${cleanStr(pm25?.caption_id)}</span>
+                                        <div class="m-0 d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <h3 class="h1 mr-1">${cleanStr(pm25?.value)}</h3>
+                                                <small>${cleanStr(pm25?.default_unit)}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <h3 class="h6 mr-1">${cleanStr(pm25_flow?.value)}</h3>
+                                                <small>${cleanStr(pm25_flow?.default_unit)}</small>
+                                            </div>
+                                        </div>
+                                    </div>`
+                        $('#particulate').html(particulate);
+                        $('#gas-content').html(gas);
+                        $('#meteorologi-content').html(meteorologi);
+
+                    }
+
+                },
+                error: function(xhr, status, err) {
+                    console.log(err);
+                }
+            })
+        }, 1000);
+    });
+</script>
+<script>
+    function cleanStr(str) {
+        try {
+            if (str === undefined || str === null) {
+                return `<span class="badge badge-danger">false</span>`;
+            }
+        } catch (err) {
+            return `<span class="badge badge-danger">false</span>`;
+        }
+        return str;
+    }
 </script>
 <?= $this->endSection() ?>
