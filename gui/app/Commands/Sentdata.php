@@ -4,25 +4,35 @@ namespace App\Commands;
 
 use App\Models\m_configuration;
 use App\Models\m_measurement;
+use App\Models\m_measurement_log;
+use App\Models\m_parameter;
+use App\Models\m_sensor_value;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class Sentdata extends BaseCommand
 {
-
-	public function __construct()
-	{
-		$this->measurements = new m_measurement();
-		$this->configurations = new m_configuration();
-	}
-
 	/**
 	 * The Command's Group
 	 *
 	 * @var string
 	 */
 	protected $group = 'CodeIgniter';
+	protected $parameters;
+	protected $sensor_values;
+	protected $measurement_logs;
+	protected $configurations;
+	protected $lastPutData;
 
+	public function __construct()
+	{
+		$this->parameters =  new m_parameter();
+		$this->sensor_values =  new m_sensor_value();
+		$this->measurement_logs =  new m_measurement_log();
+		$this->configurations =  new m_configuration();
+		$this->measurements =  new m_measurement();
+		$this->lastPutData = "0000-00-00 00:00";
+	}
 	/**
 	 * The Command's Name
 	 *
@@ -65,88 +75,48 @@ class Sentdata extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		//CURL
-		$mData = @$this->measurements->where(["is_sent_cloud" => 0])->orderBy("id DESC")->findAll()[0];
-		$cnfig = @$this->configurations->findAll()[0];
+		$server_host = "103.247.11.149";
+		$measurement_ids = "";
+		$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
+		foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
+			$measurement = $this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
+			$arr["waktu"] = $measurement->xtimestamp;
+			$arr[$parameter->code] = $measurement->value;
+			$measurement_ids .= $measurement->id . ",";
+		}
+		$measurement_ids = substr($measurement_ids, 0, -1);
 
-		if (!empty($mData)) {
-			$token = "";
-			$client =
-				[
-					'keys' 		=> 'UkFQUDE2MTk1MTQyMjE=',
-					'email' 	=> 'rapp@trusur.com',
-					'password' 	=> '4p&)z6)JNuLTeJ3'
-				];
-			$cEncode = http_build_query($client);
+		$data = json_encode($arr);
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "PUT",
+			CURLOPT_USERPWD => "KLHK-2019:Project2016-2019",
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_HTTPHEADER => array(
+				"Api-Key: VHJ1c3VyVW5nZ3VsVGVrbnVzYV9wVA==",
+				"cache-control: no-cache",
+				"content-type: application/json"
+			),
+		));
 
-			$cLogin = curl_init();
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
 
-			curl_setopt_array($cLogin, array(
-				CURLOPT_URL => 'https://ispumaps.id/egateway_server/public/api/auth/clientlogin',
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => '',
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_FOLLOWLOCATION => true,
-				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-				CURLOPT_CUSTOMREQUEST => 'POST',
-				CURLOPT_POSTFIELDS => $cEncode,
-				CURLOPT_HTTPHEADER => array(
-					'Content-Type: application/x-www-form-urlencoded'
-				),
-			));
+		curl_close($curl);
 
-			$responseLogin = curl_exec($cLogin);
-
-			curl_close($cLogin);
-			$resultLogin = json_decode($responseLogin, true);
-
-			$token = @$resultLogin['token'];
-
-			if ($token != "") {
-				$data =
-					[
-						'egateway_code' => $cnfig->egateway_code,
-						'measured_at' => $mData->measured_at,
-						'client_parameter_id' => $mData->parameter_id,
-						'value' => $mData->value,
-						'unit_id' => $mData->unit_id,
-						'is_sent' => $mData->is_sent_klhk,
-						'sent_type' => $mData->sent_klhk_type,
-						'sent_by' => $mData->sent_klhk_by,
-						'sent_at' => $mData->sent_klhk_at,
-						'sent_tries' => $mData->sent_klhk_tries,
-					];
-
-				$dEncode = http_build_query($data);
-
-				$curl = curl_init();
-
-				curl_setopt_array($curl, array(
-					CURLOPT_URL => 'https://ispumaps.id/egateway_server/public/api/send/measurement',
-					CURLOPT_RETURNTRANSFER => true,
-					CURLOPT_ENCODING => '',
-					CURLOPT_MAXREDIRS => 10,
-					CURLOPT_TIMEOUT => 0,
-					CURLOPT_FOLLOWLOCATION => true,
-					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-					CURLOPT_CUSTOMREQUEST => 'POST',
-					CURLOPT_POSTFIELDS => $dEncode,
-					CURLOPT_HTTPHEADER => array(
-						'Authorization: Bearer ' . $token,
-						'Content-Type: application/x-www-form-urlencoded',
-					),
-				));
-
-				$response = curl_exec($curl);
-
-				curl_close($curl);
-				$result = json_decode($response, true);
-				print_r($response);
-
-				if ($result['status'] == 200) {
-					$this->measurements->update($mData->id, ['is_sent_cloud' => 1]);
-				}
+		if ($err) {
+			echo "cURL Error #:" . $err;
+		} else {
+			if (strpos(" " . $response, "success") > 0) {
+				$measurement->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->where("id IN (" . $measurement_ids . ")")->update();
+			} else {
+				echo $response;
 			}
 		}
 	}

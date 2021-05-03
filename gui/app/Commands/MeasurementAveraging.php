@@ -100,23 +100,21 @@ class MeasurementAveraging extends BaseCommand
 
 	public function measurements_averaging()
 	{
-		$configuration = $this->configurations->where("id", 1)->findAll()[0];
-		$measurement_logs = $this->get_measurement_logs_range($configuration->interval_average);
+		$data_interval = $this->configurations->where("name", "data_interval")->findAll()[0]->content;
+		$measurement_logs = $this->get_measurement_logs_range($data_interval);
 		if ($measurement_logs != 0) {
 			foreach ($measurement_logs["data"] as $measurement_log) {
-				@$instrument_id[$measurement_log->parameter_id] = $measurement_log->instrument_id;
 				@$total[$measurement_log->parameter_id] += $measurement_log->value;
 				@$numdata[$measurement_log->parameter_id]++;
 			}
-			foreach ($this->parameters->findAll() as $parameter) {
+			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if (@$numdata[$parameter->id] > 0) {
 					$measurements = [
-						"instrument_id" => $instrument_id[$parameter->id],
-						"time_group" => $measurement_logs["waktu"],
-						"measured_at" => $measurement_logs["waktu"],
 						"parameter_id" => $parameter->id,
 						"value" => $total[$parameter->id] / $numdata[$parameter->id],
-						"unit_id" => $parameter->unit_id,
+						"sensor_value" => 0,
+						"is_sent_cloud" => 0,
+						"is_sent_klhk" => 0,
 					];
 					$this->measurements->save($measurements);
 				}
@@ -125,6 +123,7 @@ class MeasurementAveraging extends BaseCommand
 			$this->lastPutData = date("Y-m-d H:i");
 		}
 	}
+
 	public function run(array $params)
 	{
 		$this->measurements_averaging();
