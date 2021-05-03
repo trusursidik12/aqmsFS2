@@ -10,7 +10,7 @@ class SensorReaders extends Migration
 	{
 		$this->forge->addField([
 			'id'			=> ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
-			'mode'			=> ['type' => 'VARCHAR', 'constraint' => 50],
+			'driver'		=> ['type' => 'VARCHAR', 'constraint' => 50],
 			'sensor_code'	=> ['type' => 'VARCHAR', 'constraint' => 30],
 			'baud_rate'		=> ['type' => 'VARCHAR', 'constraint' => 100],
 			'pins'			=> ['type' => 'VARCHAR', 'constraint' => 200],
