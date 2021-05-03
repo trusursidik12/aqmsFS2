@@ -10,7 +10,7 @@ class SensorReaders extends Seeder
 	{
 		$this->db->query("TRUNCATE TABLE sensor_readers");
 		$data = [
-			['driver' => 'labjack.py', 'sensor_code' => 'ANY', 'baud_rate' => '', 'pins' => '0,1,2,3'],
+			['driver' => 'labjack_reader.py', 'sensor_code' => 'ANY', 'baud_rate' => '', 'pins' => '0,1,2,3'],
 			['driver' => 'hc.py', 'sensor_code' => '/dev/ttyUSB0', 'baud_rate' => '9600', 'pins' => ''],
 			['driver' => 'metone_82840.py', 'sensor_code' => '/dev/ttyUSB1', 'baud_rate' => '9600', 'pins' => ''],
 			['driver' => 'metone_82840.py', 'sensor_code' => '/dev/ttyUSB2', 'baud_rate' => '9600', 'pins' => ''],
