@@ -40,6 +40,8 @@ $routes->get('calibration/zero/{:num}', 'Calibration::zero');
 $routes->get('calibration/span/{:num}', 'Calibration::span');
 $routes->get('exports', 'Export::index');
 
+$routes->add('/switch/pump', 'Home::pump');
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div class="container-md py-2">
     <div class="row justify-content-start">
-        <div class="col-md-12 mb-2">
+        <div class="col-md-12 my-3">
             <div class="card bg-light px-3 py-0 mb-md-0 mb-3 overflow-hidden">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                     <div id="location">
@@ -14,7 +14,7 @@
                             </svg>
                         </span>
                         <?= lang('Global.Location') ?>
-                        <div class="">
+                        <div id="aqm_voltage">
                             <h2 class="h3" data-intro="Lokasi AQMS">DKI Jakarta
                                 <!-- Date -->
                             </h2>
@@ -56,9 +56,10 @@
                                 <?= lang('Global.Pump') ?>
                             </div>
                             <div>
-                                <span>(Pump 1)</span>
-                                <span id="pumpTimer" class="small">06:00:00</span>
-                                <button type="button" class="btn btn-sm btn-info" data-intro="Mengubah pompa aktif">
+                                <span id="pumpState"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpTimer" class="small"><i class="fas fa-spinner fa-spin"></i></span>
+                                <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="Mengubah pompa aktif">
+
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
@@ -101,11 +102,15 @@
                     <div id="gas-content">
                         <?php foreach ($gases as $gas) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
-                                <span class="py-0 small font-weight-bold"><?= $gas->caption_id ?></span>
-                                <div class="m-0 d-flex justify-content-center">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="py-0 small font-weight-bold"><?= $gas->caption_id ?></span>
+                                    <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $gas->code ?>">0</span>
+                                </div>
+                                <div class="m-0 d-flex justify-content-center ">
                                     <div class="d-flex align-items-center">
                                         <h3 class="h3 mr-1" id="value_<?= $gas->code ?>">0</h3>
                                         <small><?= $gas->default_unit ?></small>
+
                                     </div>
                                 </div>
                             </div>
@@ -262,9 +267,10 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data !== null) {
-                        data.map(function(value, index) {
+                        data?.logs.map(function(value, index) {
                             try {
                                 $(`#value_${value.code}`).html(cleanStr(value?.value));
+                                $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
                             } catch (err) {
                                 console.error(err);
                             }
@@ -277,6 +283,25 @@
                             }
 
                         });
+                        try {
+                            let pump_state = data?.config?.pump_state;
+                            let curent = new Date(data?.config?.now);
+                            let pump_last = new Date(data?.config?.pump_last);
+                            let pump_interval = data?.config?.pump_interval;
+                            let pump_state_time = (curent - pump_last) / 1000;
+                            let remaining = (pump_interval * 60) - pump_state_time;
+                            let h = Math.floor(remaining / 3600);
+                            let m = Math.floor((remaining - (h * 3600)) / 60);
+                            let s = Math.floor(remaining % 60);
+                            let pumpTimer = `${h}:${m}:${s}`;
+                            if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0)) {
+                                $('#switch_pump').click();
+                            }
+                            $('#pumpTimer').html(pumpTimer);
+                            $('#pumpState').html(`(Pump ${Math.floor(parseInt(pump_state)+1)})`)
+                        } catch (err) {
+                            console.log(err)
+                        }
                     }
 
                 },
@@ -298,5 +323,29 @@
         }
         return str;
     }
+</script>
+<script>
+    var x = 1;
+    var show = true;
+    $('#aqm_voltage').click(function() {
+        x++;
+        if (x > 3) {
+            if (show) {
+                $('.sensor').removeClass('d-none');
+            } else {
+                $('.sensor').addClass('d-none');
+            }
+            show = !show;
+            x = 1;
+        }
+    })
+</script>
+<script>
+    $("#switch_pump").click(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/switch/pump',
+        })
+    })
 </script>
 <?= $this->endSection() ?>

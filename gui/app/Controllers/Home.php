@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\m_configuration;
 use App\Models\m_parameter;
 
 class Home extends BaseController
@@ -11,6 +12,7 @@ class Home extends BaseController
 	{
 		parent::__construct();
 		$this->parameter = new m_parameter();
+		$this->configuration = new m_configuration();
 	}
 	public function index()
 	{
@@ -25,5 +27,20 @@ class Home extends BaseController
 		} else {
 			echo view("dashboard/v_dashboard2", $data);
 		}
+	}
+
+	public function pump()
+	{
+		$getPumpState = $this->configuration->where(["name" => "pump_state"])->findAll()[0];
+		$getPumpLast = $this->configuration->where(["name" => "pump_last"])->findAll()[0];
+		if ($getPumpState->content == 1) {
+			$switch = 0;
+		} else {
+			$switch = 1;
+		}
+		$pumpStateData['content'] 	= $switch;
+		$pumpLastData['content'] 	= date('Y-m-d H:i:s');
+		$this->configuration->update($getPumpState->id, $pumpStateData);
+		$this->configuration->update($getPumpLast->id, $pumpLastData);
 	}
 }

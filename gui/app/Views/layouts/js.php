@@ -136,23 +136,6 @@
     }
 </script>
 <script>
-    try {
-        /* request to server get eventTime pump */
-        let eventTime = moment().add(6, 'h').unix(); /* Dummy data */
-        let curentTime = moment().unix();
-        let diffTime = eventTime - curentTime;
-        let duration = moment.duration(diffTime * 1000, 'milliseconds');
-        let interval = 1000;
-        setInterval(() => {
-            duration = moment.duration(duration - interval, 'milliseconds');
-            $('#pumpTimer').html(`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`)
-        }, interval);
-
-    } catch (err) {
-        console.error(err);
-    }
-</script>
-<script>
     $('form').submit(function(e) {
         e.preventDefault();
         let loader = `<i class="fas fa-spinner fa-spin"></i> Saving`;
