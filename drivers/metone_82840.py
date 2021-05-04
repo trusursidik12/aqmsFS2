@@ -23,7 +23,7 @@ def update_sensor_value(sensor_reader_id,value):
             for row in cursor:
                 sensor_value_id = row[0]
                 
-            conn.execute("UPDATE sensor_values SET value = '" + value + "', xtimestamp = datetime('now') WHERE id = '" + str(sensor_value_id) + "'")
+            conn.execute("UPDATE sensor_values SET value = '" + value + "', xtimestamp = datetime('now', 'localtime') WHERE id = '" + str(sensor_value_id) + "'")
             conn.commit()
         except Exception as e:
             conn.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
