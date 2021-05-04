@@ -6,4 +6,4 @@
 /gui/tests/*
 /gui/.env
 __pycache__
-app/Database/database.s3db
+/gui/app/Database/*
