@@ -24,7 +24,7 @@ for row in cursor:
     subprocess.Popen(command, shell=True)
     
 time.sleep(2)
-subprocess.Popen("php gui\spark serve", shell=True)
+subprocess.Popen("cd gui && php spark serve", shell=True)
 
 time.sleep(5)
 
