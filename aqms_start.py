@@ -22,21 +22,20 @@ for row in cursor:
     if sys.platform.startswith('win') == False:
         command = command.replace("python","python3")
     subprocess.Popen(command, shell=True)
-    print(command)
     
-# time.sleep(2)
-# subprocess.Popen("php gui\spark serve", shell=True)
+time.sleep(2)
+subprocess.Popen("php gui\spark serve", shell=True)
 
-# time.sleep(5)
+time.sleep(5)
 
-# command = "python background_process.py"
-# if sys.platform.startswith('win') == False:
-#     command = "sudo " + command.replace("python","python3")
-# subprocess.Popen(command, shell=True)
+command = "python background_process.py"
+if sys.platform.startswith('win') == False:
+    command = command.replace("python","python3")
+subprocess.Popen(command, shell=True)
 
 time.sleep(2)
 
-# command = "python gui_start.py"
-# if sys.platform.startswith('win') == False:
-#     command = "sudo " + command.replace("python","python3")
-# subprocess.Popen(command, shell=True)
+command = "python gui_start.py"
+if sys.platform.startswith('win') == False:
+    command = command.replace("python","python3")
+subprocess.Popen(command, shell=True)
