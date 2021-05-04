@@ -17,7 +17,7 @@ class Parameters extends Migration
 			'molecular_mass'	=> ['type' => 'double', 'default' => 0],
 			'formula'			=> ['type' => 'VARCHAR', 'constraint' => 255],
 			'is_view'			=> ['type' => 'tinyint', 'default' => 0],
-			'type'				=> ['type' => 'VARCHAR', 'default' => 'gas'],
+			'p_type'			=> ['type' => 'VARCHAR', 'default' => 'gas'],
 			'is_graph'			=> ['type' => 'tinyint', 'default' => 0],
 			'sensor_value_id'	=> ['type' => 'int', 'default' => 0],
 			'voltage1'			=> ['type' => 'double', 'default' => 0],
