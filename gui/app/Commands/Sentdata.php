@@ -114,7 +114,7 @@ class Sentdata extends BaseCommand
 			echo "cURL Error #:" . $err;
 		} else {
 			if (strpos(" " . $response, "success") > 0) {
-				$this->measurement->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->where("id IN (" . $measurement_ids . ")")->update();
+				$this->measurements->where("id IN (" . $measurement_ids . ")")->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->update();
 			} else {
 				echo $response;
 			}
