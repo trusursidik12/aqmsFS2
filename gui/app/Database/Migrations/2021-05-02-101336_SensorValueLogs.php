@@ -12,7 +12,7 @@ class SensorValueLogs extends Migration
 			'id'				=> ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
 			'sensor_value_id'	=> ['type' => 'INT', 'default' => 0],
 			'value'				=> ['type' => 'VARCHAR', 'default' => '', 'constraint' => 255],
-			'xtimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('sensor_value_id');
