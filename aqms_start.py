@@ -3,16 +3,20 @@ import sys
 import serial
 import time
 import subprocess
-import db_connect
+import sqlite3
+conn = sqlite3.connect('gui/app/Database/database.s3db')
 
-mydb = db_connect.connecting()
-mycursor = mydb.cursor()
+sensor_reader = ["","",""]
 
-mycursor.execute("TRUNCATE sensor_values");
+conn.execute("DELETE FROM sensor_values");
+conn.commit()
+conn.execute("UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'sensor_values'");
+conn.commit()
 
-mycursor.execute("SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
-sensor_readers = mycursor.fetchall()
-for sensor_reader in sensor_readers:
+cursor = conn.execute("SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
+for row in cursor:
+    sensor_reader[0] = row[0]
+    sensor_reader[1] = row[1]
     time.sleep(1)
     command = "cd drivers && python " + sensor_reader[1] + " " + str(sensor_reader[0])
     if sys.platform.startswith('win') == False:
