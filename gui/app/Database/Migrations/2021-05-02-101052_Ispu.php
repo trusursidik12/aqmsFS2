@@ -14,7 +14,7 @@ class Ispu extends Migration
 			'parameter_id'		=> ['type' => 'INT', 'default' => 0],
 			'value'				=> ['type' => 'DOUBLE', 'default' => 0],
 			'ispu'				=> ['type' => 'int', 'default' => 0],
-			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
+			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('ispu_at');

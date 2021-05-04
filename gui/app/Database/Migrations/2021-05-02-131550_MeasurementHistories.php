@@ -14,7 +14,7 @@ class MeasurementHistories extends Migration
 			'value'				=> ['type' => 'DOUBLE', 'default' => 0],
 			'sensor_value'		=> ['type' => 'DOUBLE', 'default' => 0],
 			'is_averaged'		=> ['type' => 'tinyint', 'default' => 0],
-			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
+			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('parameter_id');

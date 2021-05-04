@@ -14,7 +14,7 @@ class AUsers extends Migration
 			'email'		=> ['type' => 'VARCHAR', 'constraint' => 100, 'default' => 0],
 			'password'	=> ['type' => 'VARCHAR', 'constraint' => 255, 'default' => ''],
 			'name'		=> ['type' => 'VARCHAR', 'constraint' => 100, 'default' => ''],
-			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
+			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('group_id');
