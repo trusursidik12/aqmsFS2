@@ -20,7 +20,7 @@ for row in cursor:
     time.sleep(1)
     command = "cd drivers && python " + sensor_reader[1] + " " + str(sensor_reader[0])
     if sys.platform.startswith('win') == False:
-        command = "sudo " + command.replace("python","python3")
+        command = command.replace("python","python3")
     subprocess.Popen(command, shell=True)
     print(command)
     
