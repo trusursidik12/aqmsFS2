@@ -2,7 +2,6 @@ from __future__ import print_function
 from pyvantagepro import VantagePro2
 import sys
 import time
-sys.path.insert(1, '..')
 import db_connect
 
 is_WS_connect = False

@@ -2,7 +2,6 @@ from __future__ import print_function
 import sys
 from labjack import ljm
 import time
-sys.path.insert(1, '..')
 import db_connect
 
 AIN = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]

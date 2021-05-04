@@ -2,7 +2,6 @@ from __future__ import print_function
 import sys
 import serial
 import time
-sys.path.insert(1, '..')
 import db_connect
 
 is_HC_connect = False
