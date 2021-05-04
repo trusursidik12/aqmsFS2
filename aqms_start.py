@@ -18,7 +18,7 @@ for row in cursor:
     sensor_reader[0] = row[0]
     sensor_reader[1] = row[1]
     time.sleep(1)
-    command = "python " + drivers/sensor_reader[1] + " " + str(sensor_reader[0])
+    command = "python drivers/" + sensor_reader[1] + " " + str(sensor_reader[0])
     if sys.platform.startswith('win') == False:
         command = command.replace("python","python3")
     subprocess.Popen(command, shell=True)
