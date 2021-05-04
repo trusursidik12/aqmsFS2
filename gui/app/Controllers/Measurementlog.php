@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\m_measurement_log;
+use App\Models\m_parameter;
 use CodeIgniter\Database\BaseBuilder;
 use Exception;
 
@@ -12,6 +13,7 @@ class Measurementlog extends BaseController
 	public function __construct()
 	{
 		$this->measurement_log = new m_measurement_log();
+		$this->parameter = new m_parameter();
 	}
 	public function index()
 	{

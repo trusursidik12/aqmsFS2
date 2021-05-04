@@ -72,12 +72,26 @@
                 <div class="p-2">
                     <h1 class="h5">Partikulat</h1>
                     <div id="particulate">
-                        <i class="fas fa-spinner fa-spin"></i>
+                        <?php foreach ($particulates as $particulate) : ?>
+                            <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
+                                <span class="py-0 font-weight-bold"><?= $particulate->caption_id ?></span>
+                                <div class="m-0 d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <h3 class="h1 mr-1" id="value_<?= $particulate->code ?>">0</h3>
+                                        <small><?= $particulate->default_unit ?></small>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <h3 class="h6 mr-1" id="value_<?= $particulate->code ?>_flow"></h3>
+                                        <small>l/mnt</small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+
             </div>
-            <div class="text-center pt-4">
-                <img src="https://www.nicepng.com/png/full/32-321434_compass-rose-002-by-prettywitchery-on-deviantart-need.png" alt="" width="130vw" class="img img-fluid">
+            <div class="text-center rounded my-1" id="chartdiv">
             </div>
         </div>
         <div class="col-sm mx-2">
@@ -85,7 +99,18 @@
                 <div class="p-2">
                     <h1 class="h5">Gas</h1>
                     <div id="gas-content">
-                        <i class="fas fa-spinner fa-spin"></i>
+                        <?php foreach ($gases as $gas) : ?>
+                            <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
+                                <span class="py-0 small font-weight-bold"><?= $gas->caption_id ?></span>
+                                <div class="m-0 d-flex justify-content-center">
+                                    <div class="d-flex align-items-center">
+                                        <h3 class="h3 mr-1" id="value_<?= $gas->code ?>">0</h3>
+                                        <small><?= $gas->default_unit ?></small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
                     </div>
                 </div>
             </div>
@@ -95,175 +120,163 @@
                 <div class="p-2">
                     <h1 class="h5">Meteorologi</h1>
                     <div id="meteorologi-content">
-                        <i class="fas fa-spinner fa-spin"></i>
+                        <?php foreach ($weathers as $wheather) : ?>
+                            <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
+                                <span class="py-0 small font-weight-bold"><?= $wheather->caption_id ?></span>
+                                <div class="m-0 d-flex justify-content-center">
+                                    <div class="d-flex align-items-center">
+                                        <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
+                                        <small><?= $wheather->default_unit ?></small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+
+
+    </div>
+</div>
 <?= $this->endSection() ?>
+<?= $this->section('css') ?>
+<style>
+    #chartdiv {
+        /* width: 100%; */
+        min-width: 20vh;
+        min-height: 20vh;
+    }
+</style>
+<?= $this->endSection('css') ?>
 <?= $this->section('js') ?>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
-<!-- <script>
-    /* Carousel Options */
-    $('.carousel').carousel({
-        interval: 5000,
-        /* Slide everfy 5s */
-        pause: "hover",
-        /* Pause on Hover */
-    })
-</script>
+<script src="<?= base_url('amchart/core.js') ?>"></script>
+<script src="<?= base_url('amchart/charts.js') ?>"></script>
+<script src="<?= base_url('amchart/themes/animated.js') ?>"></script>
 <script>
-    function play() {
-        $('.carousel').carousel('cycle');
-        $('#btn-play').hide();
-        $('#btn-pause').show();
-    }
+    am4core.ready(function() {
 
-    function pause() {
-        $('.carousel').carousel('pause');
-        $('#btn-pause').hide();
-        $('#btn-play').show();
-    }
-    $(document).ready(function() {
-        $('#btn-play').hide();
-        $('#btn-play').click(function() {
-            play();
-        });
-        $('#btn-pause').click(function() {
-            pause();
-        });
-        $('#carouselSlider').hover(function() {
-            pause();
-        });
-        $('#carouselSlider').mouseleave(function() {
-            play();
-        });
-    });
-</script> -->
-<!-- <script>
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
-            datasets: [{
-                label: 'PM10',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                data: [Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50)],
-            }, {
-                label: 'PM2.5',
-                strokeColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
 
-                data: [Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50)],
+        // create chart
+        chart = am4core.create("chartdiv", am4charts.GaugeChart);
+        chart.exporting.menu = new am4core.ExportMenu();
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-            }, {
-                label: 'NO2',
-                pointColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                data: [Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50), Math.random(0, 50)],
+        chart.startAngle = -90;
+        chart.endAngle = 270;
+
+        axis = chart.xAxes.push(new am4charts.ValueAxis());
+        axis.radiusValue = 360;
+        axis.min = 0;
+        axis.max = 360;
 
 
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+        axis.renderer.line.strokeWidth = 3;
+        axis.renderer.line.strokeOpacity = 1;
+        axis.renderer.line.stroke = am4core.color("#ffff");
+        axis.renderer.inside = true;
+
+        axis.renderer.axisFills.template.disabled = true;
+        axis.renderer.grid.template.disabled = true;
+        axis.renderer.ticks.template.disabled = false
+        axis.renderer.ticks.template.length = 3;
+        axis.renderer.ticks.template.strokeOpacity = 1;
+
+        axis.renderer.labels.template.radius = -15;
+        axis.renderer.labels.template.disabled = true;
+        axis.renderer.ticks.template.disabled = true;
+
+        function createLabel(label, deg) {
+            var range = axis.axisRanges.create();
+            range.value = deg;
+            range.grid.disabled = true;
+            range.label.text = label;
+            range.label.fill = am4core.color("#fff");
+
         }
-    });
-</script> -->
+
+        createLabel("N", 0, '#ffff');
+        createLabel("E", 100);
+        createLabel("S", 200);
+        createLabel("W", 300);
+
+        // hands
+        northHand = chart.hands.push(new am4charts.ClockHand());
+
+        northHand.radius = am4core.percent(80);
+        northHand.startWidth = 10;
+        northHand.endWidth = 1;
+        northHand.rotationDirection = "clockWise";
+        northHand.pin.disabled = true;
+        northHand.zIndex = 0;
+        northHand.fill = am4core.color("#c00");
+        northHand.stroke = am4core.color("#c00");
+        northHand.value = 0;
+
+        southHand = chart.hands.push(new am4charts.ClockHand());
+
+        southHand.radius = am4core.percent(80);
+        southHand.startWidth = 10;
+        southHand.endWidth = 1;
+        southHand.rotationDirection = "clockWise";
+        southHand.pin.disabled = true;
+        southHand.zIndex = 0;
+        southHand.fill = am4core.color("#ffff");
+        southHand.stroke = am4core.color("#ffff");
+        southHand.value = 200;
+
+
+    }); // end am4core.ready()
+</script>
+
+
 <script>
+    var northHand, chart, axis;
+
+    function rotateCompass(value) {
+        axis.min = 0;
+        axis.max = 360;
+        northHand.value = value;
+        northHand.animate({
+            property: "value",
+            to: value
+        }, 1000, am4core.ease.cubicOut);
+        southHand.value = 200 + value;
+        southHand.animate({
+            property: "value",
+            to: 200 + value
+        }, 1000, am4core.ease.cubicOut);
+    }
     $(document).ready(function() {
+        var begin = 1;
         setInterval(() => {
             $.ajax({
                 url: '<?= base_url('measurementlog') ?>',
                 dataType: 'json',
                 success: function(data) {
-                    let particulate, pm10, pm10_flow, pm25, pm25_flow;
-                    let gas = ``;
-                    let meteorologi = ``;
                     if (data !== null) {
                         data.map(function(value, index) {
-                            console.log(`${value.code} ${value.value}`)
-                            // Cek Gas
-                            if (parseFloat(value?.molecular_mass) > 0) {
-                                gas += `<div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
-                                            <span class="py-0 small font-weight-bold">${value?.caption_id}</span>
-                                            <div class="m-0 d-flex justify-content-center">
-                                                <div class="d-flex align-items-center">
-                                                    <h3 class="h3 mr-1">${value?.value}</h3>
-                                                    <small>${value?.default_unit}</small>
-                                                </div>
-                                            </div>
-                                        </div>`;
+                            try {
+                                $(`#value_${value.code}`).html(cleanStr(value?.value));
+                            } catch (err) {
+                                console.error(err);
                             }
-                            // Cek Meteorologi, id > 17 & < 31
-                            if (parseFloat(value?.id) > 17 && value?.id < 31) {
-                                meteorologi += `<div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
-                                                    <span class="py-0 small font-weight-bold">${value?.caption_id}</span>
-                                                    <div class="m-0 d-flex justify-content-center">
-                                                        <div class="d-flex mt-n2 align-items-center">
-                                                            <h3 class="h4 mr-1">${value?.value}</h3>
-                                                            <small>${value?.default_unit}</small>
-                                                        </div>
-                                                    </div>
-                                                </div>`;
+                            if (value?.code == 'wd') {
+                                try {
+                                    rotateCompass(parseInt(cleanStr(value?.value)) * 10 / 9);
+                                } catch (er) {
+                                    console.error(er);
+                                }
                             }
-                            // Get Particulate
-                            switch (value?.code) {
-                                // Particulate
-                                case 'pm10':
-                                    pm10 = value;
-                                    break;
-                                case 'pm10_flow':
-                                    pm10_flow = value;
-                                    break;
-                                case 'pm25':
-                                    pm25 = value;
-                                    break;
-                                case 'pm25_flow':
-                                    pm25_flow = value;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        });
-                        particulate = `<div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
-                                        <span class="py-0 font-weight-bold">${cleanStr(pm10?.caption_id)}</span>
-                                        <div class="m-0 d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="h1 mr-1">${cleanStr(pm10?.value)}</h3>
-                                                <small>${cleanStr(pm10?.default_unit)}</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="h6 mr-1">${cleanStr(pm10_flow?.value)}</h3>
-                                                <small>${cleanStr(pm10_flow?.default_unit)}</small>
-                                            </div>
-                                        </div>
-                                    </div>`
-                        particulate += `<div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
-                                        <span class="py-0 font-weight-bold">${cleanStr(pm25?.caption_id)}</span>
-                                        <div class="m-0 d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="h1 mr-1">${cleanStr(pm25?.value)}</h3>
-                                                <small>${cleanStr(pm25?.default_unit)}</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="h6 mr-1">${cleanStr(pm25_flow?.value)}</h3>
-                                                <small>${cleanStr(pm25_flow?.default_unit)}</small>
-                                            </div>
-                                        </div>
-                                    </div>`
-                        $('#particulate').html(particulate);
-                        $('#gas-content').html(gas);
-                        $('#meteorologi-content').html(meteorologi);
 
+                        });
                     }
 
                 },
@@ -278,10 +291,10 @@
     function cleanStr(str) {
         try {
             if (str === undefined || str === null) {
-                return `<span class="badge badge-danger">false</span>`;
+                return `0`;
             }
         } catch (err) {
-            return `<span class="badge badge-danger">false</span>`;
+            return `0`;
         }
         return str;
     }
