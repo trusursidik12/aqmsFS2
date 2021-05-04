@@ -92,7 +92,6 @@ class FormulaMeasurementLogs extends BaseCommand
 			@eval("\$data[$parameter->id] = $parameter->formula;");
 			$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
 			$sensor_value = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
-			$sensor_value = 0;
 			$measurement_logs = [
 				"parameter_id" => $parameter->id,
 				"value" => ($data[$parameter->id] < 0) ? 0 : $data[$parameter->id],
