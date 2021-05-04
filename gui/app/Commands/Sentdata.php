@@ -80,7 +80,7 @@ class Sentdata extends BaseCommand
 		$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
 		foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 			$measurement = $this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
-			$arr["waktu"] = $measurement->xtimestamp;
+			$arr["waktu"] = date("Y-m-d H:i:00", strtotime($measurement->xtimestamp));
 			$arr[$parameter->code] = $measurement->value;
 			$measurement_ids .= $measurement->id . ",";
 		}
