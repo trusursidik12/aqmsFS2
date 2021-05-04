@@ -17,14 +17,14 @@ class Parameters extends Migration
 			'molecular_mass'	=> ['type' => 'double', 'default' => 0],
 			'formula'			=> ['type' => 'VARCHAR', 'constraint' => 255],
 			'is_view'			=> ['type' => 'tinyint', 'default' => 0],
-			'p_type'			=> ['type' => 'VARCHAR', 'default' => 'gas'],
+			'p_type'			=> ['type' => 'VARCHAR', 'constraint' => 30, 'default' => 'gas'],
 			'is_graph'			=> ['type' => 'tinyint', 'default' => 0],
 			'sensor_value_id'	=> ['type' => 'int', 'default' => 0],
 			'voltage1'			=> ['type' => 'double', 'default' => 0],
 			'voltage2'			=> ['type' => 'double', 'default' => 0],
 			'concentration1'	=> ['type' => 'double', 'default' => 0],
 			'concentration2'	=> ['type' => 'double', 'default' => 0],
-			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
+			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('code');

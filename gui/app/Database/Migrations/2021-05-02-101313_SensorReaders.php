@@ -14,7 +14,7 @@ class SensorReaders extends Migration
 			'sensor_code'	=> ['type' => 'VARCHAR', 'constraint' => 30],
 			'baud_rate'		=> ['type' => 'VARCHAR', 'constraint' => 100],
 			'pins'			=> ['type' => 'VARCHAR', 'constraint' => 200],
-			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
+			'xtimestamp timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()'
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->createTable('sensor_readers', TRUE);

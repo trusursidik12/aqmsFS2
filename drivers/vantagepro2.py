@@ -2,35 +2,29 @@ from __future__ import print_function
 from pyvantagepro import VantagePro2
 import sys
 import time
-import sqlite3
-try:
-    conn = sqlite3.connect('../gui/app/Database/database.s3db')
-except Exception as e: 
-    conn = sqlite3.connect('gui/app/Database/database.s3db')
+import db_connect
 
 is_WS_connect = False
-sensor_reader = ["","",""]
 
 try:
-    cursor = conn.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
-    for row in cursor:
-        sensor_reader[0] = row[0]
-        sensor_reader[1] = row[1]
+    mydb = db_connect.connecting()
+    mycursor = mydb.cursor()
+    
+    mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+    sensor_reader = mycursor.fetchone()
 except Exception as e: 
     print("[X]  [V] VantagePro2  Sensor ID: " + str(sys.argv[1]) + " " + e)
     
 def update_sensor_value(sensor_reader_id,value):
     try:
         try:
-            cursor = conn.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")        
-            for row in cursor:
-                sensor_value_id = row[0]
-                
-            conn.execute("UPDATE sensor_values SET value = '" + value + "', xtimestamp = datetime('now', 'localtime') WHERE id = '" + str(sensor_value_id) + "'")
-            conn.commit()
+            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")
+            sensor_value_id = mycursor.fetchone()[0]
+            mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
+            mydb.commit()
         except Exception as e:
-            conn.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
-            conn.commit()
+            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
+            mydb.commit()
     except Exception as e2:
         return None
     
@@ -56,7 +50,7 @@ try:
             ws_data = COM_WS.get_current_data()
             WS = ws_data.to_csv(';',False)
             
-            update_sensor_value(str(sys.argv[1]),WS)
+            update_sensor_value(str(sys.argv[1]),WS[0:254])
             #print(WS)
         except Exception as e2: 
             is_WS_connect = False
