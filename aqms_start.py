@@ -35,7 +35,9 @@ subprocess.Popen(command, shell=True)
 
 time.sleep(2)
 
-command = "python gui_start.py"
-if sys.platform.startswith('win') == False:
-    command = command.replace("python","python3")
-subprocess.Popen(command, shell=True)
+subprocess.Popen("chromium-browser --start-fullscreen --start-maximized --kiosk http://localhost:8080", shell=True)
+
+#command = "python gui_start.py"
+#if sys.platform.startswith('win') == False:
+#    command = command.replace("python","python3")
+#subprocess.Popen(command, shell=True)
