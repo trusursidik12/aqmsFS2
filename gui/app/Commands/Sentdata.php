@@ -84,43 +84,40 @@ class Sentdata extends BaseCommand
 			$arr[$parameter->code] = $measurement->value;
 			$measurement_ids .= $measurement->id . ",";
 		}
-		echo $measurement_ids = substr($measurement_ids, 0, -1);
-		echo "\n";
-		print_r($arr);
+		$measurement_ids = substr($measurement_ids, 0, -1);
 
+		$data = json_encode($arr);
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "PUT",
+			CURLOPT_USERPWD => "KLHK-2019:Project2016-2019",
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_HTTPHEADER => array(
+				"Api-Key: VHJ1c3VyVW5nZ3VsVGVrbnVzYV9wVA==",
+				"cache-control: no-cache",
+				"content-type: application/json"
+			),
+		));
 
-		// $data = json_encode($arr);
-		// $curl = curl_init();
-		// curl_setopt_array($curl, array(
-		// 	CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
-		// 	CURLOPT_RETURNTRANSFER => true,
-		// 	CURLOPT_ENCODING => "",
-		// 	CURLOPT_MAXREDIRS => 10,
-		// 	CURLOPT_TIMEOUT => 30,
-		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		// 	CURLOPT_CUSTOMREQUEST => "PUT",
-		// 	CURLOPT_USERPWD => "KLHK-2019:Project2016-2019",
-		// 	CURLOPT_POSTFIELDS => $data,
-		// 	CURLOPT_HTTPHEADER => array(
-		// 		"Api-Key: VHJ1c3VyVW5nZ3VsVGVrbnVzYV9wVA==",
-		// 		"cache-control: no-cache",
-		// 		"content-type: application/json"
-		// 	),
-		// ));
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
 
-		// $response = curl_exec($curl);
-		// $err = curl_error($curl);
+		curl_close($curl);
 
-		// curl_close($curl);
-
-		// if ($err) {
-		// 	echo "cURL Error #:" . $err;
-		// } else {
-		// 	if (strpos(" " . $response, "success") > 0) {
-		// 		$measurement->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->where("id IN (" . $measurement_ids . ")")->update();
-		// 	} else {
-		// 		echo $response;
-		// 	}
-		// }
+		if ($err) {
+			echo "cURL Error #:" . $err;
+		} else {
+			if (strpos(" " . $response, "success") > 0) {
+				$this->measurement->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->where("id IN (" . $measurement_ids . ")")->update();
+			} else {
+				echo $response;
+			}
+		}
 	}
 }
