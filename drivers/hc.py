@@ -2,38 +2,45 @@ from __future__ import print_function
 import sys
 import serial
 import time
-sys.path.insert(1, '..')
-import db_connect
-
+import sqlite3
+try:
+    conn = sqlite3.connect('../gui/app/Database/database.s3db')
+except Exception as e: 
+    conn = sqlite3.connect('gui/app/Database/database.s3db')
+    
 is_HC_connect = False
+sensor_reader = ["","",""]
 
 try:
-    mydb = db_connect.connecting()
-    mycursor = mydb.cursor()
-    
-    mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
-    sensor_reader = mycursor.fetchone()
+    cursor = conn.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+    for row in cursor:
+        sensor_reader[0] = row[0]
+        sensor_reader[1] = row[1]
 except Exception as e: 
     print("[X]  [V] HC  Sensor ID: " + str(sys.argv[1]) + " " + e)
     
 def update_sensor_value(sensor_reader_id,value):
     try:
         try:
-            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")
-            sensor_value_id = mycursor.fetchone()[0]
-            mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
-            mydb.commit()
+            cursor = conn.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")        
+            for row in cursor:
+                sensor_value_id = row[0]
+                
+            conn.execute("UPDATE sensor_values SET value = '" + value + "', xtimestamp = datetime('now', 'localtime') WHERE id = '" + str(sensor_value_id) + "'")
+            conn.commit()
         except Exception as e:
-            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
-            mydb.commit()
+            conn.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
+            conn.commit()
     except Exception as e2:
         return None
     
 def connect_hc():
     global is_HC_connect
     try:
-        mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
-        sensor_reader = mycursor.fetchone()
+        cursor = conn.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+        for row in cursor:
+            sensor_reader[0] = row[0]
+            sensor_reader[1] = row[1]
         
         COM_HC = serial.Serial(sensor_reader[0], sensor_reader[1])
         HC = str(COM_HC.readline())

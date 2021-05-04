@@ -17,7 +17,7 @@ class Measurements extends Migration
 			'sent_cloud_at'		=> ['type' => 'DATETIME'],
 			'is_sent_klhk'		=> ['type' => 'tinyint', 'default' => 0],
 			'sent_klhk_at'		=> ['type' => 'DATETIME'],
-			'xtimestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+			"xtimestamp DATETIME NOT NULL DEFAULT (datetime('now','localtime'))",
 		]);
 		$this->forge->addKey('id', TRUE);
 		$this->forge->addKey('parameter_id');
