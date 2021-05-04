@@ -3,7 +3,10 @@ from pyvantagepro import VantagePro2
 import sys
 import time
 import sqlite3
-conn = sqlite3.connect('../gui/app/Database/database.s3db')
+try:
+    conn = sqlite3.connect('../gui/app/Database/database.s3db')
+except Exception as e: 
+    conn = sqlite3.connect('gui/app/Database/database.s3db')
 
 is_WS_connect = False
 sensor_reader = ["","",""]
