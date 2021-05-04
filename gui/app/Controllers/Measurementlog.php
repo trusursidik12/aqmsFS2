@@ -16,10 +16,12 @@ class Measurementlog extends BaseController
 	public function index()
 	{
 		try {
-			$data = $this->measurement_log->whereIn('parameter_id', function (BaseBuilder $builder) {
-				return $builder->select('id')->from('parameters')->where('is_view', 1);
-			})->join('parameters', 'measurement_logs.parameter_id = parameters.id', 'left')->findAll();
+			$measurementlog_id = $this->measurement_log->selectMax('id')->groupBy('parameter_id');
+			$data = $this->measurement_log->whereIn('measurement_logs.id', function (BaseBuilder $builder) use ($measurementlog_id) {
+				return $measurementlog_id;
+			})->join('parameters', 'measurement_logs.parameter_id = parameters.id AND parameters.is_view = 1', 'left')->groupBy('parameter_id')->findAll();
 		} catch (Exception $e) {
+			echo $e->getMessage();
 			$data = null;
 		}
 		return $this->response->setJson($data);
