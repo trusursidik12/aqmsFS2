@@ -25,7 +25,7 @@ subprocess.Popen("php gui/spark serve", shell=True)
 
 time.sleep(5)
 
-subprocess.Popen("python3 gui_start", shell=True)
+subprocess.Popen("python3 gui_start.py", shell=True)
 
 time.sleep(2)
 
