@@ -177,8 +177,8 @@
 <style>
     #chartdiv {
         /* width: 100%; */
-        min-width: 20vh;
-        min-height: 20vh;
+        min-width: 35vh;
+        min-height: 35vh;
     }
 </style>
 <?= $this->endSection('css') ?>
