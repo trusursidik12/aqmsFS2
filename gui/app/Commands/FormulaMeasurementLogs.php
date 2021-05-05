@@ -99,7 +99,7 @@ class FormulaMeasurementLogs extends BaseCommand
 				"is_averaged" => 0
 			];
 			$this->measurement_logs->save($measurement_logs);
-			$this->measurement_histories->save($measurement_logs);
+			// $this->measurement_histories->save($measurement_logs);
 		}
 	}
 }
