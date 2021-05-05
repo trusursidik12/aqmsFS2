@@ -6,7 +6,7 @@ import db_connect
 
 is_PUMP_connect = False
 pump_speed = 0
-cur_pump_state = "0"
+cur_pump_state = 0
 
 try:
     mydb = db_connect.connecting()
@@ -34,8 +34,12 @@ def connect_pump():
         rec = mycursor.fetchone()
         pump_state = int(rec[0])
         
+        time.sleep(2)
+        
         speed = (pump_state * 100) + pump_speed;
         cur_pump_state = pump_state
+        #print(str(cur_pump_state) + ":" + str(pump_state))
+            
         COM_PUMP.write(str(speed).encode());
             
     except Exception as e: 
@@ -50,8 +54,10 @@ try:
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
             rec = mycursor.fetchone()
             pump_state = int(rec[0])
+            time.sleep(2)
+            #print(str(cur_pump_state) + ":" + str(pump_state))
             
-            if pump_state != cur_pump_state:
+            if pump_state != cur_pump_state and is_PUMP_connect:
                 mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
                 rec = mycursor.fetchone()
                 pump_speed = int(rec[0])
