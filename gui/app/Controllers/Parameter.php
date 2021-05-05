@@ -39,6 +39,11 @@ class Parameter extends BaseController
 			$data['molecular_mass'] = $req->getPost('molecular_mass');
 			$data['is_view'] = $req->getPost('is_view');
 			$data['is_graph'] = $req->getPost('is_graph');
+			$data['sensor_value_id'] = $req->getPost('sensor_value_id');
+			$data['voltage1'] = $req->getPost('voltage1');
+			$data['voltage2'] = $req->getPost('voltage2');
+			$data['concentration1'] = $req->getPost('concentration1');
+			$data['concentration2'] = $req->getPost('concentration2');
 			$data['formula'] = $req->getPost('formula');
 			$this->parameter->update($id, $data);
 			$data['success'] = true;

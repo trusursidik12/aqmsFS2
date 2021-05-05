@@ -331,6 +331,10 @@
                             $(`input[name="is_view"][value="${parameter?.is_view}"]`).attr('checked', true);
                             $(`input[name="is_graph"][value="${parameter?.is_graph}"]`).attr('checked', true);
                             $('select[name="sensor_value_id"]').val(parameter?.sensor_value_id);
+                            $('input[name="voltage1"]').val(parameter?.voltage1);
+                            $('input[name="voltage2"]').val(parameter?.voltage2);
+                            $('input[name="concentration1"]').val(parameter?.concentration1);
+                            $('input[name="concentration2"]').val(parameter?.concentration2);
                             $('input[name="formula"]').val(parameter?.formula);
                             $('#paramModal').modal('show');
                             btnEdit.html(`Edit`);
