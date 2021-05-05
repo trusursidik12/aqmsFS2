@@ -272,7 +272,11 @@
                                 if (p_type == 'gas' || p_type == 'particulate') {
                                     switch (beginUnit) {
                                         case 2:
-                                            param_value = calculatePpm(param_value, molecular_mass);
+                                            // param_value = calculatePpm(param_value, molecular_mass);
+                                            if (p_type == 'particulate') {
+                                                console.log(param_value);
+                                                console.log(param_value, molecular_mass);
+                                            }
                                             break;
                                         case 3:
                                             param_value = calculatePpb(param_value);
@@ -375,7 +379,7 @@
 <script>
     function cleanStr(str) {
         try {
-            if (str === undefined || str === null) {
+            if (str === undefined || str === null || str === "") {
                 return `0`;
             }
         } catch (err) {
