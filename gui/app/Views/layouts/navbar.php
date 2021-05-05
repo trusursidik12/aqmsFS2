@@ -10,9 +10,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item <?= @strtolower($__routename) == 'dashboard' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= base_url() ?>">Dashboard <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>" data-intro="Menu Konfigurasi">
                     <a class="nav-link" href="<?= base_url('configurations') ?>"><?= lang('Global.Configuration') ?></a>
                 </li>

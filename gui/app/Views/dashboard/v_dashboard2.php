@@ -119,6 +119,28 @@
                     </div>
                 </div>
             </div>
+            <div class="card mt-1">
+                <div class="p-2">
+                    <h1 class="h5">Flow Meter</h1>
+                    <div id="gas-content">
+                        <?php foreach ($flow_meters as $f_meter) : ?>
+                            <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="py-0 font-weight-bold"><?= $f_meter->caption_id ?></span>
+                                    <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $f_meter->code ?>">0</span>
+                                </div>
+                                <div class="m-0 d-flex justify-content-center ">
+                                    <div class="d-flex align-items-center">
+                                        <h3 class="h3 mr-1" id="value_<?= $f_meter->code ?>">0</h3>
+                                        <small><?= $f_meter->default_unit ?></small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm mx-2">
             <div class="card">
@@ -126,10 +148,12 @@
                     <h1 class="h5">Meteorologi</h1>
                     <div id="meteorologi-content">
                         <?php foreach ($weathers as $wheather) : ?>
-                            <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
+                            <!-- <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);"> -->
+                            <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(99,173,252,0.6);">
                                 <span class="py-0 font-weight-bold"><?= $wheather->caption_id ?></span>
                                 <div class="m-0 d-flex justify-content-center">
-                                    <div class="d-flex align-items-center mt-n3">
+                                    <!-- <div class="d-flex align-items-center mt-n3"> -->
+                                    <div class="d-flex align-items-center">
                                         <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
                                         <small><?= $wheather->default_unit ?></small>
                                     </div>
@@ -275,7 +299,7 @@
                                             param_value = calculatePpm(param_value, molecular_mass);
                                             break;
                                         case 3:
-                                            param_value = calculatePpb(param_value);
+                                            param_value = calculatePpb(param_value, molecular_mass);
                                             break;
                                         case 1:
                                         default:
@@ -284,6 +308,7 @@
                                 }
                                 $(`#value_${value.code}`).html(param_value);
                                 $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
+                                console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
                             }
@@ -352,7 +377,7 @@
             try {
                 ug = parseFloat(ug);
                 molecular_mass = parseFloat(molecular_mass);
-                let value = ug * molecular_mass / 24.45 / 1000;
+                let value = (ug * 24.45) / (1000 * molecular_mass);
                 return `${value}`.substr(0, 5);
             } catch (err) {
                 toastr.error(err);
@@ -360,10 +385,11 @@
             }
         }
 
-        function calculatePpb(ug) {
+        function calculatePpb(ug, molecular_mass) {
             try {
                 ug = parseFloat(ug);
-                let value = ug * 1000;
+                molecular_mass = parseFloat(molecular_mass);
+                let value = (ug * 24.45) / molecular_mass;
                 return Math.round(value);
             } catch (err) {
                 toastr.error(err);

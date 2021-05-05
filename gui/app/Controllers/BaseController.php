@@ -960,4 +960,12 @@ class BaseController extends Controller
 			$this->notifications->save($notification);
 		}
 	}
+
+	//AQMS FS2
+	public function findConfig($name)
+	{
+		$data['config']	=	$this->configuration->get()->getResultArray();
+		$idx = array_search($name, array_column($data['config'], 'name'));
+		return @$data['config'][$idx]['content'];
+	}
 }
