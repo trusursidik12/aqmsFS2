@@ -103,7 +103,7 @@
                         <?php foreach ($gases as $gas) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="py-0 small font-weight-bold"><?= $gas->caption_id ?></span>
+                                    <span class="py-0 font-weight-bold"><?= $gas->caption_id ?></span>
                                     <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $gas->code ?>">0</span>
                                 </div>
                                 <div class="m-0 d-flex justify-content-center ">
@@ -127,7 +127,7 @@
                     <div id="meteorologi-content">
                         <?php foreach ($weathers as $wheather) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
-                                <span class="py-0 small font-weight-bold"><?= $wheather->caption_id ?></span>
+                                <span class="py-0 font-weight-bold"><?= $wheather->caption_id ?></span>
                                 <div class="m-0 d-flex justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
@@ -165,13 +165,9 @@
 <script>
     am4core.ready(function() {
 
-        // Themes begin
         am4core.useTheme(am4themes_animated);
-        // Themes end
 
-        // create chart
         chart = am4core.create("chartdiv", am4charts.GaugeChart);
-        chart.exporting.menu = new am4core.ExportMenu();
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
         chart.startAngle = -90;
