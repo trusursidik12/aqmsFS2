@@ -109,8 +109,9 @@
                         </svg>
                     </span>`;
         $('#connect').html(disconnect);
-        setInterval(() => {
-            const pingUrl = 'https://ipv4.icanhazip.com';
+
+        function testInternet() {
+            const pingUrl = 'https://ispumaps.id/server_side/api/is_connect.php';
             fetch(`${pingUrl}?_t=` + parseInt(Math.random() * 10000)).then((result) => {
                 $('#connect').html(connected);
             }).catch((err) => {
@@ -118,7 +119,12 @@
                     $('#connect').html(disconnect);
                 }
             });
-        }, 3000);
+        }
+        testInternet()
+        setInterval(() => {
+            testInternet()
+
+        }, 10000); //1 menit
     });
 </script>
 <script>

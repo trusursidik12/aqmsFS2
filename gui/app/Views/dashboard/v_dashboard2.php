@@ -79,7 +79,7 @@
                                 <div class="m-0 d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <h3 class="h1 mr-1" id="value_<?= $particulate->code ?>">0</h3>
-                                        <small class="switch-unit"><?= $particulate->default_unit ?></small>
+                                        <small><?= $particulate->default_unit ?></small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <h3 class="h6 mr-1" id="value_<?= $particulate->code ?>_flow"></h3>
@@ -269,14 +269,10 @@
                                 let param_value = cleanStr(value?.value);
                                 let molecular_mass = cleanStr(value?.molecular_mass);
                                 let p_type = value?.p_type
-                                if (p_type == 'gas' || p_type == 'particulate') {
+                                if (p_type == 'gas') {
                                     switch (beginUnit) {
                                         case 2:
-                                            // param_value = calculatePpm(param_value, molecular_mass);
-                                            if (p_type == 'particulate') {
-                                                console.log(param_value);
-                                                console.log(param_value, molecular_mass);
-                                            }
+                                            param_value = calculatePpm(param_value, molecular_mass);
                                             break;
                                         case 3:
                                             param_value = calculatePpb(param_value);
@@ -352,11 +348,12 @@
         });
 
         function calculatePpm(ug, molecular_mass) {
+
             try {
                 ug = parseFloat(ug);
                 molecular_mass = parseFloat(molecular_mass);
-                let value = ug * molecular_mass / 24.45 * 1000;
-                return Math.round(value);
+                let value = ug * molecular_mass / 24.45 / 1000;
+                return `${value}`.substr(0, 5);
             } catch (err) {
                 toastr.error(err);
                 return 0;
