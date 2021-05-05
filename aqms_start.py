@@ -9,6 +9,7 @@ mydb = db_connect.connecting()
 mycursor = mydb.cursor()
 
 mycursor.execute("TRUNCATE sensor_values");
+mycursor.execute("TRUNCATE measurement_logs");
 
 mycursor.execute("SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
 sensor_readers = mycursor.fetchall()

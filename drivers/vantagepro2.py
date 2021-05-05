@@ -50,7 +50,7 @@ try:
             ws_data = COM_WS.get_current_data()
             WS = ws_data.to_csv(';',False)
             
-            update_sensor_value(str(sys.argv[1]),WS[0:254])
+            update_sensor_value(str(sys.argv[1]),WS[0:149])
             #print(WS)
         except Exception as e2: 
             is_WS_connect = False

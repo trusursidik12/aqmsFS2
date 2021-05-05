@@ -41,8 +41,10 @@ def connect_pump():
     except Exception as e: 
         return None
     
+connect_pump()
+
 try:
-    while True :
+    while False :
         try:
             if(not is_PUMP_connect):
                 COM_PUMP = connect_pump()
