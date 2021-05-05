@@ -30,6 +30,33 @@
             </div>
         <?php endforeach; ?>
         <div class="col-md-12">
+            <h2 class="h3 text-light border-bottom">Flow Meter</h2>
+        </div>
+        <?php foreach ($flow_meters as $flow_meter) : ?>
+            <div class="col-md-6 my-3">
+                <div class="card">
+                    <div class="bg-light px-3 py-2">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="h4"><?= $flow_meter->caption_id ?></h4>
+                            <div>
+                                <?php if ($flow_meter->is_view) : ?>
+                                    <span class="badge badge-success">Aktif</span>
+                                <?php else : ?>
+                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <p class="my-0"><?= $flow_meter->formula ?></p>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-sm btn-info btn-edit" data-id="<?= $flow_meter->id ?>">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="col-md-12">
             <h2 class="h3 text-light border-bottom">Partikulat</h2>
         </div>
         <?php foreach ($particulates as $particulat) : ?>
