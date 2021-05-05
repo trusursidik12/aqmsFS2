@@ -121,7 +121,7 @@
             </div>
             <div class="card mt-1">
                 <div class="p-2">
-                    <h1 class="h5">Flow Meter</h1>
+                    <h1 class="h5">Tekanan Gas</h1>
                     <div id="gas-content">
                         <?php foreach ($flow_meters as $f_meter) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
@@ -299,7 +299,7 @@
                                             param_value = calculatePpm(param_value, molecular_mass);
                                             break;
                                         case 3:
-                                            param_value = calculatePpb(param_value, molecular_mass);
+                                            param_value = calculatePpm(param_value, molecular_mass) * 1000;
                                             break;
                                         case 1:
                                         default:
@@ -385,18 +385,18 @@
             }
         }
 
-        function calculatePpb(ug, molecular_mass) {
-            try {
-                ug = parseFloat(ug);
-                molecular_mass = parseFloat(molecular_mass);
-                let value = (ug * 24.45) / molecular_mass;
-                return Math.round(value);
-            } catch (err) {
-                toastr.error(err);
-                return 0;
-            }
+        // function calculatePpb(ug, molecular_mass) {
+        //     try {
+        //         ug = parseFloat(ug);
+        //         molecular_mass = parseFloat(molecular_mass);
+        //         let value = (ug * 24.45) / molecular_mass;
+        //         return Math.round(value);
+        //     } catch (err) {
+        //         toastr.error(err);
+        //         return 0;
+        //     }
 
-        }
+        // }
     });
 </script>
 <script>
