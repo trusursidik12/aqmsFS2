@@ -108,7 +108,7 @@ class MeasurementAveraging extends BaseCommand
 			}
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if (@$numdata[$parameter->id] > 0) {
-					if ($parameter->p_type == "gas")
+					if ($parameter->p_type == "gas" || $parameter->p_type == "particulate")
 						$value = round($total[$parameter->id] / $numdata[$parameter->id], 0);
 					else
 						$value = round($total[$parameter->id] / $numdata[$parameter->id], 2);
