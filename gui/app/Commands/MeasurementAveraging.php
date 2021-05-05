@@ -23,7 +23,6 @@ class MeasurementAveraging extends BaseCommand
 	protected $sensor_values;
 	protected $measurement_logs;
 	protected $configurations;
-	protected $lastPutData;
 
 	public function __construct()
 	{
@@ -32,7 +31,6 @@ class MeasurementAveraging extends BaseCommand
 		$this->measurement_logs =  new m_measurement_log();
 		$this->configurations =  new m_configuration();
 		$this->measurements =  new m_measurement();
-		$this->lastPutData = "0000-00-00 00:00";
 	}
 	/**
 	 * The Command's Name
@@ -81,7 +79,8 @@ class MeasurementAveraging extends BaseCommand
 		$lasttime = date("Y-m-d H:i:%", mktime(date("H"), date("i") - $minute));
 		$mm = date("i") * 1;
 		$current_time = date("Y-m-d H:i");
-		if ($mm % $minute == 0 && $this->lastPutData != $current_time) {
+		$lastPutData = @$this->measurements->orderBy("time_group DESC")->findAll()[0]->time_group;
+		if ($mm % $minute == 0 && $lastPutData != $current_time) {
 			$id_start = @$this->measurement_logs->where("xtimestamp >= '" . $lasttime . ":00'")->where("is_averaged", 0)->orderBy("id")->findAll()[0]->id;
 			if ($id_start > 0) {
 				$measurement_logs = $this->measurement_logs->where("id BETWEEN '" . $id_start . "' AND '" . $id_end . "'")->where("is_averaged", 0)->findAll();
@@ -109,10 +108,14 @@ class MeasurementAveraging extends BaseCommand
 			}
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if (@$numdata[$parameter->id] > 0) {
+					if ($parameter->p_type == "gas")
+						$value = round($total[$parameter->id] / $numdata[$parameter->id], 0);
+					else
+						$value = round($total[$parameter->id] / $numdata[$parameter->id], 2);
 					$measurements = [
 						"time_group" => $measurement_logs["waktu"],
 						"parameter_id" => $parameter->id,
-						"value" => round($total[$parameter->id] / $numdata[$parameter->id], 0),
+						"value" => $value,
 						"sensor_value" => 0,
 						"is_sent_cloud" => 0,
 						"is_sent_klhk" => 0,
@@ -123,7 +126,6 @@ class MeasurementAveraging extends BaseCommand
 			// $this->measurement_logs->set(["is_averaged" => 1])->where("id BETWEEN '" . $measurement_logs["id_start"] . "' AND '" . $measurement_logs["id_end"] . "'")->update();
 			// $this->measurement_logs->where("id BETWEEN '" . $measurement_logs["id_start"] . "' AND '" . $measurement_logs["id_end"] . "'")->delete();
 			$this->measurement_logs->truncate();
-			$this->lastPutData = date("Y-m-d H:i");
 		}
 	}
 
