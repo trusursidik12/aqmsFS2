@@ -30,12 +30,23 @@ subprocess.Popen("python3 gui_start.py", shell=True)
 
 time.sleep(2)
 
-counter = 0
+counter_senddata = 0
+counter_averaging = 0
 while True:
-    counter = counter + 1
+    counter_senddata = counter_senddata + 1
+    counter_averaging = counter_averaging + 1
     subprocess.Popen("php gui/spark command:formula_measurement_logs", shell=True)
-    if(counter >= 60):
+    
+    if(counter_senddata >= 60):
+        print("Try Send Data")
         subprocess.Popen("php gui/spark command:sentdata", shell=True)
+        time.sleep(5)
+        counter_senddata = 0
+        
+    if(counter_averaging >= 30):
+        print("Try Averaging")
         subprocess.Popen("php gui/spark command:measurement_averaging", shell=True)
-        counter = 0
+        time.sleep(5)
+        counter_averaging = 0
+        
     time.sleep(1)
