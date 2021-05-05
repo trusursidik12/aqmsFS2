@@ -111,7 +111,7 @@ class MeasurementAveraging extends BaseCommand
 				if (@$numdata[$parameter->id] > 0) {
 					$measurements = [
 						"parameter_id" => $parameter->id,
-						"value" => $total[$parameter->id] / $numdata[$parameter->id],
+						"value" => round($total[$parameter->id] / $numdata[$parameter->id], 0),
 						"sensor_value" => 0,
 						"is_sent_cloud" => 0,
 						"is_sent_klhk" => 0,
@@ -128,6 +128,7 @@ class MeasurementAveraging extends BaseCommand
 
 	public function run(array $params)
 	{
+		$this->measurements->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR)")->delete();
 		$this->measurements_averaging();
 	}
 }

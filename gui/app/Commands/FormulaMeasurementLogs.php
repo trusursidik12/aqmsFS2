@@ -82,7 +82,7 @@ class FormulaMeasurementLogs extends BaseCommand
 	public function run(array $params)
 	{
 		$this->measurement_logs->where("(is_averaged = 1 AND xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR))")->delete();
-		$this->measurement_histories->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 24 HOUR)")->delete();
+		// $this->measurement_histories->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 24 HOUR)")->delete();
 
 		foreach ($this->sensor_values->findAll() as $sensor_value) {
 			$sensor[$sensor_value->sensor_reader_id][$sensor_value->pin] = $sensor_value->value;
