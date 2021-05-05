@@ -9,6 +9,7 @@ use App\Models\m_sensor_value;
 use App\Models\m_measurement;
 use App\Models\m_measurement_log;
 use App\Models\m_parameter;
+use Exception;
 
 class MeasurementAveraging extends BaseCommand
 {
@@ -120,7 +121,10 @@ class MeasurementAveraging extends BaseCommand
 						"is_sent_cloud" => 0,
 						"is_sent_klhk" => 0,
 					];
-					$this->measurements->save($measurements);
+					try {
+						$this->measurements->save($measurements);
+					} catch (Exception $e) {
+					}
 				}
 			}
 			// $this->measurement_logs->set(["is_averaged" => 1])->where("id BETWEEN '" . $measurement_logs["id_start"] . "' AND '" . $measurement_logs["id_end"] . "'")->update();
