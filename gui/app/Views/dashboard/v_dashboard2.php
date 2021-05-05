@@ -275,7 +275,7 @@
                                             param_value = calculatePpm(param_value, molecular_mass);
                                             break;
                                         case 3:
-                                            param_value = calculatePpb(param_value);
+                                            param_value = calculatePpb(param_value, molecular_mass);
                                             break;
                                         case 1:
                                         default:
@@ -352,7 +352,7 @@
             try {
                 ug = parseFloat(ug);
                 molecular_mass = parseFloat(molecular_mass);
-                let value = ug * molecular_mass / 24.45 / 1000;
+                let value = (ug * 24.45) / (1000 * molecular_mass);
                 return `${value}`.substr(0, 5);
             } catch (err) {
                 toastr.error(err);
@@ -360,10 +360,11 @@
             }
         }
 
-        function calculatePpb(ug) {
+        function calculatePpb(ug, molecular_mass) {
             try {
                 ug = parseFloat(ug);
-                let value = ug * 1000;
+                molecular_mass = parseFloat(molecular_mass);
+                let value = (ug * 24.45) / molecular_mass;
                 return Math.round(value);
             } catch (err) {
                 toastr.error(err);
