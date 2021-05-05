@@ -110,6 +110,7 @@ class MeasurementAveraging extends BaseCommand
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if (@$numdata[$parameter->id] > 0) {
 					$measurements = [
+						"time_group" => $measurement_logs["waktu"],
 						"parameter_id" => $parameter->id,
 						"value" => round($total[$parameter->id] / $numdata[$parameter->id], 0),
 						"sensor_value" => 0,

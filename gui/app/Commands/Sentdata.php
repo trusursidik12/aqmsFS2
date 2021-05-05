@@ -79,15 +79,28 @@ class Sentdata extends BaseCommand
 		$measurement_ids = "";
 		$is_exist = false;
 		$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
-		foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
-			$measurement = @$this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
-			if ($measurement) {
-				$arr["waktu"] = date("Y-m-d H:i:00", strtotime($measurement->xtimestamp));
+
+		$time_group = @$this->measurements->where(["is_sent_cloud" => 0])->orderBy("id")->findAll()[0]->time_group;
+		if ($time_group) {
+			$is_exist = true;
+			$arr["waktu"] = $time_group;
+			$measurements = @$this->measurements->where(["time_group" => $time_group, "is_sent_cloud" => 0])->orderBy("id")->findAll();
+			foreach ($measurements as $measurement) {
+				$parameter = @$this->parameters->where(["id" => $measurement->parameter_id])->findAll()[0];
 				$arr[$parameter->code] = $measurement->value;
-				if ($measurement->value) $is_exist = true;
 				$measurement_ids .= $measurement->id . ",";
 			}
 		}
+
+		// foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
+		// 	$measurement = @$this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
+		// 	if ($measurement) {
+		// 		$arr["waktu"] = date("Y-m-d H:i:00", strtotime($measurement->xtimestamp));
+		// 		$arr[$parameter->code] = $measurement->value;
+		// 		if ($measurement->value) $is_exist = true;
+		// 		$measurement_ids .= $measurement->id . ",";
+		// 	}
+		// }
 		$measurement_ids = substr($measurement_ids, 0, -1);
 		if ($is_exist) {
 			$data = json_encode($arr);
