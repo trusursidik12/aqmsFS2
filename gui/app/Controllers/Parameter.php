@@ -27,6 +27,7 @@ class Parameter extends BaseController
 		$data['particulates'] = $this->parameter->where(['p_type' => 'particulate'])->findAll();
 		$data['particulate_flows'] = $this->parameter->where(['p_type' => 'particulate_flow'])->findAll();
 		$data['weathers'] = $this->parameter->where(['p_type' => 'weather'])->findAll();
+		$data['flow_meters'] = $this->parameter->where(['p_type' => 'flowmeter'])->findAll();
 		echo view("parameter/v_index", $data);
 	}
 	public function saving()
