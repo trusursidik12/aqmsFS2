@@ -129,7 +129,7 @@
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
                                 <span class="py-0 font-weight-bold"><?= $wheather->caption_id ?></span>
                                 <div class="m-0 d-flex justify-content-center">
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center mt-n3">
                                         <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
                                         <small><?= $wheather->default_unit ?></small>
                                     </div>

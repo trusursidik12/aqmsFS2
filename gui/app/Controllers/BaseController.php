@@ -55,6 +55,8 @@ class BaseController extends Controller
 	 */
 	protected $helpers = [];
 
+	protected $request;
+
 	/**
 	 * Constructor.
 	 */
