@@ -36,8 +36,8 @@
                                 <?= lang('Global.Unit') ?>
                             </div>
                             <div>
-                                <span>(PPM)</span>
-                                <button type="button" class="btn btn-sm btn-info" data-intro="Mengubah satuan parameter">
+                                <span id="unit-content">(µg/m3)</span>
+                                <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="Mengubah satuan parameter">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
@@ -109,7 +109,7 @@
                                 <div class="m-0 d-flex justify-content-center ">
                                     <div class="d-flex align-items-center">
                                         <h3 class="h3 mr-1" id="value_<?= $gas->code ?>">0</h3>
-                                        <small><?= $gas->default_unit ?></small>
+                                        <small class="switch-unit"><?= $gas->default_unit ?></small>
 
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);">
                                 <span class="py-0 font-weight-bold"><?= $wheather->caption_id ?></span>
                                 <div class="m-0 d-flex justify-content-center">
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center mt-n3">
                                         <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
                                         <small><?= $wheather->default_unit ?></small>
                                     </div>
@@ -257,6 +257,7 @@
     }
     $(document).ready(function() {
         var begin = 1;
+        var beginUnit = 1;
         setInterval(() => {
             $.ajax({
                 url: '<?= base_url('measurementlog') ?>',
@@ -265,7 +266,23 @@
                     if (data !== null) {
                         data?.logs.map(function(value, index) {
                             try {
-                                $(`#value_${value.code}`).html(cleanStr(value?.value));
+                                let param_value = cleanStr(value?.value);
+                                let molecular_mass = cleanStr(value?.molecular_mass);
+                                let p_type = value?.p_type
+                                if (p_type == 'gas') {
+                                    switch (beginUnit) {
+                                        case 2:
+                                            param_value = calculatePpm(param_value, molecular_mass);
+                                            break;
+                                        case 3:
+                                            param_value = calculatePpb(param_value);
+                                            break;
+                                        case 1:
+                                        default:
+                                            break;
+                                    }
+                                }
+                                $(`#value_${value.code}`).html(param_value);
                                 $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
                             } catch (err) {
                                 console.error(err);
@@ -306,12 +323,60 @@
                 }
             })
         }, 1000);
+        $('#btn-unit').click(function(e) {
+            beginUnit++;
+            if (beginUnit > 3) {
+                beginUnit = 1;
+            }
+            switch (beginUnit) {
+                case 2: //ppm
+                    $('#unit-content').html(`(ppm)`);
+                    unit = `ppm`;
+                    break;
+                case 3: //ppb
+                    $('#unit-content').html(`(ppb)`);
+                    unit = `ppb`;
+                    break;
+                case 1: //micro
+                default:
+                    $('#unit-content').html(`(µg/m<sup>3</sup>)`);
+                    unit = `µg/m<sup>3</sup>`;
+                    break;
+            }
+            $('.switch-unit').html(unit)
+
+        });
+
+        function calculatePpm(ug, molecular_mass) {
+
+            try {
+                ug = parseFloat(ug);
+                molecular_mass = parseFloat(molecular_mass);
+                let value = ug * molecular_mass / 24.45 / 1000;
+                return `${value}`.substr(0, 5);
+            } catch (err) {
+                toastr.error(err);
+                return 0;
+            }
+        }
+
+        function calculatePpb(ug) {
+            try {
+                ug = parseFloat(ug);
+                let value = ug * 1000;
+                return Math.round(value);
+            } catch (err) {
+                toastr.error(err);
+                return 0;
+            }
+
+        }
     });
 </script>
 <script>
     function cleanStr(str) {
         try {
-            if (str === undefined || str === null) {
+            if (str === undefined || str === null || str === "") {
                 return `0`;
             }
         } catch (err) {
