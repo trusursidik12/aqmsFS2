@@ -14,7 +14,7 @@ class Export extends BaseController
 	}
 	public function index()
 	{
-		$tGroups = $this->measurement->groupBy('time_group')->findAll();
+		$tGroups = $this->measurement->groupBy('time_group')->orderBy('time_group', 'DESC')->findAll(100);
 		$parameters = [];
 		foreach ($tGroups as $key => $tGroup) {
 			$parameters[$key]['waktu'] = $tGroup->time_group;
