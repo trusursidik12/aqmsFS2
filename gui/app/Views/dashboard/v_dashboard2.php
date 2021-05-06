@@ -71,7 +71,8 @@
         <div class="col-sm mx-2">
             <div class="card">
                 <div class="p-2">
-                    <h1 class="h5">Partikulat</h1>
+
+                    <h1 class="h5" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
                     <div id="particulate">
                         <?php foreach ($particulates as $particulate) : ?>
                             <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
@@ -98,7 +99,7 @@
         <div class="col-sm mx-2">
             <div class="card">
                 <div class="p-2">
-                    <h1 class="h5">Gas</h1>
+                    <h1 class="h5" data-intro="Gas"><?= lang('Global.Gases') ?></h1>
                     <div id="gas-content">
                         <?php foreach ($gases as $gas) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
@@ -121,7 +122,7 @@
             </div>
             <div class="card mt-1">
                 <div class="p-2">
-                    <h1 class="h5">Tekanan Gas</h1>
+                    <h1 class="h5" data-intro="Tekanan Gas"><?= lang('Global.GasesPressure') ?></h1>
                     <div id="gas-content">
                         <?php foreach ($flow_meters as $f_meter) : ?>
                             <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
@@ -145,7 +146,7 @@
         <div class="col-sm mx-2">
             <div class="card">
                 <div class="p-2">
-                    <h1 class="h5">Meteorologi</h1>
+                    <h1 class="h5" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
                     <div id="meteorologi-content">
                         <?php foreach ($weathers as $wheather) : ?>
                             <!-- <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);"> -->

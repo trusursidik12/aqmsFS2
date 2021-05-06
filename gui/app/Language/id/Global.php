@@ -35,6 +35,8 @@ return [
     'Voltage' => 'Tegangan',
     'Voltage Field' => 'Bidang Tegangan',
     'Concentration' => 'Konsentrasi',
-    'Meteorology' => 'Meteorologi',
-
+    'Meteorology' => 'Cuaca',
+    'Particulate' => 'Partikulat',
+    'GasesPressure' => 'Tekanan Gas',
+    'Gases' => 'Gas',
 ];
