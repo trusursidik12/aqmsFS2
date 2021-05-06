@@ -105,6 +105,7 @@ class MeasurementAveraging extends BaseCommand
 		if ($measurement_logs != 0) {
 			foreach ($measurement_logs["data"] as $measurement_log) {
 				@$total[$measurement_log->parameter_id] += $measurement_log->value;
+				@$lastdata[$measurement_log->parameter_id] = $measurement_log->value;
 				@$numdata[$measurement_log->parameter_id]++;
 			}
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
@@ -112,7 +113,9 @@ class MeasurementAveraging extends BaseCommand
 					if ($parameter->p_type == "gas" || $parameter->p_type == "particulate")
 						$value = round($total[$parameter->id] / $numdata[$parameter->id], 0);
 					else
-						$value = round($total[$parameter->id] / $numdata[$parameter->id], 2);
+						$value = round($lastdata[$parameter->id], 2);
+
+					// $value = round($total[$parameter->id] / $numdata[$parameter->id], 2);
 					$measurements = [
 						"time_group" => $measurement_logs["waktu"],
 						"parameter_id" => $parameter->id,
