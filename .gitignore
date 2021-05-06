@@ -6,4 +6,3 @@
 /gui/tests/*
 /gui/.env
 __pycache__
-/gui/app/Database/*
