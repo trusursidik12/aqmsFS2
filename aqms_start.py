@@ -39,11 +39,11 @@ while True:
     counter_averaging = counter_averaging + 1
     subprocess.Popen("php gui/spark command:formula_measurement_logs", shell=True)
     
-    #if(counter_senddata_klhk >= 60):
-    #    print("Try Send Data to KLHK")
-    #    subprocess.Popen("php gui/spark command:sentdata_klhk", shell=True)
-    #    time.sleep(5)
-    #    counter_senddata_klhk = 0
+    if(counter_senddata_klhk >= 60):
+        print("Try Send Data to KLHK")
+        subprocess.Popen("php gui/spark command:sentdata_klhk", shell=True)
+        time.sleep(5)
+        counter_senddata_klhk = 0
         
     if(counter_senddata >= 60):
         print("Try Send Data")
