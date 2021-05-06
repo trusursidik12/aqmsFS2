@@ -112,7 +112,6 @@ class Sentdata_klhk extends BaseCommand
 			$arr["stat_no2"] = @$this->parameters->where(["code" => "no2"])->findAll()[0]->is_view * 1;
 			$arr["stat_hc"] = @$this->parameters->where(["code" => "hc"])->findAll()[0]->is_view * 1;
 			print_r($arr);
-			exit();
 
 			$token = "";
 			$data = json_encode(["username" => "pt_trusur_unggul_teknusa", "password" => "c6eXK8EUpbuCoaki"]);
