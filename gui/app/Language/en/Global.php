@@ -36,4 +36,7 @@ return [
     'Voltage Field' => 'Voltage Field',
     'Concentration' => 'Concentration',
     'Meteorology' => 'Meteorology',
+    'Particulate' => 'Particulate',
+    'GasesPressure' => 'Gases Pressure',
+    'Gases' => 'Gases',
 ];
