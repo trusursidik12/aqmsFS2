@@ -10,6 +10,7 @@ class Measurements extends Migration
 	{
 		$this->forge->addField([
 			'id'				=> ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
+			'time_group'		=> ['type' => 'DATETIME'],
 			'parameter_id'		=> ['type' => 'INT', 'default' => 0],
 			'value'				=> ['type' => 'DOUBLE', 'default' => 0],
 			'sensor_value'		=> ['type' => 'DOUBLE', 'default' => 0],

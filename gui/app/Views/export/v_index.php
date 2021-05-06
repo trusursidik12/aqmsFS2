@@ -1,14 +1,6 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
-<div class="container-md py-5">
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 text-light"><?= lang('Global.Export') ?></h1>
-        <div>
-            <a href="#" onclick="return window.history.go(-1);" class="btn btn-sm btn-primary">
-                <i class="fas fa-xs fa-arrow-left"></i> <?= lang('Global.Back') ?>
-            </a>
-        </div>
-    </div>
+<div class="container-md py-3">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -17,37 +9,45 @@
                         <table class="table stripped">
                             <thead>
                                 <tr>
-                                    <th><?= lang('Global.Station') ?></th>
-                                    <th><?= lang('Global.Timestamp') ?></th>
-                                    <th>PM10</th>
-                                    <th>PM2.5</th>
-                                    <th>SO2</th>
-                                    <th>CO</th>
-                                    <th>O3</th>
+                                    <th>ID STASIUN</th>
+                                    <th>WAKTU</th>
                                     <th>NO2</th>
+                                    <th>O3</th>
+                                    <th>CO</th>
+                                    <th>SO2</th>
                                     <th>HC</th>
-                                    <th>VOC</th>
-                                    <th>H2S</th>
-                                    <th>CS2</th>
+                                    <th>PM2.5</th>
+                                    <th>PM10</th>
+                                    <th>TEKANAN</th>
+                                    <th>ARAH ANGIN</th>
+                                    <th>KEC. ANGIN</th>
+                                    <th>TEMP</th>
+                                    <th>KELEMBABAN</th>
+                                    <th>SR</th>
+                                    <th>RAIN INT</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php for ($i = 0; $i <= 11; $i++) : ?>
+                                <?php foreach ($parameters as $param) : ?>
                                     <tr>
-                                        <td>TRUSUR</td>
-                                        <td>2021-02-11 07:30:00</td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
-                                        <td><?= rand(0, 10) ?></td>
+                                        <th>AQMS_FS2</th>
+                                        <td><?= $param['waktu'] ?></td>
+                                        <td><?= $param['no2'] ?></td>
+                                        <td><?= $param['o3'] ?></td>
+                                        <td><?= $param['co'] ?></td>
+                                        <td><?= $param['so2'] ?></td>
+                                        <td><?= $param['hc'] ?></td>
+                                        <td><?= $param['pm25'] ?></td>
+                                        <td><?= $param['pm10'] ?></td>
+                                        <td><?= $param['pressure'] ?></td>
+                                        <td><?= $param['wd'] ?></td>
+                                        <td><?= $param['ws'] ?></td>
+                                        <td><?= $param['temperature'] ?></td>
+                                        <td><?= $param['humidity'] ?></td>
+                                        <td><?= $param['sr'] ?></td>
+                                        <td><?= $param['rain_intensity'] ?></td>
                                     </tr>
-                                <?php endfor; ?>
+                                <?php endforeach ?>
                             </tbody>
                         </table>
                     </div>
