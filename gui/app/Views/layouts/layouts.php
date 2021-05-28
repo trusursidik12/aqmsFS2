@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="position-fixed" style="left:3vw;bottom:4vh">
+    <div class="position-fixed" style="left: 11vw;bottom:4vh">
         <button id="btn-capture" class="btn btn-sm btn-info rounded" title="Capture" data-intro="Screenshoot layar">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-capture" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

@@ -8,9 +8,26 @@
                     <div class="bg-light px-3 py-2">
                         <h2 class="h4"><?= lang('Global.Configuration Instrument') ?></h2>
                         <div class="alert alert-info">
-                            <b>PORTS:</b>
-                            <?php foreach ($sensor_readers as $sensor_reader) : ?>
-                                <p class="m-0"><?= $sensor_reader->sensor_code . ' => ' . str_replace(".py", "", $sensor_reader->driver) ?></p>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="h6">PORTS:</h3>
+                                <span class="btn-show-all" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse-sensor" aria-expanded="true" aria-controls="collapse-sensor">
+                                    Show All <i class='fas fa-xs fa-arrow-circle-down'></i>
+                                </span>
+                            </div>
+                            <?php foreach ($sensor_readers as $key => $sensor_reader) : ?>
+                                <?php if ($key > 0) : ?>
+                                    <div id="collapse-sensor" class="collapse">
+                                        <p class="mb-1 small">
+                                            <button type="button" class="btn btn-sm btn-outline-primary btn-copy" data-id="<?= $key ?>"><i class="fas fa-xs fa-copy"></i></button>
+                                            <?= "<span data-id='{$key}'>{$sensor_reader->sensor_code}</span>  => " . str_replace(".py", "", $sensor_reader->driver) ?>
+                                        </p>
+                                    </div>
+                                <?php else : ?>
+                                    <p class="mb-1 small">
+                                        <button type="button" class="btn btn-sm btn-outline-primary btn-copy" data-id="<?= $key ?>"><i class="fas fa-xs fa-copy"></i></button>
+                                        <?= "<span data-id='{$key}'>{$sensor_reader->sensor_code}</span>  => " . str_replace(".py", "", $sensor_reader->driver) ?>
+                                    </p>
+                                <?php endif; ?>
                             <?php endforeach ?>
                         </div>
                         <?php foreach ($sensor_readers as $sensor_reader) : ?>
@@ -139,6 +156,39 @@
 <!-- Custom CSS Here -->
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>
+<script>
+    // Copy to clipboard
+    const copyToClipboard = str => {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    };
+</script>
+<script>
+    $(document).ready(function() {
+        $('.btn-copy').click(function() {
+            let id = $(this).attr('data-id');
+            let text = $(`span[data-id="${id}"]`).text();
+            copyToClipboard(text);
+            toastr.success(`${text} berhasil disalin ke clipboard`);
+        });
+        $('.btn-show-all').click(function() {
+            let show = $(this).attr('data-show');
+            $(this).attr('data-show', show === 'true' ? 'false' : 'true');
+            if (show === 'true') {
+                $(this).html(`Show All <i class='fas fa-xs fa-arrow-circle-down'></i>`);
+            } else {
+                $(this).html(`Hidden <i class='fas fa-xs fa-arrow-circle-up'></i>`);
+            }
+        });
+    });
+</script>
 <!-- <script>
     // Get Geolocation
     $(document).ready(function() {
