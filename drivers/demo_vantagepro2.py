@@ -42,7 +42,7 @@ try:
             WS = "XXX;0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
             
             update_sensor_value(str(sys.argv[1]),WS[0:149])
-            print(WS)
+            # print(WS)
         except Exception as e2: 
             is_WS_connect = False
             print("Reconnect WS Davis");

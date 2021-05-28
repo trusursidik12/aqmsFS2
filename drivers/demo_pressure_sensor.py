@@ -32,10 +32,10 @@ def update_sensor_value(sensor_reader_id,value):
 try:
     while True :
         try:
-            PRESSURE = str(round(random.uniform(0, 2),3)) + ":" + str(round(random.uniform(0, 2),3))
+            PRESSURE = str(round(random.uniform(512, 1020),0)).replace(".0","") + ":" + str(round(random.uniform(5, 512),0)).replace(".0","")
             update_sensor_value(str(sys.argv[1]),PRESSURE)
             
-            print(PRESSURE)
+            # print(PRESSURE)
         except Exception as e2:
             print(e2)
             is_PRESSURE_connect = False
