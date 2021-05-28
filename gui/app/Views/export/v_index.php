@@ -5,8 +5,21 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <h3 class="h5">Filter</h3>
+                    <div class="d-flex justify-content-between mb-3">
+                        <form id="form-filter-date" class="form-inline">
+                            <label class="sr-only">Begin Time</label>
+                            <input type="date" name="begindate" class="form-control mr-1" title="Begin Time">
+                            <label class="sr-only">End Time</label>
+                            <input type="date" name="enddate" class="form-control mr-1" title="End Time">
+                            <button type="button" id="btn-filter" class="btn btn-outline-primary" title="Filter">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+
+                    </div>
                     <div class="table-responsive">
-                        <table class="table stripped">
+                        <table id="export-tbl" class="table stripped">
                             <thead>
                                 <tr>
                                     <th>ID STASIUN</th>
@@ -28,26 +41,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($parameters as $param) : ?>
-                                    <tr>
-                                        <th>AQMS_FS2</th>
-                                        <td><?= $param['waktu'] ?></td>
-                                        <td><?= $param['no2'] ?></td>
-                                        <td><?= $param['o3'] ?></td>
-                                        <td><?= $param['co'] ?></td>
-                                        <td><?= $param['so2'] ?></td>
-                                        <td><?= $param['hc'] ?></td>
-                                        <td><?= $param['pm25'] ?></td>
-                                        <td><?= $param['pm10'] ?></td>
-                                        <td><?= $param['pressure'] ?></td>
-                                        <td><?= $param['wd'] ?></td>
-                                        <td><?= $param['ws'] ?></td>
-                                        <td><?= $param['temperature'] ?></td>
-                                        <td><?= $param['humidity'] ?></td>
-                                        <td><?= $param['sr'] ?></td>
-                                        <td><?= $param['rain_intensity'] ?></td>
-                                    </tr>
-                                <?php endforeach ?>
                             </tbody>
                         </table>
                     </div>
@@ -74,32 +67,107 @@
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
 <script>
-    $('table').DataTable({
-        "pageLength": 4,
-        dom: 'Bfrtip',
-        buttons: [{
-                text: 'Excel',
-                extend: 'excelHtml5',
-                className: 'btn btn-sm btn-info mb-3',
-                exportOptions: {
-                    modifier: {
-                        page: 'all',
-                        search: 'none'
+    function requestDatatable(filter = "none") {
+        let datatable;
+        datatable = $('table[id="export-tbl"]').DataTable({
+            "pageLength": 4,
+            'bDestroy': true,
+            searching: false,
+            dom: 'Bfrtip',
+            buttons: [{
+                    text: 'Excel',
+                    extend: 'excelHtml5',
+                    className: 'btn btn-sm btn-info mb-3',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all',
+                            search: 'none'
+                        }
                     }
-                }
-            },
-            {
-                text: 'PDF',
-                extend: 'pdf',
-                className: 'btn btn-sm btn-danger mb-3',
-                exportOptions: {
-                    modifier: {
-                        page: 'all',
-                        search: 'none'
+                },
+                {
+                    text: 'PDF',
+                    extend: 'pdf',
+                    className: 'btn btn-sm btn-danger mb-3',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all',
+                            search: 'none'
+                        }
                     }
-                }
-            },
-        ]
+                },
+            ],
+            ajax: `<?= base_url('export/datatable') ?>?${filter=="none"?"":filter}`,
+            processing: true,
+            serverSide: true,
+            columns: [{
+                    data: 'id_stasiun'
+                },
+                {
+                    data: 'waktu'
+                },
+                {
+                    data: 'no2'
+                },
+                {
+                    data: 'o3'
+                },
+                {
+                    data: 'co'
+                },
+                {
+                    data: 'so2'
+                },
+                {
+                    data: 'hc'
+                },
+                {
+                    data: 'pm25'
+                },
+                {
+                    data: 'pm10'
+                },
+                {
+                    data: 'pressure'
+                },
+                {
+                    data: 'wd'
+                },
+                {
+                    data: 'ws'
+                },
+                {
+                    data: 'temperature'
+                },
+                {
+                    data: 'humidity'
+                },
+                {
+                    data: 'sr'
+                },
+                {
+                    data: 'rain_intensity'
+                },
+            ]
+        });
+    }
+    try {
+        requestDatatable();
+    } catch (er) {
+        console.log(er);
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#btn-filter').click(function() {
+            let form = $(this).closest('form');
+            if (form.find('input').eq(0).val() === "" || form.find('input').eq(1).val() === "") {
+                toastr.error('Anda harus menentukan range waktu!');
+            } else {
+                let filter = form?.serialize();
+                requestDatatable(filter);
+            }
+        });
     });
 </script>
 <?= $this->endSection() ?>
