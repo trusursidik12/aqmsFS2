@@ -138,7 +138,7 @@ class MeasurementAveraging extends BaseCommand
 
 	public function run(array $params)
 	{
-		while ($is_looping) {
+		while (true) {
 			$this->measurements->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR)")->delete();
 			$this->measurements_averaging();
 			sleep(1);

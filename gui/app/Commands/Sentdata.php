@@ -75,68 +75,71 @@ class Sentdata extends BaseCommand
 	 */
 	public function run(array $params)
 	{
-		$server_host = "103.247.11.149";
-		$measurement_ids = "";
-		$is_exist = false;
-		$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
+		while (true) {
+			$server_host = "103.247.11.149";
+			$measurement_ids = "";
+			$is_exist = false;
+			$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
 
-		$time_group = @$this->measurements->where(["is_sent_cloud" => 0])->orderBy("id")->findAll()[0]->time_group;
-		if ($time_group) {
-			$is_exist = true;
-			$arr["waktu"] = $time_group;
-			$measurements = @$this->measurements->where(["time_group" => $time_group, "is_sent_cloud" => 0])->orderBy("id")->findAll();
-			foreach ($measurements as $measurement) {
-				$parameter = @$this->parameters->where(["id" => $measurement->parameter_id])->findAll()[0];
-				$arr[$parameter->code] = $measurement->value;
-				$measurement_ids .= $measurement->id . ",";
-			}
-		}
-
-		// foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
-		// 	$measurement = @$this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
-		// 	if ($measurement) {
-		// 		$arr["waktu"] = date("Y-m-d H:i:00", strtotime($measurement->xtimestamp));
-		// 		$arr[$parameter->code] = $measurement->value;
-		// 		if ($measurement->value) $is_exist = true;
-		// 		$measurement_ids .= $measurement->id . ",";
-		// 	}
-		// }
-		$measurement_ids = substr($measurement_ids, 0, -1);
-		if ($is_exist) {
-			$data = json_encode($arr);
-			$curl = curl_init();
-			curl_setopt_array($curl, array(
-				CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => "",
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 30,
-				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-				CURLOPT_CUSTOMREQUEST => "PUT",
-				CURLOPT_USERPWD => "KLHK-2019:Project2016-2019",
-				CURLOPT_POSTFIELDS => $data,
-				CURLOPT_HTTPHEADER => array(
-					"Api-Key: VHJ1c3VyVW5nZ3VsVGVrbnVzYV9wVA==",
-					"cache-control: no-cache",
-					"content-type: application/json"
-				),
-			));
-
-			$response = curl_exec($curl);
-			$err = curl_error($curl);
-
-			curl_close($curl);
-
-			if ($err) {
-				echo "cURL Error #:" . $err;
-			} else {
-				if (strpos(" " . $response, "success") > 0) {
-					$this->measurements->where(["time_group" => $time_group])->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->update();
-					// $this->measurements->where("id IN (" . $measurement_ids . ")")->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->update();
-				} else {
-					echo $response;
+			$time_group = @$this->measurements->where(["is_sent_cloud" => 0])->orderBy("id")->findAll()[0]->time_group;
+			if ($time_group) {
+				$is_exist = true;
+				$arr["waktu"] = $time_group;
+				$measurements = @$this->measurements->where(["time_group" => $time_group, "is_sent_cloud" => 0])->orderBy("id")->findAll();
+				foreach ($measurements as $measurement) {
+					$parameter = @$this->parameters->where(["id" => $measurement->parameter_id])->findAll()[0];
+					$arr[$parameter->code] = $measurement->value;
+					$measurement_ids .= $measurement->id . ",";
 				}
 			}
+
+			// foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
+			// 	$measurement = @$this->measurements->where(["parameter_id" => $parameter->id, "is_sent_cloud" => 0])->orderBy("id")->findAll()[0];
+			// 	if ($measurement) {
+			// 		$arr["waktu"] = date("Y-m-d H:i:00", strtotime($measurement->xtimestamp));
+			// 		$arr[$parameter->code] = $measurement->value;
+			// 		if ($measurement->value) $is_exist = true;
+			// 		$measurement_ids .= $measurement->id . ",";
+			// 	}
+			// }
+			$measurement_ids = substr($measurement_ids, 0, -1);
+			if ($is_exist) {
+				$data = json_encode($arr);
+				$curl = curl_init();
+				curl_setopt_array($curl, array(
+					CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_ENCODING => "",
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_TIMEOUT => 30,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => "PUT",
+					CURLOPT_USERPWD => "KLHK-2019:Project2016-2019",
+					CURLOPT_POSTFIELDS => $data,
+					CURLOPT_HTTPHEADER => array(
+						"Api-Key: VHJ1c3VyVW5nZ3VsVGVrbnVzYV9wVA==",
+						"cache-control: no-cache",
+						"content-type: application/json"
+					),
+				));
+
+				$response = curl_exec($curl);
+				$err = curl_error($curl);
+
+				curl_close($curl);
+
+				if ($err) {
+					echo "cURL Error #:" . $err;
+				} else {
+					if (strpos(" " . $response, "success") > 0) {
+						$this->measurements->where(["time_group" => $time_group])->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->update();
+						// $this->measurements->where("id IN (" . $measurement_ids . ")")->set(["is_sent_cloud" => 1, "sent_cloud_at" => date("Y-m-d H:i:s")])->update();
+					} else {
+						echo $response;
+					}
+				}
+			}
+			sleep(10);
 		}
 	}
 }
