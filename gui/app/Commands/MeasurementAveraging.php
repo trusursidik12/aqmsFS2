@@ -77,9 +77,9 @@ class MeasurementAveraging extends BaseCommand
 	public function get_measurement_logs_range($minute)
 	{
 		$id_end = @$this->measurement_logs->orderBy("id DESC")->findAll()[0]->id;
-		$lasttime = date("Y-m-d H:i:%", mktime(date("H"), date("i") - $minute));
+		$lasttime = date("Y-m-d H:i", mktime(date("H"), date("i") - $minute));
 		$mm = date("i") * 1;
-		$current_time = date("Y-m-d H:i");
+		$current_time = date("Y-m-d H:i") . ":00";
 		$lastPutData = @$this->measurements->orderBy("time_group DESC")->findAll()[0]->time_group;
 		if ($mm % $minute == 0 && $lastPutData != $current_time) {
 			$id_start = @$this->measurement_logs->where("xtimestamp >= '" . $lasttime . ":00'")->where("is_averaged", 0)->orderBy("id")->findAll()[0]->id;
@@ -87,7 +87,7 @@ class MeasurementAveraging extends BaseCommand
 				$measurement_logs = $this->measurement_logs->where("id BETWEEN '" . $id_start . "' AND '" . $id_end . "'")->where("is_averaged", 0)->findAll();
 				$return["id_start"] = $id_start;
 				$return["id_end"] = $id_end;
-				$return["waktu"] = $current_time . ":00";
+				$return["waktu"] = $current_time;
 				$return["data"] = $measurement_logs;
 				return $return;
 			} else {
@@ -138,7 +138,10 @@ class MeasurementAveraging extends BaseCommand
 
 	public function run(array $params)
 	{
-		$this->measurements->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR)")->delete();
-		$this->measurements_averaging();
+		while ($is_looping) {
+			$this->measurements->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR)")->delete();
+			$this->measurements_averaging();
+			sleep(1);
+		}
 	}
 }
