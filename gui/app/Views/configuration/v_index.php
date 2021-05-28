@@ -11,7 +11,7 @@
                             <div class="d-flex justify-content-between">
                                 <h3 class="h6">PORTS:</h3>
                                 <span class="btn-show-all" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse-sensor" aria-expanded="true" aria-controls="collapse-sensor">
-                                    Show All <i class='fas fa-xs fa-arrow-circle-down'></i>
+                                    Show All
                                 </span>
                             </div>
                             <?php foreach ($sensor_readers as $key => $sensor_reader) : ?>
@@ -182,9 +182,9 @@
             let show = $(this).attr('data-show');
             $(this).attr('data-show', show === 'true' ? 'false' : 'true');
             if (show === 'true') {
-                $(this).html(`Show All <i class='fas fa-xs fa-arrow-circle-down'></i>`);
+                $(this).html(`Show All`);
             } else {
-                $(this).html(`Hidden <i class='fas fa-xs fa-arrow-circle-up'></i>`);
+                $(this).html(`Hidden`);
             }
         });
     });
