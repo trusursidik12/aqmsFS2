@@ -23,6 +23,7 @@ class Home extends BaseController
 		$data['particulates'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'particulate'])->findAll();
 		$data['weathers'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'weather'])->findAll();
 		$data['flow_meters'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'flowmeter'])->findAll();
+		$data['stationname'] = @$this->configuration->where(['name' => 'nama_stasiun'])->get()->getFirstRow()->content;
 		if ($template == 1) {
 			echo view("dashboard/v_dashboard", $data);
 		} else {

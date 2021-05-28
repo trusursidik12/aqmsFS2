@@ -15,7 +15,7 @@
                         </span>
                         <?= lang('Global.Location') ?>
                         <div id="aqm_voltage">
-                            <h2 class="h3" data-intro="Lokasi AQMS">DKI Jakarta
+                            <h2 class="h3" data-intro="Lokasi AQMS" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?>
                                 <!-- Date -->
                             </h2>
                             <h2 class="h6 text-dark" id="date"></h2>
