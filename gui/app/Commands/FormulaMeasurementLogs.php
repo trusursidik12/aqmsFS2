@@ -81,25 +81,28 @@ class FormulaMeasurementLogs extends BaseCommand
 
 	public function run(array $params)
 	{
-		$this->measurement_logs->where("(is_averaged = 1 AND xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR))")->delete();
-		// $this->measurement_histories->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 24 HOUR)")->delete();
+		while (true) {
+			$this->measurement_logs->where("(is_averaged = 1 AND xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 2 HOUR))")->delete();
+			// $this->measurement_histories->where("xtimestamp < ('" . date("Y-m-d H:i:s") . "' - INTERVAL 24 HOUR)")->delete();
 
-		foreach ($this->sensor_values->findAll() as $sensor_value) {
-			$sensor[$sensor_value->sensor_reader_id][$sensor_value->pin] = $sensor_value->value;
-		}
+			foreach ($this->sensor_values->findAll() as $sensor_value) {
+				$sensor[$sensor_value->sensor_reader_id][$sensor_value->pin] = $sensor_value->value;
+			}
 
-		foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
-			@eval("\$data[$parameter->id] = $parameter->formula;");
-			$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
-			$sensor_value = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
-			$measurement_logs = [
-				"parameter_id" => $parameter->id,
-				"value" => ($data[$parameter->id] < 0) ? 0 : $data[$parameter->id],
-				"sensor_value" => $sensor_value,
-				"is_averaged" => 0
-			];
-			$this->measurement_logs->save($measurement_logs);
-			// $this->measurement_histories->save($measurement_logs);
+			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
+				@eval("\$data[$parameter->id] = $parameter->formula;");
+				$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
+				$sensor_value = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
+				$measurement_logs = [
+					"parameter_id" => $parameter->id,
+					"value" => ($data[$parameter->id] < 0) ? 0 : $data[$parameter->id],
+					"sensor_value" => $sensor_value,
+					"is_averaged" => 0
+				];
+				$this->measurement_logs->save($measurement_logs);
+				// $this->measurement_histories->save($measurement_logs);
+			}
+			sleep(1);
 		}
 	}
 }
