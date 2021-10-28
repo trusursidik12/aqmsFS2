@@ -19,8 +19,11 @@ except Exception as e:
     print("[X]  MEMBRAPOR ID: " + str(sys.argv[1]) + " " + e)
     
 def dectofloat(dec0,dec1):
-    hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
-    return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
+    try:
+        hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
+        return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
+    except Exception as e: 
+        return "0"
 
 def update_sensor_value(sensor_reader_id,value):
     try:
