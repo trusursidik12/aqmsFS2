@@ -101,6 +101,8 @@ try:
         except Exception as e2:
             print(e2)
             
+        time.sleep(2)
+            
     while False:
         try:
             val = connect_membrapor(int(sys.argv[1])).split(";")
