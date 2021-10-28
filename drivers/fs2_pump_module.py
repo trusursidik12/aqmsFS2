@@ -72,6 +72,7 @@ connect_pump()
 try:
     while True :
         try:
+            COM_PUMP = None
             if(not is_PUMP_connect):
                 COM_PUMP = connect_pump()
                 
