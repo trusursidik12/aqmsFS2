@@ -49,14 +49,14 @@ def connect_membrapor(membrapormode):
         rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=0.2
         
-        add0=rs485.read_register(1000,0,3,False)
-        add1=rs485.read_register(1001,0,3,False)
-        add2=rs485.read_register(1002,0,3,False)
-        add3=rs485.read_register(1003,0,3,False)
-        add4=rs485.read_register(1004,0,3,False)
-        add5=rs485.read_register(1005,0,3,False)
-        add6=rs485.read_register(1006,0,3,False)
-        add7=rs485.read_register(1007,0,3,False)
+        add0=int(rs485.read_register(1000,0,3,False))
+        add1=int(rs485.read_register(1001,0,3,False))
+        add2=int(rs485.read_register(1002,0,3,False))
+        add3=int(rs485.read_register(1003,0,3,False))
+        add4=int(rs485.read_register(1004,0,3,False))
+        add5=int(rs485.read_register(1005,0,3,False))
+        add6=int(rs485.read_register(1006,0,3,False))
+        add7=int(rs485.read_register(1007,0,3,False))
         
         add00=rs485.read_register(1010,0,3,False)
         add01=rs485.read_register(1011,0,3,False)
