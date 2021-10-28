@@ -90,7 +90,7 @@ try:
         try:
             MEMBRAPOR = connect_membrapor(int(sys.argv[1]))
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
-            #print(MEMBRAPOR)
+            print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
             print("Reconnect MEMBRAPOR");
