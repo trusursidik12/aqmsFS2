@@ -38,7 +38,6 @@ def connect_pump():
         
         COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1])
         PUMP = str(COM_PUMP.readline())
-        print(PUMP)
         if(PUMP.count("FS2_PUMP") > 0):
             is_PUMP_connect = True
             print("[V] PUMP Module " + sensor_reader[0] + " CONNECTED")
@@ -71,7 +70,7 @@ def connect_pump():
 connect_pump()
 
 try:
-    while False :
+    while True :
         try:
             if(not is_PUMP_connect):
                 COM_PUMP = connect_pump()
