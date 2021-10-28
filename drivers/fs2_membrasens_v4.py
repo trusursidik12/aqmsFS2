@@ -52,6 +52,7 @@ def connect_membrapor(membrapormode):
         rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=0.2
         
+        #concentration
         add0=rs485.read_register(1000,0,3,False)
         add1=rs485.read_register(1001,0,3,False)
         add2=rs485.read_register(1002,0,3,False)
@@ -61,6 +62,7 @@ def connect_membrapor(membrapormode):
         add6=rs485.read_register(1006,0,3,False)
         add7=rs485.read_register(1007,0,3,False)
         
+        #voltage
         add00=rs485.read_register(1010,0,3,False)
         add01=rs485.read_register(1011,0,3,False)
         add02=rs485.read_register(1012,0,3,False)
@@ -70,6 +72,7 @@ def connect_membrapor(membrapormode):
         add06=rs485.read_register(1016,0,3,False)
         add07=rs485.read_register(1017,0,3,False)
         
+        #temp
         add000=rs485.read_register(1070,0,3,False)
         add001=rs485.read_register(1071,0,3,False)
         add002=rs485.read_register(1072,0,3,False)
@@ -90,14 +93,14 @@ try:
     while True:
         try:
             val = connect_membrapor(int(sys.argv[1])).split(";")
-            print(val)
+            # print(val)
             MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]) + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
-            print(MEMBRAPOR)
+            # print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
             print("Reconnect MEMBRAPOR");
-            # update_sensor_value(str(sys.argv[1]),0)
+            update_sensor_value(str(sys.argv[1]),0)
 
         time.sleep(1)
 
