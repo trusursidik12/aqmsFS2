@@ -38,13 +38,14 @@ def connect_pump():
         
         COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1])
         PUMP = str(COM_PUMP.readline())
+        print(PUMP)
         if(PUMP.count("FS2_PUMP") > 0):
             is_PUMP_connect = True
             print("[V] PUMP Module " + sensor_reader[0] + " CONNECTED")
-            return COM_PUMP
+            returnval = COM_PUMP
         else:
             is_PUMP_connect = False
-            return None
+            returnval = None
         
         mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
         rec = mycursor.fetchone()
@@ -61,6 +62,8 @@ def connect_pump():
         #print(str(cur_pump_state) + ":" + str(pump_state))
             
         COM_PUMP.write(str(speed).encode());
+        
+        return returnval
             
     except Exception as e: 
         return None
