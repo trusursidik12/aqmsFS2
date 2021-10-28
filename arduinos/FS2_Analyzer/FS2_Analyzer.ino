@@ -24,7 +24,7 @@ void setup() {
 
 String getValue(String data)
 {
-    String retval = "000.000;0.0";
+    String retval = "";
     String temp = "";
     if(data.length() > 0){
       temp += data[0];
@@ -50,6 +50,7 @@ String getValue(String data)
 
 void loop() {
   vacuum = analogRead(pinVacuum);
+  string_pm01 = "";
   if(Serial1.available() > 0){
     string_pm01 = "";
     while(Serial1.available() > 0){
@@ -57,7 +58,8 @@ void loop() {
       if(pm01_read != 13 && pm01_read != 10){string_pm01 += pm01_read;}
     }
   }
-  
+
+  string_pm02 = "";
   if(Serial2.available() > 0){
     string_pm02 = "";
     while(Serial2.available() > 0){
@@ -67,5 +69,5 @@ void loop() {
   }
   
   Serial.println("FS2_ANALYZER;" + getValue(string_pm01) + ";" + getValue(string_pm02) + ";" + vacuum + ";" + temp1 + ";" + hum1 + ";" + temp2 + ";" + hum2 + ";");
-  delay(100);
+  delay(2000);
 }
