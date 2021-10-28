@@ -76,8 +76,7 @@ def connect_membrapor(membrapormode):
         add006=rs485.read_register(1076,0,3,False)
         add007=rs485.read_register(1077,0,3,False)
         
-        return str(add0) +";"+ str(add1) +";"+ str(add2) +";"+ str(add3) +";"+ str(add4) +";"+ str(add5) +";"+ str(add6) +";"+ str(add7) + ";" + str(add00) +";"+ str(add01) +";"+ str(add02) +";"+ str(add03) +";"+ str(add04) +";"+ str(add05) +";"+ str(add06) +";"+ str(add07) + ";" + str(add000) +";"+ str(add001) +";"+ str(add002) +";"+ str(add003) +";"+ str(add004) +";"+ str(add005) +";"+ str(add006) +";"+ str(add007) + ";" + "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + dectofloat(add1,add0) + ";" + dectofloat(add3,add2) + ";" + dectofloat(add5,add4) + ";" + dectofloat(add7,add6) + ";" + dectofloat(add001,add001) + ";" + dectofloat(add003,add002) + ";" + dectofloat(add005,add004) + ";" + dectofloat(add007,add006) + ";"
-        # return "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";"
+        return str(add0) +";"+ str(add1) +";"+ str(add2) +";"+ str(add3) +";"+ str(add4) +";"+ str(add5) +";"+ str(add6) +";"+ str(add7) + ";" + str(add00) +";"+ str(add01) +";"+ str(add02) +";"+ str(add03) +";"+ str(add04) +";"+ str(add05) +";"+ str(add06) +";"+ str(add07) + ";" + str(add000) +";"+ str(add001) +";"+ str(add002) +";"+ str(add003) +";"+ str(add004) +";"+ str(add005) +";"+ str(add006) +";"+ str(add007)
         
     except Exception as e:
         print(e)
@@ -87,8 +86,15 @@ def connect_membrapor(membrapormode):
 try:
     while True:
         try:
-            MEMBRAPOR = connect_membrapor(int(sys.argv[1]))
+            val = connect_membrapor(int(sys.argv[1])).split(";")
+            
+            MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]);
+            
+            
+            
+            # "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + dectofloat(add1,add0) + ";" + dectofloat(add3,add2) + ";" + dectofloat(add5,add4) + ";" + dectofloat(add7,add6) + ";" + dectofloat(add001,add001) + ";" + dectofloat(add003,add002) + ";" + dectofloat(add005,add004) + ";" + dectofloat(add007,add006) + ";"
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
+            print(val)
             print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
