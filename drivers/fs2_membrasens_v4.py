@@ -96,7 +96,7 @@ def connect_membrapor(membrapormode):
 try:
     while True:
         try:
-            val = connect_membrapor(int(sys.argv[1])).split(";")
+            val = connect_membrapor(int(sys.argv[1]))
             print(val)
         except Exception as e2:
             print(e2)
