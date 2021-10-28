@@ -49,14 +49,14 @@ def connect_membrapor(membrapormode):
         rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=0.2
         
-        add0=int(rs485.read_register(1000,0,3,False))
-        add1=int(rs485.read_register(1001,0,3,False))
-        add2=int(rs485.read_register(1002,0,3,False))
-        add3=int(rs485.read_register(1003,0,3,False))
-        add4=int(rs485.read_register(1004,0,3,False))
-        add5=int(rs485.read_register(1005,0,3,False))
-        add6=int(rs485.read_register(1006,0,3,False))
-        add7=int(rs485.read_register(1007,0,3,False))
+        add0=rs485.read_register(1000,0,3,False)
+        add1=rs485.read_register(1001,0,3,False)
+        add2=rs485.read_register(1002,0,3,False)
+        add3=rs485.read_register(1003,0,3,False)
+        add4=rs485.read_register(1004,0,3,False)
+        add5=rs485.read_register(1005,0,3,False)
+        add6=rs485.read_register(1006,0,3,False)
+        add7=rs485.read_register(1007,0,3,False)
         
         add00=rs485.read_register(1010,0,3,False)
         add01=rs485.read_register(1011,0,3,False)
@@ -78,7 +78,7 @@ def connect_membrapor(membrapormode):
         
         # return str(add0) +";"+ str(add1) +";"+ str(add2) +";"+ str(add3) +";"+ str(add4) +";"+ str(add5) +";"+ str(add6) +";"+ str(add7) + ";" + str(add00) +";"+ str(add01) +";"+ str(add02) +";"+ str(add03) +";"+ str(add04) +";"+ str(add05) +";"+ str(add06) +";"+ str(add07) + ";" + str(add000) +";"+ str(add001) +";"+ str(add002) +";"+ str(add003) +";"+ str(add004) +";"+ str(add005) +";"+ str(add006) +";"+ str(add007)
         # return "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + dectofloat(add1,add0) + ";" + dectofloat(add3,add2) + ";" + dectofloat(add5,add4) + ";" + dectofloat(add7,add6) + ";" + dectofloat(add001,add001) + ";" + dectofloat(add003,add002) + ";" + dectofloat(add005,add004) + ";" + dectofloat(add007,add006) + ";"
-        return "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + add1
+        return "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + str(add1)
         
     except Exception as e:
         print(e)
