@@ -88,11 +88,7 @@ try:
         try:
             val = connect_membrapor(int(sys.argv[1])).split(";")
             
-            MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]);
-            
-            
-            
-            # "FS2_MEMBRASENS;" + dectofloat(add01,add00) + ";" + dectofloat(add03,add02) + ";" + dectofloat(add05,add04) + ";" + dectofloat(add07,add06) + ";" + dectofloat(add1,add0) + ";" + dectofloat(add3,add2) + ";" + dectofloat(add5,add4) + ";" + dectofloat(add7,add6) + ";" + dectofloat(add001,add001) + ";" + dectofloat(add003,add002) + ";" + dectofloat(add005,add004) + ";" + dectofloat(add007,add006) + ";"
+            MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]) + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
             print(val)
             print(MEMBRAPOR)
