@@ -86,7 +86,7 @@ def connect_membrapor(membrapormode):
         regVoltage = rs485.read_registers(1010,8,3)
         regTemp = rs485.read_registers(1070,8,3)
         
-        return regConcentration
+        return regConcentration + regVoltage
         
     except Exception as e:
         print(e)
