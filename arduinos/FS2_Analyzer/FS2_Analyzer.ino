@@ -24,7 +24,7 @@ void setup() {
 
 String getValue(String data)
 {
-    String retval = "";
+    String retval = "000.000;0.0";
     String temp = "";
     if(data.length() > 0){
       temp += data[0];
@@ -67,5 +67,5 @@ void loop() {
   }
   
   Serial.println("FS2_ANALYZER;" + getValue(string_pm01) + ";" + getValue(string_pm02) + ";" + vacuum + ";" + temp1 + ";" + hum1 + ";" + temp2 + ";" + hum2 + ";");
-  delay(1000);
+  delay(100);
 }
