@@ -16,7 +16,6 @@ class Home extends BaseController
 	}
 	public function index()
 	{
-		$template = $this->request->getGet('theme');
 		$data['__modulename'] = 'Dashboard'; /* Title */
 		$data['__routename'] = 'dashboard'; /* Route for check menu */
 		$data['gases'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'gas'])->findAll();
@@ -24,11 +23,7 @@ class Home extends BaseController
 		$data['weathers'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'weather'])->findAll();
 		$data['flow_meters'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'flowmeter'])->findAll();
 		$data['stationname'] = @$this->configuration->where(['name' => 'nama_stasiun'])->get()->getFirstRow()->content;
-		if ($template == 1) {
-			echo view("dashboard/v_dashboard", $data);
-		} else {
-			echo view("dashboard/v_dashboard2", $data);
-		}
+		echo view("v_home", $data);
 	}
 
 	public function pump()
