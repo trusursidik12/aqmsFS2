@@ -1,3 +1,7 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include "Adafruit_SHT31.h"
+
 int speedpump = map(50,0,100,0,255);
 int pressure = 0;
 float temp = 0.0;
@@ -7,6 +11,8 @@ int pinPump2 = 3;
 int pinFanPwm = 9;
 int pinPressure = A0;
 int activePin = pinPump2;
+
+Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
 void setup() {
   Serial.begin(9600);
@@ -19,10 +25,17 @@ void setup() {
   digitalWrite(pinFanPwm, LOW);
   delay(1000);
   digitalWrite(pinFanPwm, HIGH);
+  if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+    Serial.println("Couldn't find SHT31");
+    while (1) delay(1);
+  }
   delay(1000);
 }
 
 void loop() {
+  temp = sht31.readTemperature();
+  hum = sht31.readHumidity();
+
   pressure = analogRead(pinPressure);
   if (Serial.available() > 0) {
     analogWrite(pinPump1,0);
