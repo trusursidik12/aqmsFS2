@@ -11,6 +11,7 @@ int pinPump2 = 3;
 int pinFanPwm = 9;
 int pinPressure = A0;
 int activePin = pinPump2;
+bool isSHT = false;
 
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
 
@@ -25,16 +26,30 @@ void setup() {
   digitalWrite(pinFanPwm, LOW);
   delay(1000);
   digitalWrite(pinFanPwm, HIGH);
+  Serial.println("Connecting SHT31...");
   if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
     Serial.println("Couldn't find SHT31");
-    while (1) delay(1);
+  }else{
+    isSHT = true;
   }
   delay(1000);
+  Serial.println("FS2_PUMP_BEGIN");
 }
 
 void loop() {
-  temp = sht31.readTemperature();
-  hum = sht31.readHumidity();
+  if(!isSHT){
+    if (sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+      isSHT = true;
+    }
+  }
+  
+  if(isSHT){
+    temp = sht31.readTemperature();
+    hum = sht31.readHumidity();
+  } else {
+    temp = 0.0;
+    hum = 0.0;
+  }
 
   pressure = analogRead(pinPressure);
   if (Serial.available() > 0) {
