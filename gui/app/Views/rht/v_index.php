@@ -47,40 +47,58 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Temp(°C)</th>
+                            <th scope="col">Concentration (ppm)</th>
+                            <th scope="col">Voltage</th>
+                            <th scope="col">Temp (°C)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Board1 [0]</td>
+                            <td id="con_membrasens_0_0">0</td>
+                            <td id="volt_membrasens_0_0">0</td>
                             <td id="temp_membrasens_0_0">0</td>
                         </tr>
                         <tr>
                             <td>Board1 [1]</td>
+                            <td id="con_membrasens_0_1">0</td>
+                            <td id="volt_membrasens_0_1">0</td>
                             <td id="temp_membrasens_0_1">0</td>
                         </tr>
                         <tr>
                             <td>Board1 [2]</td>
+                            <td id="con_membrasens_0_2">0</td>
+                            <td id="volt_membrasens_0_2">0</td>
                             <td id="temp_membrasens_0_2">0</td>
                         </tr>
                         <tr>
                             <td>Board1 [3]</td>
+                            <td id="con_membrasens_0_3">0</td>
+                            <td id="volt_membrasens_0_3">0</td>
                             <td id="temp_membrasens_0_3">0</td>
                         </tr>
                         <tr>
                             <td>Board2 [0]</td>
+                            <td id="con_membrasens_1_0">0</td>
+                            <td id="volt_membrasens_1_0">0</td>
                             <td id="temp_membrasens_1_0">0</td>
                         </tr>
                         <tr>
                             <td>Board2 [1]</td>
+                            <td id="con_membrasens_1_1">0</td>
+                            <td id="volt_membrasens_1_1">0</td>
                             <td id="temp_membrasens_1_1">0</td>
                         </tr>
                         <tr>
                             <td>Board2 [2]</td>
+                            <td id="con_membrasens_1_2">0</td>
+                            <td id="volt_membrasens_1_2">0</td>
                             <td id="temp_membrasens_1_2">0</td>
                         </tr>
                         <tr>
                             <td>Board2 [3]</td>
+                            <td id="con_membrasens_1_3">0</td>
+                            <td id="volt_membrasens_1_3">0</td>
                             <td id="temp_membrasens_1_3">0</td>
                         </tr>
                     </tbody>
@@ -138,10 +156,26 @@
                         $("#temp_pump").html(data.temp_pump);
                         $("#rh_psu").html(data.rh_psu);
                         $("#temp_psu").html(data.temp_psu);
+                        $("#con_membrasens_0_0").html(data.con_membrasens_0_0);
+                        $("#con_membrasens_0_1").html(data.con_membrasens_0_1);
+                        $("#con_membrasens_0_2").html(data.con_membrasens_0_2);
+                        $("#con_membrasens_0_3").html(data.con_membrasens_0_3);
+                        $("#volt_membrasens_0_0").html(data.volt_membrasens_0_0);
+                        $("#volt_membrasens_0_1").html(data.volt_membrasens_0_1);
+                        $("#volt_membrasens_0_2").html(data.volt_membrasens_0_2);
+                        $("#volt_membrasens_0_3").html(data.volt_membrasens_0_3);
                         $("#temp_membrasens_0_0").html(data.temp_membrasens_0_0);
                         $("#temp_membrasens_0_1").html(data.temp_membrasens_0_1);
                         $("#temp_membrasens_0_2").html(data.temp_membrasens_0_2);
                         $("#temp_membrasens_0_3").html(data.temp_membrasens_0_3);
+                        $("#con_membrasens_1_0").html(data.con_membrasens_1_0);
+                        $("#con_membrasens_1_1").html(data.con_membrasens_1_1);
+                        $("#con_membrasens_1_2").html(data.con_membrasens_1_2);
+                        $("#con_membrasens_1_3").html(data.con_membrasens_1_3);
+                        $("#volt_membrasens_1_0").html(data.volt_membrasens_1_0);
+                        $("#volt_membrasens_1_1").html(data.volt_membrasens_1_1);
+                        $("#volt_membrasens_1_2").html(data.volt_membrasens_1_2);
+                        $("#volt_membrasens_1_3").html(data.volt_membrasens_1_3);
                         $("#temp_membrasens_1_0").html(data.temp_membrasens_1_0);
                         $("#temp_membrasens_1_1").html(data.temp_membrasens_1_1);
                         $("#temp_membrasens_1_2").html(data.temp_membrasens_1_2);
