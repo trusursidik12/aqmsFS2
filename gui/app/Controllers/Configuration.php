@@ -47,6 +47,7 @@ class Configuration extends BaseController
 		$this->configuration->set('content', $this->request->getPost('pump_interval'))->where('name', 'pump_interval')->update();
 		$this->configuration->set('content', $this->request->getPost('data_interval'))->where('name', 'data_interval')->update();
 		$this->configuration->set('content', $this->request->getPost('graph_interval'))->where('name', 'graph_interval')->update();
+		$this->configuration->set('content', $this->request->getPost('pump_speed'))->where('name', 'pump_speed')->update();
 		$data['success'] = true;
 		$data['message'] = 'Configuration has changed';
 		$data['data'] = @$_POST;

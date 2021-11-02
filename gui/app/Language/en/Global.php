@@ -41,6 +41,7 @@ return [
     'Gases' => 'Gases',
     'Rht' => 'RHT',
     'extras' => 'Extras',
+    'pump_speed' => 'Pump Speed',
     'intro_configuration' => 'AQMS unit configuration Menu',
     'intro_parameter' => 'Setting gases, particulate, meteorology, humidity and temperature sensors',
     'intro_calibration' => 'Sensor calibration menu',

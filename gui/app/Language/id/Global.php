@@ -40,6 +40,7 @@ return [
     'GasesPressure' => 'Tekanan Gas',
     'Rht' => 'RHT',
     'extras' => 'Tambahan',
+    'pump_speed' => 'Kecepatan Pompa',
     'intro_configuration' => 'Menu Konfigurasi unit AQMS',
     'intro_parameter' => 'Setelan sensor gas, partikulat, meteorologi, kelembaban and suhu',
     'intro_calibration' => 'Menu kalibrasi sensor gas',

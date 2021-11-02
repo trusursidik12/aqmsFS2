@@ -125,6 +125,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="small"><?= lang('Global.pump_speed') ?> <small>(%)</small></label>
+                                    <input type="text" name="pump_speed" value="<?= $__this->findConfig('pump_speed') ?>" placeholder="<?= lang('Global.pump_speed') ?> <?= lang('Global.pump_speed') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="small"><?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
                                     <input type="text" name="pump_interval" value="<?= $__this->findConfig('pump_interval') ?>" placeholder="<?= lang('Global.Interval') ?> <?= lang('Global.Pump') ?>" class="form-control">
                                 </div>
