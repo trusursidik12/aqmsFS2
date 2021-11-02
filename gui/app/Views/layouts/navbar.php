@@ -22,8 +22,8 @@
                 <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_export') ?>">
                     <a class="nav-link" href="<?= base_url('exports') ?>"><?= lang('Global.Export') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'rht' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_rht') ?>">
-                    <a class="nav-link" href="<?= base_url('rht') ?>"><?= lang('Global.Rht') ?></a>
+                <li class="nav-item <?= @strtolower($__routename) == 'rht' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_extras') ?>">
+                    <a class="nav-link" href="<?= base_url('rht') ?>"><?= lang('Global.extras') ?></a>
                 </li>
             </ul>
             <div class="d-flex justify-content-end align-items-center my-2 ml-md-0">
