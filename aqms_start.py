@@ -14,6 +14,10 @@ mycursor.execute("TRUNCATE measurement_logs");
 subprocess.Popen("php gui/spark serve", shell=True)
 time.sleep(1)
 
+mycursor.execute("UPDATE configurations SET content=NOW() WHERE name LIKE 'pump_last'")
+mydb.commit()
+print("UPDATE configurations SET content=NOW() WHERE name LIKE 'pump_last'")
+
 mycursor.execute("SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
 sensor_readers = mycursor.fetchall()
 for sensor_reader in sensor_readers:

@@ -309,7 +309,7 @@
                                 }
                                 $(`#value_${value.code}`).html(param_value);
                                 $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
-                                console.log('value_' + value.code + ' = ' + param_value);
+                                // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
                             }
@@ -329,6 +329,8 @@
                             let pump_interval = data?.config?.pump_interval;
                             let pump_state_time = (curent - pump_last) / 1000;
                             let remaining = (pump_interval * 60) - pump_state_time;
+                            console.log(pump_state_time);
+                            console.log(pump_interval);
                             let h = Math.floor(remaining / 3600);
                             let m = Math.floor((remaining - (h * 3600)) / 60);
                             let s = Math.floor(remaining % 60);
