@@ -37,7 +37,7 @@ class Rht extends BaseController
 		$data["rh_analyzer"] = explode(";", $analyzer)[5] * 1;
 		$data["temp_sensor"] = explode(";", $analyzer)[6] * 1;
 		$data["rh_sensor"]  = explode(";", $analyzer)[7] * 1;
-		$data["pressure"] = round((0.00392156862745098 * explode(";", $pump)[3]) + 0, 6); //round((0.00392156862745098 * $sensor[2][0]) + 0,6) // round((0.00784313725490196 * $sensor[2][0]) + 0,6)
+		$data["pressure"] = round((0.00784313725490196 * explode(";", $pump)[3]) + 0, 6); //round((0.00392156862745098 * $sensor[2][0]) + 0,6) // round((0.00784313725490196 * $sensor[2][0]) + 0,6)
 		$data["temp_pump"] = explode(";", $pump)[4] * 1;
 		$data["rh_pump"] = explode(";", $pump)[5] * 1;
 		$data["temp_psu"] = explode(";", $psu)[1] * 1;
