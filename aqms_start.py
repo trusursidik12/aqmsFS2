@@ -16,7 +16,6 @@ time.sleep(1)
 
 mycursor.execute("UPDATE configurations SET content=NOW() WHERE name LIKE 'pump_last'")
 mydb.commit()
-print("UPDATE configurations SET content=NOW() WHERE name LIKE 'pump_last'")
 
 mycursor.execute("SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
 sensor_readers = mycursor.fetchall()
