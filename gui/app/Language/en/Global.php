@@ -47,4 +47,7 @@ return [
     'intro_rht' => 'AQMS humidity and temperature info',
     'intro_connectivity' => 'Internet Connection Status',
     'intro_lang' => 'Language Setting',
+    'intro_aqms_location' => 'AQMS location',
+    'intro_change_unit' => 'Change parameter unit',
+    'intro_change_pump' => 'Switch active pump',
 ];

@@ -46,4 +46,7 @@ return [
     'intro_rht' => 'Info kelembaban dan suhu unit AQMS',
     'intro_connectivity' => 'Status koneksi internet',
     'intro_lang' => 'Setelan bahasa',
+    'intro_aqms_location' => 'Lokasi AQMS',
+    'intro_change_unit' => 'Ubah satuan parameter',
+    'intro_change_pump' => 'Ganti pompa aktif',
 ];

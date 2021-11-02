@@ -15,7 +15,7 @@
                         </span>
                         <?= lang('Global.Location') ?>
                         <div id="aqm_voltage">
-                            <h2 class="h3" data-intro="Lokasi AQMS" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?>
+                            <h2 class="h3" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?>
                                 <!-- Date -->
                             </h2>
                             <h2 class="h6 text-dark" id="date"></h2>
@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <span id="unit-content">(µg/m3)</span>
-                                <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="Mengubah satuan parameter">
+                                <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
@@ -58,7 +58,7 @@
                             <div>
                                 <span id="pumpState"><i class="fas fa-spinner fa-spin"></i></span>
                                 <span id="pumpTimer" class="small"><i class="fas fa-spinner fa-spin"></i></span>
-                                <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="Mengubah pompa aktif">
+                                <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
 
                                     <?= lang('Global.Switch') ?>
                                 </button>
