@@ -288,7 +288,7 @@
                                     }
                                 }
                                 $(`#value_${value.code}`).html(param_value);
-                                $(`#svalue_${value.code}`).html("volt: " + cleanStr(value?.sensor_value));
+                                $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value) + " Volt");
                                 // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
