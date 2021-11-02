@@ -3,7 +3,7 @@
 <div class="container-md py-1">
     <div class="row justify-content-start">
         <div class="col-md-12 my-2">
-            <div class="card bg-light px-3 py-0 mb-md-0 mb-3 overflow-hidden">
+            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                     <div id="location">
                         <div id="aqm_voltage">
@@ -14,13 +14,13 @@
                                     <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
                                 </svg>
                             </span>
-                            <h2 class="h3" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
-                            <h2 class="h5 text-dark" id="date"></h2>
+                            <h2 class="h4" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
+                            <h2 class="h6 text-dark" id="date"></h2>
                         </div>
 
                     </div>
                     <div>
-                        <div id="unit" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                        <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
                             <div class="mr-3">
                                 <span class="icon" style="display:inline-block;position:relative;top:-5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -30,16 +30,16 @@
                                         <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
                                     </svg>
                                 </span>
-                                <h6 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h6>
+                                <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
                             </div>
                             <div>
-                                <span id="unit-content" style="font-weight:bolder;font-size:20px;">(µg/m3)</span>
+                                <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
                                 <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
                         </div>
-                        <div id="pump" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                        <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
                             <div class="mr-3">
                                 <span class="icon" style="display:inline-block;position:relative;top:-5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -50,11 +50,11 @@
                                         <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
                                     </svg>
                                 </span>
-                                <h6 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h6>
+                                <h7 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
                             </div>
                             <div>
                                 <span id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
                                 <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
 
                                     <?= lang('Global.Switch') ?>
