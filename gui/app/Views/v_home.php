@@ -1,31 +1,28 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
-<div class="container-md py-2">
+<div class="container-md py-1">
     <div class="row justify-content-start">
-        <div class="col-md-12 my-3">
+        <div class="col-md-12 my-2">
             <div class="card bg-light px-3 py-0 mb-md-0 mb-3 overflow-hidden">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                     <div id="location">
-                        <span class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <circle cx="12" cy="11" r="3"></circle>
-                                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                            </svg>
-                        </span>
-                        <?= lang('Global.Location') ?>
                         <div id="aqm_voltage">
-                            <h2 class="h3" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?>
-                                <!-- Date -->
-                            </h2>
-                            <h2 class="h6 text-dark" id="date"></h2>
+                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="12" cy="11" r="3"></circle>
+                                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                                </svg>
+                            </span>
+                            <h2 class="h3" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
+                            <h2 class="h5 text-dark" id="date"></h2>
                         </div>
 
                     </div>
                     <div>
                         <div id="unit" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                            <div class="mr-5">
-                                <span class="icon">
+                            <div class="mr-3">
+                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <line x1="12" y1="12" x2="12" y2="12.01"></line>
@@ -33,18 +30,18 @@
                                         <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
                                     </svg>
                                 </span>
-                                <?= lang('Global.Unit') ?>
+                                <h6 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h6>
                             </div>
                             <div>
-                                <span id="unit-content">(µg/m3)</span>
+                                <span id="unit-content" style="font-weight:bolder;font-size:20px;">(µg/m3)</span>
                                 <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
                         </div>
                         <div id="pump" class="my-2 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                            <div class="mr-5">
-                                <span class="icon">
+                            <div class="mr-3">
+                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <rect x="3" y="3" width="6" height="6" rx="1" />
@@ -53,11 +50,11 @@
                                         <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
                                     </svg>
                                 </span>
-                                <?= lang('Global.Pump') ?>
+                                <h6 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h6>
                             </div>
                             <div>
-                                <span id="pumpState"><i class="fas fa-spinner fa-spin"></i></span>
-                                <span id="pumpTimer" class="small"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
                                 <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
 
                                     <?= lang('Global.Switch') ?>
@@ -69,56 +66,45 @@
             </div>
         </div>
         <div class="col-sm mx-2">
-            <div class="card">
-                <div class="p-2">
-
-                    <h1 class="h5" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
-                    <div id="particulate">
-                        <?php foreach ($particulates as $particulate) : ?>
-                            <div class="my-1 mx-n4 shadow px-3 py-2 rounded" style="background-color:RGBA(28,183,160,0.6);">
-                                <span class="py-0 font-weight-bold"><?= $particulate->caption_id ?></span>
-                                <div class="m-0 d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <h3 class="h1 mr-1" id="value_<?= $particulate->code ?>">0</h3>
-                                        <small><?= $particulate->default_unit ?></small>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h3 class="h6 mr-1" id="value_<?= $particulate->code ?>_flow"></h3>
-                                        <small>l/mnt</small>
-                                    </div>
-                                </div>
+            <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
+            <div id="particulate">
+                <?php foreach ($particulates as $particulate) : ?>
+                    <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,0.6);background-image: url(../img/black_metal_texture.png);">
+                        <span class="h6 py-0 font-weight-bold text-light"><?= $particulate->caption_id ?></span>
+                        <div class="m-0 d-flex justify-content-between">
+                            <div class="d-flex align-items-center text-light">
+                                <h3 class="h1 mr-1 text-light" id="value_<?= $particulate->code ?>">0</h3>
+                                <p><?= $particulate->default_unit ?></p>
                             </div>
-                        <?php endforeach; ?>
+                            <div class="d-flex align-items-center" style="color:#FFFF00">
+                                <h3 class="h5 mr-1" id="value_<?= $particulate->code ?>_flow" style="color:#FFFF00"></h3>
+                                l/mnt
+                            </div>
+                        </div>
                     </div>
-                </div>
-
+                <?php endforeach; ?>
             </div>
+
             <div class="text-center rounded my-1" id="chartdiv">
             </div>
         </div>
         <div class="col-sm mx-2">
-            <div class="card">
-                <div class="p-2">
-                    <h1 class="h5" data-intro="Gas"><?= lang('Global.Gases') ?></h1>
-                    <div id="gas-content">
-                        <?php foreach ($gases as $gas) : ?>
-                            <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(124,122,243,0.6);">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="py-0 font-weight-bold"><?= $gas->caption_id ?></span>
-                                    <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $gas->code ?>">0</span>
-                                </div>
-                                <div class="m-0 d-flex justify-content-center ">
-                                    <div class="d-flex align-items-center">
-                                        <h3 class="h3 mr-1" id="value_<?= $gas->code ?>">0</h3>
-                                        <small class="switch-unit"><?= $gas->default_unit ?></small>
-
-                                    </div>
-                                </div>
+            <h1 class="h4 text-light" data-intro="Gas"><?= lang('Global.Gases') ?></h1>
+            <div id="gas-content">
+                <?php foreach ($gases as $gas) : ?>
+                    <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGBA(124,122,243,0.6);background-image: url(../img/black_metal_texture.png);">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 py-0 font-weight-bold text-light"><?= $gas->caption_id ?></span>
+                            <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $gas->code ?>">0</span>
+                        </div>
+                        <div class="m-0 d-flex justify-content-center">
+                            <div class="d-flex align-items-center">
+                                <h3 class="h3 mr-1 text-light" id="value_<?= $gas->code ?>">0</h3>
+                                &nbsp;&nbsp;<p class="switch-unit" style="color:#FFFF00"><?= $gas->default_unit ?></p>
                             </div>
-                        <?php endforeach; ?>
-
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
             <!--div class="card mt-1">
                 <div class="p-2">
@@ -144,25 +130,19 @@
             </div-->
         </div>
         <div class="col-sm mx-2">
-            <div class="card">
-                <div class="p-2">
-                    <h1 class="h5" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
-                    <div id="meteorologi-content">
-                        <?php foreach ($weathers as $wheather) : ?>
-                            <!-- <div class="my-1 mx-n4 shadow px-3 rounded" style="max-height: 8vh;background-color:RGBA(99,173,252,0.6);"> -->
-                            <div class="my-1 mx-n4 shadow px-3 rounded" style="background-color:RGBA(99,173,252,0.6);">
-                                <span class="py-0 font-weight-bold"><?= $wheather->caption_id ?></span>
-                                <div class="m-0 d-flex justify-content-center">
-                                    <!-- <div class="d-flex align-items-center mt-n3"> -->
-                                    <div class="d-flex align-items-center">
-                                        <h3 class="h3 mr-1" id="value_<?= $wheather->code ?>">0</h3>
-                                        <small><?= $wheather->default_unit ?></small>
-                                    </div>
-                                </div>
+            <h1 class="h4 text-light" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
+            <div id="meteorologi-content">
+                <?php foreach ($weathers as $wheather) : ?>
+                    <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGBA(99,173,252,0.6);background-image: url(../img/black_metal_texture.png);">
+                        <span class="h6 font-weight-bold text-light"><?= $wheather->caption_id ?></span>
+                        <div class="m-0 d-flex justify-content-center text-light">
+                            <div class="d-flex align-items-center">
+                                <h3 class="h4 mr-1 text-light" id="value_<?= $wheather->code ?>">0</h3>
+                                <?= $wheather->default_unit ?>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@ return [
     'Gases' => 'Gases',
     'Rht' => 'RHT',
     'intro_configuration' => 'AQMS unit configuration Menu',
-    'intro_parameter' => 'Setting gases, particulate, weather, humidity and temperature sensors',
+    'intro_parameter' => 'Setting gases, particulate, meteorology, humidity and temperature sensors',
     'intro_calibration' => 'Sensor calibration menu',
     'intro_export' => 'Export AQMS data',
     'intro_rht' => 'AQMS humidity and temperature info',
