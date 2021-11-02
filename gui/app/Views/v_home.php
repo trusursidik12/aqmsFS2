@@ -95,7 +95,7 @@
                     <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGBA(124,122,243,0.6);background-image: url(../img/black_metal_texture.png);">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="h5 py-0 font-weight-bold text-light"><?= $gas->caption_id ?></span>
-                            <span class="py-0 small font-weight-bold sensor d-none" id="svalue_<?= $gas->code ?>">0</span>
+                            <span class="py-0 small font-weight-bold sensor d-none text-light" id="svalue_<?= $gas->code ?>">0</span>
                         </div>
                         <div class="m-0 d-flex justify-content-center">
                             <div class="d-flex align-items-center">
@@ -288,7 +288,7 @@
                                     }
                                 }
                                 $(`#value_${value.code}`).html(param_value);
-                                $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
+                                $(`#svalue_${value.code}`).html("volt: " + cleanStr(value?.sensor_value));
                                 // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
