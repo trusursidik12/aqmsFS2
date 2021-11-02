@@ -39,10 +39,6 @@
     if (getCookie('introjs') === null) {
         setCookie('introjs', 1, 7);
         introJs().start();
-        console.log('Cookie tidak ada');
-    } else {
-        console.log('Cookie ada');
-        // introJs('#layout-content').start();
     }
     $('#help').click(function() {
         introJs().start();

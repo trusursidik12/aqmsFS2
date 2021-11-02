@@ -39,4 +39,12 @@ return [
     'Particulate' => 'Particulate',
     'GasesPressure' => 'Gases Pressure',
     'Gases' => 'Gases',
+    'Rht' => 'RHT',
+    'intro_configuration' => 'AQMS unit configuration Menu',
+    'intro_parameter' => 'Setting gases, particulate, weather, humidity and temperature sensors',
+    'intro_calibration' => 'Sensor calibration menu',
+    'intro_export' => 'Export AQMS data',
+    'intro_rht' => 'AQMS humidity and temperature info',
+    'intro_connectivity' => 'Internet Connection Status',
+    'intro_lang' => 'Language Setting',
 ];

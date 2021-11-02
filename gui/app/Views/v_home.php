@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-1">
+            <!--div class="card mt-1">
                 <div class="p-2">
                     <h1 class="h5" data-intro="Tekanan Gas"><?= lang('Global.GasesPressure') ?></h1>
                     <div id="gas-content">
@@ -141,7 +141,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div-->
         </div>
         <div class="col-sm mx-2">
             <div class="card">
@@ -309,7 +309,6 @@
                                 }
                                 $(`#value_${value.code}`).html(param_value);
                                 $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value));
-                                console.log(param_value);
                                 // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);

@@ -38,5 +38,12 @@ return [
     'Meteorology' => 'Cuaca',
     'Particulate' => 'Partikulat',
     'GasesPressure' => 'Tekanan Gas',
-    'Gases' => 'Gas',
+    'Rht' => 'RHT',
+    'intro_configuration' => 'Menu Konfigurasi unit AQMS',
+    'intro_parameter' => 'Setelan sensor gas, partikulat, cuaca, kelembaban and suhu',
+    'intro_calibration' => 'Menu kalibrasi sensor gas',
+    'intro_export' => 'Export data AQMS',
+    'intro_rht' => 'Info kelembaban dan suhu unit AQMS',
+    'intro_connectivity' => 'Status koneksi internet',
+    'intro_lang' => 'Setelan bahasa',
 ];
