@@ -16,9 +16,9 @@
                 <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_parameter') ?>">
                     <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
-                <!--li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
+                <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
                     <a class="nav-link" href="<?= base_url('calibrations') ?>"><?= lang('Global.Calibration') ?></a>
-                </li-->
+                </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_export') ?>">
                     <a class="nav-link" href="<?= base_url('exports') ?>"><?= lang('Global.Export') ?></a>
                 </li>

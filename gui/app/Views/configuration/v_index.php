@@ -126,7 +126,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.pump_speed') ?> <small>(%)</small></label>
-                                    <input type="text" name="pump_speed" value="<?= $__this->findConfig('pump_speed') ?>" placeholder="<?= lang('Global.pump_speed') ?> <?= lang('Global.pump_speed') ?>" class="form-control">
+                                    <input type="text" name="pump_speed" value="<?= $__this->findConfig('pump_speed') ?>" placeholder="<?= lang('Global.pump_speed') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -150,6 +150,28 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="card mt-3">
+                    <div class="bg-light px-3 py-2">
+                        <h2 class="h4"><?= lang('Global.Configuration') ?> Calibration</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small"><?= lang('Global.zerocal_schedule') ?></label>
+                                    <input type="text" name="zerocal_schedule" value="<?= $__this->findConfig('zerocal_schedule') ?>" placeholder="<?= lang('Global.zerocal_schedule') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small"><?= lang('Global.zerocal_duration') ?> <small>(<?= lang('Global.Seconds') ?>)</small></label>
+                                    <input type="text" name="zerocal_duration" value="<?= $__this->findConfig('zerocal_duration') ?>" placeholder="<?= lang('Global.zerocal_duration') ?>" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="position-fixed" style="z-index: 999;right:11vw;bottom:20px;">

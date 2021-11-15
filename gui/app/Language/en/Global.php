@@ -15,6 +15,7 @@ return [
     'Station' => 'Station',
     'Timestamp' => 'Timestamp',
     'Minutes' => 'Minutes',
+    'Seconds' => 'Seconds',
     'Show' => 'Show',
     'Hide' => 'Hide',
     'Back' => 'Back',
@@ -53,4 +54,6 @@ return [
     'intro_aqms_location' => 'AQMS location',
     'intro_change_unit' => 'Change parameter unit',
     'intro_change_pump' => 'Switch active pump',
+    'zerocal_schedule' => 'Zero Calibration Schedule',
+    'zerocal_duration' => 'Zero Calibration Duration',
 ];
