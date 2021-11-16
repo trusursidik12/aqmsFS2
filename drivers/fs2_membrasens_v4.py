@@ -4,10 +4,13 @@ import sys
 import minimalmodbus
 import serial
 import time
+import datetime
 import struct
 import db_connect
 
 is_MEMBRAPOR_connect = False
+is_zero_calibrating = False
+zerocal_finished_at = ""
 
 try:
     mydb = db_connect.connecting()
@@ -52,36 +55,6 @@ def connect_membrapor(membrapormode):
         rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=0.2
         
-        #concentration
-        ##add0=rs485.read_register(1000,0,3,False)
-        ##add1=rs485.read_register(1001,0,3,False)
-        ##add2=rs485.read_register(1002,0,3,False)
-        ##add3=rs485.read_register(1003,0,3,False)
-        ##add4=rs485.read_register(1004,0,3,False)
-        ##add5=rs485.read_register(1005,0,3,False)
-        ##add6=rs485.read_register(1006,0,3,False)
-        ##add7=rs485.read_register(1007,0,3,False)
-        
-        #voltage
-        ##add00=rs485.read_register(1010,0,3,False)
-        ##add01=rs485.read_register(1011,0,3,False)
-        ##add02=rs485.read_register(1012,0,3,False)
-        ##add03=rs485.read_register(1013,0,3,False)
-        ##add04=rs485.read_register(1014,0,3,False)
-        ##add05=rs485.read_register(1015,0,3,False)
-        ##add06=rs485.read_register(1016,0,3,False)
-        ##add07=rs485.read_register(1017,0,3,False)
-        
-        #temp
-        ##add000=rs485.read_register(1070,0,3,False)
-        ##add001=rs485.read_register(1071,0,3,False)
-        ##add002=rs485.read_register(1072,0,3,False)
-        ##add003=rs485.read_register(1073,0,3,False)
-        ##add004=rs485.read_register(1074,0,3,False)
-        ##add005=rs485.read_register(1075,0,3,False)
-        ##add006=rs485.read_register(1076,0,3,False)
-        ##add007=rs485.read_register(1077,0,3,False)
-        
         regConcentration = rs485.read_registers(1000,8,3)
         regVoltage = rs485.read_registers(1010,8,3)
         regTemp = rs485.read_registers(1070,8,3)
@@ -92,10 +65,78 @@ def connect_membrapor(membrapormode):
         print(e)
         return None
 
+def zeroing():
+    global is_zero_calibrating
+    try:
+        mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+        sensor_reader = mycursor.fetchone()
+    
+        rs485=minimalmodbus.Instrument(sensor_reader[0],1)
+        rs485.serial.baudrate=sensor_reader[1]
+        rs485.serial.parity=serial.PARITY_EVEN
+        rs485.serial.bytesize=8
+        rs485.serial.stopbits=1
+        rs485.mode=minimalmodbus.MODE_RTU
+        rs485.serial.timeout=0.2
+        
+        print("Zeroing...")
+        is_zero_calibrating = False
+        rs485.write_registers(1200,[0,0,0,0])
+        time.sleep(1)
+        rs485.write_registers(1220,[0,0,0,0])
+        time.sleep(3)
+        
+        
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'calibrator_name'")
+        calibrator_name = mycursor.fetchone()[0]
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_started_at'")
+        zerocal_started_at = mycursor.fetchone()[0]
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+        zerocal_finished_at = mycursor.fetchone()[0]
+        mycursor.execute("SELECT value FROM sensor_values WHERE sensor_reader_id = '" + sys.argv[1] + "' AND pin=0")
+        value = mycursor.fetchone()[0]
+        
+        mycursor.execute("INSERT INTO calibrations (calibrator_name,started_at,finished_at,sensor_reader_id,value) VALUES ('" + calibrator_name + "','" + zerocal_started_at + "','" + zerocal_finished_at + "','" + sys.argv[1] + "','" + value + "')")
+        mydb.commit()
+        
+        
+        mycursor.execute("UPDATE configurations SET content = '0' WHERE name LIKE 'is_zerocal'")
+        mydb.commit()
+        mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'zerocal_started_at'")
+        mydb.commit()
+        mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'zerocal_finished_at'")
+        mydb.commit()
+        
+        return True
+        
+    except Exception as e:
+        print(e)
+        return None
+
 
 try:
     while True:
         try:
+            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
+            is_zerocal = mycursor.fetchone()[0]
+            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+            zerocal_finished_at = mycursor.fetchone()[0]
+            # print(is_zerocal + " : " + zerocal_finished_at)
+            
+            if(int(is_zerocal) == 1 and zerocal_finished_at != ""):
+                is_zero_calibrating = True
+                
+            if(is_zero_calibrating):
+                try:
+                    currenttime = datetime.datetime.now()
+                    # print(zerocal_finished_at + " ||| " + str(currenttime)[0:19])
+                    if(zerocal_finished_at <= str(currenttime)[0:19] or zerocal_finished_at == ""):
+                        zeroing()
+                        time.sleep(1)
+                        
+                except Exception as e3:
+                    print(e3)
+        
             val = connect_membrapor(int(sys.argv[1]))
             # print(val)
             MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]) + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            

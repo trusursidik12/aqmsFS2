@@ -21,6 +21,30 @@
         </div>
     </form>
 
+
+    <div class="row justify-content-start">
+        <div class="col-md-12 my-2">
+            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Started At</td>
+                            <td id="zerocal_started_at"></td>
+                        </tr>
+                        <tr>
+                            <td>Finish At</td>
+                            <td id="zerocal_finished_at"></td>
+                        </tr>
+                        <tr>
+                            <td>Remaining</td>
+                            <td id="calibration Remaining"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-start">
         <div class="col-md-12 my-2">
             <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
