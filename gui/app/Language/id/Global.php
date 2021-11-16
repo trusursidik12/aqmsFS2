@@ -55,4 +55,5 @@ return [
     'intro_change_pump' => 'Ganti pompa aktif',
     'zerocal_schedule' => 'Jadwal Kalibrasi Nol',
     'zerocal_duration' => 'Durasi Kalibrasi Nol',
+    'calibrator_name' => 'Nama Operator Kalibrasi',
 ];

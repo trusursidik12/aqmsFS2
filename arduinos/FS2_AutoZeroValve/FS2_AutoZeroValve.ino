@@ -38,6 +38,6 @@ void loop() {
     }
     Serial.print("FS2_AUTO_ZERO_VALVE;");
     Serial.print(activeValve);
-    Serial.print(";");
+    Serial.println(";");
     delay(1000);
 }

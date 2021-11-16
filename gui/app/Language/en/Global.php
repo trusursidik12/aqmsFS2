@@ -56,4 +56,5 @@ return [
     'intro_change_pump' => 'Switch active pump',
     'zerocal_schedule' => 'Zero Calibration Schedule',
     'zerocal_duration' => 'Zero Calibration Duration',
+    'calibrator_name' => 'Calibrator Name',
 ];
