@@ -54,6 +54,7 @@ return [
     'intro_aqms_location' => 'AQMS location',
     'intro_change_unit' => 'Change parameter unit',
     'intro_change_pump' => 'Switch active pump',
+    'zero_calibrations' => 'Zero Calibration',
     'zerocal_schedule' => 'Zero Calibration Schedule',
     'zerocal_duration' => 'Zero Calibration Duration',
     'calibrator_name' => 'Calibrator Name',

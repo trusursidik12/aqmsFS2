@@ -53,6 +53,7 @@ return [
     'intro_aqms_location' => 'Lokasi AQMS',
     'intro_change_unit' => 'Ubah satuan parameter',
     'intro_change_pump' => 'Ganti pompa aktif',
+    'zero_calibrations' => 'Kalibrasi Nol',
     'zerocal_schedule' => 'Jadwal Kalibrasi Nol',
     'zerocal_duration' => 'Durasi Kalibrasi Nol',
     'calibrator_name' => 'Nama Operator Kalibrasi',

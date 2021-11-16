@@ -16,12 +16,14 @@ namespace App\Controllers;
  */
 
 use CodeIgniter\Controller;
+use App\Models\m_configuration;
 
 class BaseController extends Controller
 {
 	protected $users;
 	protected $groups;
 	protected $menus;
+	protected $configuration;
 	protected $session;
 	protected $_form;
 
@@ -30,6 +32,7 @@ class BaseController extends Controller
 		/* Setup language */
 		$this->language = \Config\Services::language();
 		$this->language->setlocale(session()->has('web_lang') ? session()->get('web_lang') : 'en');
+		$this->configuration = new m_configuration();
 		// $this->users =  new m_a_user();
 		// $this->groups =  new m_a_group();
 		// $this->menus =  new m_a_menu();
@@ -964,8 +967,6 @@ class BaseController extends Controller
 	//AQMS FS2
 	public function findConfig($name)
 	{
-		$data['config']	=	$this->configuration->get()->getResultArray();
-		$idx = array_search($name, array_column($data['config'], 'name'));
-		return @$data['config'][$idx]['content'];
+		return $this->configuration->where("name LIKE '" . $name . "'")->find()[0]->content;
 	}
 }
