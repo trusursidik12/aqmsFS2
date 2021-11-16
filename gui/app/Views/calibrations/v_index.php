@@ -1,30 +1,33 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
 <div class="container-md py-3">
-    <form action="<?= base_url('calibrations') ?>" method="POST">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="bg-light px-3 py-2">
-                        <h2 class="h4"><?= lang('Global.zero_calibrations') ?></h2>
-                        <div class="form-group">
-                            <label><?= lang('Global.calibrator_name') ?></label>
-                            <input type="text" name="calibrator_name" placeholder="<?= lang('Global.calibrator_name') ?>" value="<?= $__this->findConfig('calibrator_name') ?>" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label><?= lang('Global.zerocal_duration') ?> <small>(<?= lang('Global.Seconds') ?>)</small></label>
-                            <input type="text" name="zerocal_duration" placeholder="<?= lang('Global.zerocal_duration') ?>" value="<?= $__this->findConfig('zerocal_duration') ?>" class="form-control">
-                        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="bg-light px-3 py-2">
+                    <h2 class="h4"><?= lang('Global.zero_calibrations') ?></h2>
+                    <div class="form-group">
+                        <label><?= lang('Global.calibrator_name') ?></label>
+                        <input type="text" id="calibrator_name" name="calibrator_name" placeholder="<?= lang('Global.calibrator_name') ?>" value="<?= $__this->findConfig('calibrator_name') ?>" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label><?= lang('Global.zerocal_duration') ?> <small>(<?= lang('Global.Seconds') ?>)</small></label>
+                        <input type="text" id="zerocal_duration" name="zerocal_duration" placeholder="<?= lang('Global.zerocal_duration') ?>" value="<?= $__this->findConfig('zerocal_duration') ?>" class="form-control">
+                    </div>
+                    <button id="btn_start_zero_calibration" class="btn btn-success btn-lg float-right" onclick="start_zero_calibration()"><?= lang('Global.start'); ?></button>
+                    <button id="btn_force_stop_zero_calibration" class="btn btn-warning btn-lg float-right d-none" onclick="force_stop_zero_calibration()"><?= lang('Global.force_stop'); ?></button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 
 
     <div class="row justify-content-start">
         <div class="col-md-12 my-2">
             <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+                <b>
+                    <h4><?= lang('Global.zero_calibrating_status'); ?></h4>
+                </b>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -37,7 +40,7 @@
                         </tr>
                         <tr>
                             <td>Remaining</td>
-                            <td id="calibration Remaining"></td>
+                            <td id="calibration_remaining"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -160,7 +163,55 @@
                     console.log(err);
                 }
             })
+            $.ajax({
+                url: '<?= base_url('calibration/get_data') ?>',
+                dataType: 'json',
+                success: function(data) {
+                    if (data !== null) {
+                        $("#zerocal_started_at").html(data.zerocal_started_at);
+                        $("#zerocal_finished_at").html(data.zerocal_finished_at);
+                        $("#calibration_remaining").html(data.remaining);
+                        if (data.is_zerocalibrating == 0) {
+                            $("#btn_start_zero_calibration").removeClass("d-none");
+                            $("#btn_force_stop_zero_calibration").addClass("d-none");
+                        } else {
+                            $("#btn_start_zero_calibration").addClass("d-none");
+                            $("#btn_force_stop_zero_calibration").removeClass("d-none");
+                        }
+                    }
+                },
+                error: function(xhr, status, err) {
+                    console.log(err);
+                }
+            })
+
         }, 1000);
     });
+
+    function start_zero_calibration() {
+        $.ajax({
+            url: "<?= base_url(); ?>/calibration/zero_calibration_starting/" + $("#calibrator_name").val() + "/" + $("#zerocal_duration").val(),
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xhr, status, err) {
+                console.log(err);
+            }
+        })
+    }
+
+    function force_stop_zero_calibration() {
+        $.ajax({
+            url: "<?= base_url(); ?>/calibration/force_stop_zero_calibration/",
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(xhr, status, err) {
+                console.log(err);
+            }
+        })
+    }
 </script>
 <?= $this->endSection() ?>

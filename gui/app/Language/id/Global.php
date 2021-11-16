@@ -54,7 +54,10 @@ return [
     'intro_change_unit' => 'Ubah satuan parameter',
     'intro_change_pump' => 'Ganti pompa aktif',
     'zero_calibrations' => 'Kalibrasi Nol',
+    'zero_calibrating_status' => 'Status Kalibrasi Nol',
     'zerocal_schedule' => 'Jadwal Kalibrasi Nol',
     'zerocal_duration' => 'Durasi Kalibrasi Nol',
     'calibrator_name' => 'Nama Operator Kalibrasi',
+    'start' => 'Mulai',
+    'force_stop' => 'Paksa Berhenti',
 ];

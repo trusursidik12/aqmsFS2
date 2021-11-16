@@ -55,7 +55,10 @@ return [
     'intro_change_unit' => 'Change parameter unit',
     'intro_change_pump' => 'Switch active pump',
     'zero_calibrations' => 'Zero Calibration',
+    'zero_calibrating_status' => 'Zero Calibrating Status',
     'zerocal_schedule' => 'Zero Calibration Schedule',
     'zerocal_duration' => 'Zero Calibration Duration',
     'calibrator_name' => 'Calibrator Name',
+    'start' => 'Start',
+    'force_stop' => 'Force Stop',
 ];
