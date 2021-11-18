@@ -37,7 +37,7 @@ def check_as_arduino(port):
     COM = serial.Serial()
     COM.port = port
     COM.baudrate = 9600
-    COM.timeout = 3
+    COM.timeout = 10
     COM.open()
     retval = str(COM.readline())
     if(retval.count("FS2_ANALYZER") > 0):
@@ -123,7 +123,7 @@ serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
     if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("COM") > 0):
-        time.sleep(8)
+        time.sleep(5)
         check_as_arduino(serial_port[0])
         
         mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
