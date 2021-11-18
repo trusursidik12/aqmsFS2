@@ -37,7 +37,7 @@ def check_as_arduino(port):
     COM = serial.Serial()
     COM.port = port
     COM.baudrate = 9600
-    COM.timeout = 10
+    COM.timeout = 30
     COM.open()
     retval = str(COM.readline())
     if(retval.count("FS2_ANALYZER") > 0):
