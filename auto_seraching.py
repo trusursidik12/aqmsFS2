@@ -123,12 +123,18 @@ for serial_port in serial_ports:
     check_as_arduino(serial_port[0])
     
     mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
-    sensor_reader_id = mycursor.fetchone()[0]
+    try:
+        sensor_reader_id = mycursor.fetchone()[0]
+    except Exception as e:
+        sensor_reader_id = ""
     if(str(sensor_reader_id) == ""):
         check_as_membrasens(serial_port[0])
     
     mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
-    sensor_reader_id = mycursor.fetchone()[0]
+    try:
+        sensor_reader_id = mycursor.fetchone()[0]
+    except Exception as e:
+        sensor_reader_id = ""
     if(str(sensor_reader_id) == ""):
         check_as_ventagepro2(serial_port[0])
     
