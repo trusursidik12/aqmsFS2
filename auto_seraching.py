@@ -68,6 +68,7 @@ def check_as_membrasens(port):
         regConcentration = rs485.read_registers(1000,8,3)
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_membrasens_v4.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        return None
     except Exception as e: 
         None
         
