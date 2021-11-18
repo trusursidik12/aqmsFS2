@@ -89,15 +89,11 @@ def check_as_ventagepro2(port):
     except Exception as e: 
         None
 
-
-mycursor.execute("TRUNCATE sensor_values");
-mydb.commit()
-mycursor.execute("TRUNCATE measurement_logs");
-mydb.commit()
+##=============================AUTO DETECT SERIAL PORTS=================================
 mycursor.execute("UPDATE sensor_readers SET sensor_code=''")
 mydb.commit()
-
-##=============================AUTO DETECT SERIAL PORTS=================================
+mycursor.execute("TRUNCATE TABLE serial_ports")
+mydb.commit()
 
 for port in serial_ports():
     print("Adding port " + port)
@@ -145,6 +141,10 @@ for serial_port in serial_ports:
             check_as_ventagepro2(serial_port[0])
             
 ##=============================END AUTO DETECT SERIAL PORTS=================================
+mycursor.execute("TRUNCATE sensor_values");
+mydb.commit()
+mycursor.execute("TRUNCATE measurement_logs");
+mydb.commit()
 
 
 subprocess.Popen("php gui/spark serve", shell=True)
