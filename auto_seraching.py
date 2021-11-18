@@ -107,6 +107,7 @@ for port in serial_ports():
                 port_desc = port_desc.split(":")[1].split(" now attached")[0]
             except:
                 port_desc = port_desc
+        port_desc = port_desc[0:99]
 
     print(port_desc)
     try:
