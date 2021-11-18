@@ -27,10 +27,6 @@ void setup() {
     pinMode(pinFanPwm, OUTPUT);
     delay(1000);
     digitalWrite(pinFanPwm, HIGH);
-    delay(1000);
-    digitalWrite(pinFanPwm, LOW);
-    delay(1000);
-    digitalWrite(pinFanPwm, HIGH);
     Serial.println("Connecting SHT31 I...");
     if (! sht31_1.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
       Serial.println("Couldn't find SHT31 I");
@@ -50,34 +46,6 @@ void setup() {
 
 String getValue(String data)
 {
-    if(!isSHT_1){
-      if (sht31_1.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
-        isSHT_1 = true;
-      }
-    }
-    
-    if(isSHT_1){
-      temp1 = sht31_1.readTemperature();
-      hum1 = sht31_1.readHumidity();
-    } else {
-      temp1 = 0.0;
-      hum1 = 0.0;
-    }
-    
-    if(!isSHT_2){
-      if (sht31_2.begin(0x45)) {   // Set to 0x45 for alternate i2c addr
-        isSHT_2 = true;
-      }
-    }
-    
-    if(isSHT_2){
-      temp2 = sht31_2.readTemperature();
-      hum2 = sht31_2.readHumidity();
-    } else {
-      temp2 = 0.0;
-      hum2 = 0.0;
-    }
-
     String retval = "";
     String temp = "";
     if(data.length() > 0){
@@ -91,18 +59,47 @@ String getValue(String data)
           if(comas < 2 && data[i] != ','){
             retval += data[i];
           } else {
-            if(comas < 1) retval += ";";
+            if(comas < 1) retval += "|||";
             comas++;
           }
         }
       } else {
-        retval = "000.000;0.0";
+        retval = "000.000|||0.0";
       }
     }
-    return retval;
+    return "|||" + retval + "|||";
 }
 
 void loop() {
+  if(!isSHT_1){
+    if (sht31_1.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+      isSHT_1 = true;
+    }
+  }
+  
+  if(isSHT_1){
+    temp1 = sht31_1.readTemperature();
+    hum1 = sht31_1.readHumidity();
+  } else {
+    temp1 = 0.0;
+    hum1 = 0.0;
+  }
+  
+  if(!isSHT_2){
+    if (sht31_2.begin(0x45)) {   // Set to 0x45 for alternate i2c addr
+      isSHT_2 = true;
+    }
+  }
+    
+  if(isSHT_2){
+    temp2 = sht31_2.readTemperature();
+    hum2 = sht31_2.readHumidity();
+  } else {
+    temp2 = 0.0;
+    hum2 = 0.0;
+  }
+
+  
   vacuum = analogRead(pinVacuum);
   string_pm01 = "";
   if(Serial1.available() > 0){
