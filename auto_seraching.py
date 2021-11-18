@@ -109,9 +109,11 @@ for port in serial_ports():
                 port_desc = port_desc
 
     print(port_desc)
-    mycursor.execute("INSERT INTO serial_ports (port,description) VALUES ('" + port +"','" + port_desc +"')")
-    mydb.commit()
-    
+    try:
+        mycursor.execute("INSERT INTO serial_ports (port,description) VALUES ('" + port +"','" + port_desc +"')")
+        mydb.commit()
+    except Exception as e: 
+        None
     
 mycursor.execute("SELECT port FROM serial_ports")
 serial_ports = mycursor.fetchall()
