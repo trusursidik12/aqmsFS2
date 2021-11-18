@@ -123,16 +123,7 @@ serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
     if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("COM") > 0):
-        time.sleep(5)
-        check_as_arduino(serial_port[0])
-        
-        mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
-        try:
-            sensor_reader_id = mycursor.fetchone()[0]
-        except Exception as e:
-            sensor_reader_id = ""
-        if(str(sensor_reader_id) == ""):
-            check_as_membrasens(serial_port[0])
+        check_as_membrasens(serial_port[0])
         
         mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
         try:
@@ -141,6 +132,15 @@ for serial_port in serial_ports:
             sensor_reader_id = ""
         if(str(sensor_reader_id) == ""):
             check_as_ventagepro2(serial_port[0])
+        
+        mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
+        try:
+            sensor_reader_id = mycursor.fetchone()[0]
+        except Exception as e:
+            sensor_reader_id = ""
+        if(str(sensor_reader_id) == ""):    
+            time.sleep(5)
+            check_as_arduino(serial_port[0])
             
 ##=============================END AUTO DETECT SERIAL PORTS=================================
 mycursor.execute("TRUNCATE sensor_values");
