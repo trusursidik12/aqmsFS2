@@ -45,15 +45,22 @@ def check_as_arduino(port):
     if(retval.count("FS2_ANALYZER") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_analyzer_module.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        print(" ==> FS2_ANALYZER")
+        
     if(retval.count("FS2_PUMP") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_pump_module.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        print(" ==> FS2_PUMP")
+        
     if(retval.count("FS2_PSU") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_psu_module.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        print(" ==> FS2_PSU")
+        
     if(retval.count("FS2_AUTO_ZERO_VALVE") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_autozerovalve.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        print(" ==> FS2_AUTO_ZERO_VALVE")
         
 def check_as_membrasens(port):
     try:
@@ -68,6 +75,7 @@ def check_as_membrasens(port):
         regConcentration = rs485.read_registers(1000,8,3)
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_membrasens_v4.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
+        print(" ==> FS2_MEMBRASENS_V4")
         return None
     except Exception as e: 
         None
@@ -77,11 +85,11 @@ def check_as_ventagepro2(port):
         COM_WS = VantagePro2.from_url("serial:%s:%s:8N1" % (port, 19200))
         ws_data = COM_WS.get_current_data()
         WS = ws_data.to_csv(';',False)
-        print(WS)
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'vantagepro2.py' AND sensor_code='' LIMIT 1")
         mydb.commit() 
+        print(" ==> VANTAGEPRO2")
     except Exception as e: 
-        print(e)
+        None
         
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
@@ -104,9 +112,14 @@ for port in serial_ports():
     mycursor.execute("INSERT INTO serial_ports (port,description) VALUES ('" + port +"','" + port_desc +"')")
     mydb.commit()
     
-    check_as_arduino(port)
-    check_as_membrasens(port)
-    check_as_ventagepro2(port)
+    
+mycursor.execute("SELECT port FROM serial_ports")
+serial_ports = mycursor.fetchall()
+for serial_port in serial_ports:
+    print(serial_port[0])
+    check_as_arduino(serial_port[0])
+    check_as_membrasens(serial_port[0])
+    check_as_ventagepro2(serial_port[0])
     
     
 
