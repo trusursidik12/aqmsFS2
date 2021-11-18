@@ -117,7 +117,7 @@ for port in serial_ports():
     except Exception as e: 
         None
     
-mycursor.execute("SELECT port,description FROM serial_ports")
+mycursor.execute("SELECT port,description FROM serial_ports ORDER BY port")
 serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
