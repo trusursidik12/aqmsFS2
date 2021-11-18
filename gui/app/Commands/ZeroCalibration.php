@@ -78,9 +78,20 @@ class ZeroCalibration extends BaseCommand
 		$this->configurations->where(["name" => "is_zerocal"])->set(["content" => "0"])->update();
 		$this->configurations->where(["name" => "zerocal_started_at"])->set(["content" => ""])->update();
 		$this->configurations->where(["name" => "zerocal_finished_at"])->set(["content" => ""])->update();
-		while (true) {
+		if (@$this->sensor_readers->where("driver LIKE 'fs2_autozerovalve.py' AND sensor_code != ''")->find()[0]->id > 0)
+			$looping = true;
+		else
+			$looping = false;
+
+		while ($looping) {
 			try {
 				$is_zerocal = @$this->configurations->where(["name" => "is_zerocal"])->find()[0]->content;
+				$zerocal_schedule = @$this->configurations->where(["name" => "zerocal_schedule"])->find()[0]->content;
+				if ($is_zerocal == 0 && substr($zerocal_schedule, 0, 5) == date("H:i") && $zerocal_schedule <= date("H:i:s")) {
+					$this->configurations->where(["name" => "is_zerocal"])->set(["content" => "1"])->update();
+					$is_zerocal = "1";
+				}
+
 				if ($is_zerocal == "1") {
 					if (!$is_calibrating) {
 						$sensor_value = @$this->sensor_values->where(["sensor_reader_id" => $sensor_reader_id])->find()[0]->value;
