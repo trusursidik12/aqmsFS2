@@ -81,14 +81,15 @@ def check_as_membrasens(port):
         
 def check_as_sds019(serialport):
     try:
-        ser = serial.rs485.RS485(port=serialport, baudrate=9600)
-        ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=False, rts_level_for_rx=True, delay_before_tx=0.0, delay_before_rx=-0.0)
-        client = ModbusSerialClient(method='rtu')
-        client.socket = ser
-        client.connect()
-        result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
-        client.close()
+        rs485=minimalmodbus.Instrument(port,1)
+        rs485.serial.baudrate=9600
+        rs485.serial.parity=serial.PARITY_EVEN
+        rs485.serial.bytesize=8
+        rs485.serial.stopbits=1
+        rs485.mode=minimalmodbus.MODE_RTU
+        rs485.serial.timeout=0.2
         
+        regConcentration = rs485.read_registers(0x00B4,8,3)
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_sds019.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
         print(" ==> FS2_SDS019")
