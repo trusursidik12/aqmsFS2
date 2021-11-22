@@ -96,6 +96,7 @@ def check_as_sds019(serialport):
             
         return None
     except Exception as e: 
+        print(e)
         None
         
 def check_as_ventagepro2(port):
