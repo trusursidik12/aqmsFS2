@@ -79,7 +79,7 @@ def check_as_membrasens(port):
     except Exception as e: 
         None
         
-def check_as_sds019(serialport):
+def check_as_sds019(port):
     try:
         rs485=minimalmodbus.Instrument(port,1)
         rs485.serial.baudrate=9600
