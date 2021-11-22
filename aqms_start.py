@@ -88,15 +88,19 @@ def check_as_sds019(serialport):
         client.socket = ser
         client.timeout = 0.5
         client.connect()
+        print("satu")
         result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
+        print("dua")
         print(count(result.registers))
         if(count(result.registers) == 3):
             mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_sds019.py' AND sensor_code='' LIMIT 1")
             mydb.commit()
             print(" ==> FS2_SDS019")
             
+        print("tiga")
         return None
     except Exception as e: 
+        print(e)
         None
         
 def check_as_ventagepro2(port):
