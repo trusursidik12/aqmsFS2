@@ -4,6 +4,7 @@ from pyvantagepro import VantagePro2
 import sys
 import minimalmodbus
 import serial
+import serial.rs485
 import time
 import subprocess
 import glob
@@ -78,6 +79,23 @@ def check_as_membrasens(port):
     except Exception as e: 
         None
         
+def check_as_sds019(serialport):
+    try:
+        ser = serial.rs485.RS485(port=serialport, baudrate=9600)
+        ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=False, rts_level_for_rx=True, delay_before_tx=0.0, delay_before_rx=-0.0)
+        client = ModbusSerialClient(method='rtu')
+        client.socket = ser
+        client.connect()
+        result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
+        client.close()
+        
+        mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_sds019.py' AND sensor_code='' LIMIT 1")
+        mydb.commit()
+        print(" ==> FS2_SDS019")
+        return None
+    except Exception as e: 
+        None
+        
 def check_as_ventagepro2(port):
     try:
         COM_WS = VantagePro2.from_url("serial:%s:%s:8N1" % (port, 19200))
@@ -124,6 +142,14 @@ for serial_port in serial_ports:
     print(serial_port[0])
     if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("COM") > 0):
         check_as_membrasens(serial_port[0])
+        
+        mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
+        try:
+            sensor_reader_id = mycursor.fetchone()[0]
+        except Exception as e:
+            sensor_reader_id = ""
+        if(str(sensor_reader_id) == ""):
+            check_as_sds019(serial_port[0])
         
         mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
         try:
