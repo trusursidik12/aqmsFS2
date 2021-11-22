@@ -21,13 +21,6 @@ try:
     sensor_reader = mycursor.fetchone()
 except Exception as e: 
     print("[X]  SDS019 ID: " + str(sys.argv[1]) + " " + e)
-    
-def dectofloat(dec0,dec1):
-    try:
-        hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
-        return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
-    except Exception as e: 
-        return "0"
 
 def update_sensor_value(sensor_reader_id,value):
     try:
@@ -57,10 +50,12 @@ def connect_sds019():
         result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
         client.close()
         
+        print("[V] SDS019 " + sensor_reader[0] + " CONNECTED")
+        
         return result
         
     except Exception as e:
-        print(e)
+        print("[X]  SDS019 ID: " + str(sys.argv[1]) + " " + e)
         return None
 
 
