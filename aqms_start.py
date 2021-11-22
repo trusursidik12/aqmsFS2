@@ -81,8 +81,8 @@ def check_as_membrasens(port):
         
 def check_as_sds019(serialport):
     try:
-        ser = serial.rs485.RS485(port=serialport, baudrate=9600,timeout=3)
-        ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=False, rts_level_for_rx=True, delay_before_tx=0.0, delay_before_rx=-0.0)
+        ser = serial.rs485.RS485(port=serialport, baudrate=9600, timeout=3)
+        ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=False, rts_level_for_rx=True, delay_before_tx=0.0, delay_before_rx=-0.0, timeout=3)
         ser.timeout = 0.5
         client = ModbusSerialClient(method='rtu')
         client.socket = ser
