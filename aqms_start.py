@@ -81,7 +81,7 @@ def check_as_membrasens(port):
         
 def check_as_sds019(serialport):
     try:
-        ser = serial.rs485.RS485(port=serialport, baudrate=9600)
+        ser = serial.rs485.RS485(port=serialport, baudrate=9600,timeout=3)
         ser.rs485_mode = serial.rs485.RS485Settings(rts_level_for_tx=False, rts_level_for_rx=True, delay_before_tx=0.0, delay_before_rx=-0.0)
         ser.timeout = 0.5
         client = ModbusSerialClient(method='rtu')
@@ -89,16 +89,13 @@ def check_as_sds019(serialport):
         client.timeout = 0.5
         client.connect()
         result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
-        print(len(result.registers))
         if(len(result.registers) == 3):
             mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_sds019.py' AND sensor_code='' LIMIT 1")
             mydb.commit()
             print(" ==> FS2_SDS019")
             
-        print("tiga")
         return None
     except Exception as e: 
-        print(e)
         None
         
 def check_as_ventagepro2(port):
