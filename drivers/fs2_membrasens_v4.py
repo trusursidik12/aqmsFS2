@@ -18,6 +18,7 @@ try:
     
     mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
     sensor_reader = mycursor.fetchone()
+        
 except Exception as e: 
     print("[X]  MEMBRAPOR ID: " + str(sys.argv[1]) + " " + e)
     
@@ -59,7 +60,9 @@ def connect_membrapor(membrapormode):
         regVoltage = rs485.read_registers(1010,8,3)
         regTemp = rs485.read_registers(1070,8,3)
         
-        print("[V] MEMBRAPOR " + sensor_reader[0] + " CONNECTED")
+        if(is_MEMBRAPOR_connect == False):
+            is_MEMBRAPOR_connect = True
+            print("[V] MEMBRAPOR " + sensor_reader[0] + " CONNECTED")
         
         return regConcentration + regVoltage + regTemp
         
@@ -146,6 +149,7 @@ try:
             # print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
+            is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
             

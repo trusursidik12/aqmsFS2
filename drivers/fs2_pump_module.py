@@ -15,7 +15,7 @@ try:
     mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
     sensor_reader = mycursor.fetchone()
 except Exception as e: 
-    print("[X]  [V] PUMP Module ID: " + str(sys.argv[1]) + " " + e)
+    print("[X]  PUMP Module ID: " + str(sys.argv[1]) + " " + e)
     
 def update_sensor_value(sensor_reader_id,value):
     try:

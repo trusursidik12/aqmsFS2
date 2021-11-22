@@ -19,6 +19,7 @@ try:
     
     mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
     sensor_reader = mycursor.fetchone()
+        
 except Exception as e: 
     print("[X]  SDS019 ID: " + str(sys.argv[1]) + " " + e)
 
@@ -50,7 +51,9 @@ def connect_sds019():
         result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
         client.close()
         
-        print("[V] SDS019 " + sensor_reader[0] + " CONNECTED")
+        if(is_SDS019_connect == False):
+            is_SDS019_connect = True
+            print("[V] SDS019 " + sensor_reader[0] + " CONNECTED")
         
         return result
         
@@ -69,6 +72,7 @@ try:
             # print(SDS019)
         except Exception as e2:
             print(e2)
+            is_SDS019_connect = False
             print("Reconnect SDS019");
             update_sensor_value(str(sys.argv[1]),0)
             
