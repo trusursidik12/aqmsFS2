@@ -89,7 +89,7 @@ def check_as_sds019(serialport):
         client.connect()
         result = client.read_holding_registers(address=0x00B4, count=3, unit=1)
         client.close()
-        if(count(result.registers == 3):
+        if(count(result.registers) == 3):
             mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port + "' WHERE driver LIKE 'fs2_sds019.py' AND sensor_code='' LIMIT 1")
             mydb.commit()
             print(" ==> FS2_SDS019")
