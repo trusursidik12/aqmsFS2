@@ -142,7 +142,7 @@ mycursor.execute("SELECT port,description FROM serial_ports ORDER BY port")
 serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
-    if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("COM") > 0):
+    if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("ttyACM") > 0 or str(serial_port[0]).count("COM") > 0):
         check_as_membrasens(serial_port[0])
         
         mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '"+ serial_port[0] +"'")
