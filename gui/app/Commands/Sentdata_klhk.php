@@ -118,7 +118,7 @@ class Sentdata_klhk extends BaseCommand
 				$data = json_encode(["username" => "pt_trusur_unggul_teknusa", "password" => "c6eXK8EUpbuCoaki"]);
 				$curl = curl_init();
 				curl_setopt_array($curl, array(
-					CURLOPT_URL => "https://iku.menlhk.go.id/api/v1/auth",
+					CURLOPT_URL => "https://ispu.menlhk.go.id/api/v1/auth",
 					CURLOPT_RETURNTRANSFER => true,
 					CURLOPT_ENCODING => "",
 					CURLOPT_MAXREDIRS => 10,
@@ -149,7 +149,7 @@ class Sentdata_klhk extends BaseCommand
 					$data = json_encode($arr);
 					$curl = curl_init();
 					curl_setopt_array($curl, array(
-						CURLOPT_URL => "https://iku.menlhk.go.id/api/v1/aqmdata",
+						CURLOPT_URL => "https://ispu.menlhk.go.id/api/v1/aqmdata",
 						CURLOPT_RETURNTRANSFER => true,
 						CURLOPT_ENCODING => "",
 						CURLOPT_MAXREDIRS => 10,
