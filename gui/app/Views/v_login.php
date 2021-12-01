@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body login-card-body">
-                        <form method="POST" action="<?= base_url('login') ?>">
+                        <form method="POST" action="<?= base_url('login') ?>" id="formLogin">
                             <input type="hidden" name="url_direction" value="<?= @$url_direction; ?>">
                             <input type="hidden" name="login" value="1">
                             <div class="input-group mb-3">
@@ -29,4 +29,9 @@
         </div>
     </form>
 </div>
+<?= $this->endSection() ?>
+<?= $this->section('js') ?>
+<script>
+    $('#formLogin').submit();
+</script>
 <?= $this->endSection() ?>

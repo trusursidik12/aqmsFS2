@@ -25,15 +25,15 @@ class Login extends BaseController
 	public function login_action()
 	{
 		$url_direction = $this->request->getPost('url_direction');
-		$login = $this->request->getPost('login');
 		$password = $this->request->getPost('password');
 		if ($password == $this->password) {
 			$data['success'] = true;
-			$data['message'] = 'OK';
+			$data["url_direction"] = $url_direction;
+			return json_encode($data);
 		} else {
 			$data['success'] = false;
 			$data['message'] = 'Wrong Password';
+			return $this->response->setJSON($data)->setStatusCode(401);
 		}
-		return json_encode($data);
 	}
 }
