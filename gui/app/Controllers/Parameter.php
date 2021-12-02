@@ -17,6 +17,8 @@ class Parameter extends BaseController
 	}
 	public function index()
 	{
+		if (!$this->session->get("loggedin")) return redirect()->to(base_url() . '/login?url_direction=parameter');
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			return $this->saving();
 		}

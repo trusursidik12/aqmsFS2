@@ -19,7 +19,7 @@ class Login extends BaseController
 		$data['__this'] = $this;
 		$data['__modulename'] = 'Login'; /* Title */
 		$data['__routename'] = 'login'; /* Route for check menu */
-		$data['url_direction'] = $_GET["url_direction"]; /* Route for check menu */
+		$data['url_direction'] = @$_GET["url_direction"]; /* Route for check menu */
 		echo view("v_login", $data);
 	}
 
@@ -60,6 +60,17 @@ class Login extends BaseController
 	{
 		$this->session->destroy();
 		$this->session->setFlashdata("flash_message", ["success", "Logout Success"]);
-		return redirect()->to(base_url() . '/login');
+		return redirect()->to(base_url());
+	}
+
+	public function status()
+	{
+		$data = [
+			"loggedin" => $this->session->get("loggedin"),
+			"user_id" => $this->session->get("user_id"),
+			"username" => $this->session->get("username"),
+			"user" => $this->session->get("user"),
+		];
+		return $this->response->setJSON($data)->setStatusCode(200);
 	}
 }

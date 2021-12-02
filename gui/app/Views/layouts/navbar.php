@@ -25,6 +25,9 @@
                 <li class="nav-item <?= @strtolower($__routename) == 'rht' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_extras') ?>">
                     <a class="nav-link" href="<?= base_url('rht') ?>"><?= lang('Global.extras') ?></a>
                 </li>
+                <li id="logout_nav" class="nav-item hide d-none" data-intro="Logout">
+                    <a class="nav-link" href="<?= base_url('login/logout') ?>">Logout</a>
+                </li>
             </ul>
             <div class="d-flex justify-content-end align-items-center my-2 ml-md-0">
                 <div id="connect" data-intro="<?= lang('Global.intro_connectivity') ?>">

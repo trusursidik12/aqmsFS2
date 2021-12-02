@@ -124,6 +124,17 @@
     });
 </script>
 <script>
+    $.ajax({
+        url: "<?= base_url(); ?>/login/status",
+        dataType: 'json',
+        success: function(data) {
+            setTimeout(() => {
+                if (data?.loggedin == true)
+                    $("#logout_nav").removeClass("d-none");
+            }, 100);
+        }
+    })
+
     /* Date & Time */
     try {
         setInterval(function() {
