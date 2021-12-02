@@ -155,6 +155,8 @@
                     setTimeout(() => {
                         $('#btn-save').html('Save Changes');
                         toastr.success(data?.message);
+                        if (data?.url_direction != "")
+                            window.location = "<?= base_url(); ?>/" + data?.url_direction;
                     }, 1000);
                 },
                 error: function(xhr, status, err) {

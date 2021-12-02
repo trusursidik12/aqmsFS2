@@ -17,6 +17,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\m_configuration;
+use App\Models\m_a_user;
 
 class BaseController extends Controller
 {
@@ -33,10 +34,10 @@ class BaseController extends Controller
 		$this->language = \Config\Services::language();
 		$this->language->setlocale(session()->has('web_lang') ? session()->get('web_lang') : 'en');
 		$this->configuration = new m_configuration();
-		// $this->users =  new m_a_user();
+		$this->users =  new m_a_user();
 		// $this->groups =  new m_a_group();
 		// $this->menus =  new m_a_menu();
-		// $this->session = \Config\Services::session();
+		$this->session = \Config\Services::session();
 		// if ($_SERVER["REQUEST_URI"] != "/" && $_SERVER["REQUEST_URI"] != "/login" && !isset($this->session->get("user")->group_id)) {
 		// 	// echo "<script> window.location='" . base_url() . "/login'; </script>";
 		// 	// exit();

@@ -8,7 +8,14 @@
                     <div class="card-body login-card-body">
                         <form method="POST" action="<?= base_url('login') ?>" id="formLogin">
                             <input type="hidden" name="url_direction" value="<?= @$url_direction; ?>">
-                            <input type="hidden" name="login" value="1">
+                            <div class="input-group mb-3">
+                                <input name="username" class="form-control" placeholder="Username">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="input-group mb-3">
                                 <input type="password" name="password" class="form-control" placeholder="Password">
                                 <div class="input-group-append">
