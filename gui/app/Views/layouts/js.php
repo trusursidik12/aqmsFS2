@@ -165,7 +165,11 @@
                 success: function(data) {
                     setTimeout(() => {
                         $('#btn-save').html('Save Changes');
-                        toastr.success(data?.message);
+                        if(!data?.success){
+                            toastr.error(data?.message);
+                        }else{
+                            toastr.success(data?.message);
+                        }
                         if (data?.url_direction != undefined)
                             window.location = "<?= base_url(); ?>/" + data?.url_direction;
                     }, 1000);

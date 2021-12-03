@@ -56,7 +56,7 @@ class Calibration extends BaseController
 			$calibrationLogs = $this->calibrations
 				->select('sensor_readers.sensor_code, calibrations.*')
 				// ->groupBy('started_at')
-				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id')
+				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id','left')
 				->orderBy('calibrations.id','desc')->findAll(5);
 			$data['draw'] = @$this->request->getGet('draw') ?  (int) $this->request->getGet('draw') : 1;
 			$data['recordsTotal'] = 0;
@@ -96,14 +96,62 @@ class Calibration extends BaseController
 		header("Content-Disposition: attachment;filename={$filename}");
 		header("Content-Transfer-Encoding: binary");
 	}
+
+	public function getDataExport($started_at,$end_at){
+		try{
+			$whereRaw = "1=1";
+			$whereRaw .= !empty($started_at) ? " AND DATE_FORMAT(started_at,'%Y-%m-%d') >= '${started_at}'" : "";
+			$whereRaw .= !empty($end_at) ? " AND DATE_FORMAT(calibrations.xtimestamp,'%Y-%m-%d') <= '${end_at}'" : "";
+			// print_r($whereRaw);
+			// exit();
+			$calibrationLogs = $this->calibrations
+				->asArray()
+				->select('sensor_readers.sensor_code, calibrations.*')
+				// ->groupBy('started_at')
+				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id','left')
+				->where($whereRaw)
+				->orderBy('calibrations.id','desc')->findAll();
+			return $calibrationLogs;
+		}catch(Exception $e){
+			return [];
+		}
+	}
+
+	public function validateExport(){
+		try{
+			$started_at = $this->request->getGet('started_at');
+			$end_at = $this->request->getGet('end_at');
+			if(count($this->getDataExport($started_at,$end_at)) > 0){
+				$data['success'] = true;
+				$data['message'] = 'Generate CSV, Please wait...';
+				$data['download_url'] = base_url("calibration/export?started_at={$started_at}&end_at={$end_at}");
+				return $this->response->setJSON($data);
+			}
+			return $this->response->setJSON(['success'=>false,'message'=> 'No data available!']);
+		}catch(Exception $e){
+			return $this->response->setJSON(['success'=>false,'message'=> $e->getMessage()]);
+		}
+	}
+
 	public function export(){
 		try{
 			$started_at = $this->request->getGet('started_at');
 			$end_at = $this->request->getGet('end_at');
-			$whereRaw = "1=1";
-			$whereRaw .= "";
+			$calibrationLogs = $this->getDataExport($started_at,$end_at);
+			$export = [];
+			foreach ($calibrationLogs as $key =>  $log) {
+				$export[$key]['Started at'] = $log['started_at'];
+				$export[$key]['End at'] = $log['xtimestamp'];
+				$export[$key]['Calibrator Name'] = $log['calibrator_name'];
+				$export[$key]['Sensor'] = $log['sensor_code'];
+				$export[$key]['PIN'] = $log['pin'];
+				$export[$key]['Value'] = $log['value'];
+			}
+			$filename = "Report Calibration {$started_at} - {$end_at} ".rand(0,99);
+			$this->download_send_headers("{$filename}.csv");
+			return $this->array2csv($export);
 		}catch(Exception $e){
-
+			return $e->getMessage();
 		}
 	}
 }

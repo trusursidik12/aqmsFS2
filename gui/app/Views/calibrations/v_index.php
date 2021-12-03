@@ -122,12 +122,12 @@
                     <h4 class="card-title">Zero Calibration Logs</h4>
                 </div>
                 <div class="card-body">
-                <form class="form-inline">
+                <form class="form-inline" method="get" id="formExport" action="<?=base_url("calibration/validateExport");?>">
                     <label class="mr-1" for="started_at">Started at: </label>
                     <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="started_at">
 
                     <label class="mr-1" for="end_at">End at :</label>
-                    <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="started_at">
+                    <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="end_at">
                     <button type="submit" class="btn btn-success btn-sm mb-2">Export CSV <i class="ml-1 fas fa-xs fa-download"></i></button>
                 </form>
                     <div class="table-responsive">
@@ -165,6 +165,27 @@
 
 <script>
     $(document).ready(function() {
+        $('#formExport').submit(function(){
+            $.ajax({
+                url : $(this).attr('action'),
+                type : 'get',
+                dataType : 'json',
+                data : $(this).serialize(),
+                success : function(data){
+                    if(data?.success){
+                        setTimeout(() => {
+                            window.location.href = data?.download_url;
+                        }, 1000);
+                    }
+                },
+                error : function(xhr, status, err){
+                    
+                }
+            })
+        })
+
+
+
         var begin = 1;
         var beginUnit = 1;
         setInterval(() => {
