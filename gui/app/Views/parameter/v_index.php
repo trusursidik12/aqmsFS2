@@ -335,7 +335,7 @@
                 </div>
                 <div class="modal-body">
                     <p class="alert alert-warning text-danger">
-                        <i class="fas fa-info-circle fa-xs mr-1"></i> Pastikan aliran gas kalibrasi span NO2 sudah terpasang dengan benar pada saluran sampling dengan laju alir 0.9 lpm
+                        <i class="fas fa-info-circle fa-xs mr-1"></i> Pastikan aliran gas kalibrasi span <span id="spanGas"></span> sudah terpasang dengan benar pada saluran sampling dengan laju alir 0.9 lpm
                     </p>
                     <p class="alert alert-warning text-danger">
                         <i class="fas fa-info-circle fa-xs mr-1"></i> Kesalahan penggunaan gas kalibrasi dapat mempengaruhi daya akurasi pengukuran pada sensor Gas
@@ -471,7 +471,8 @@
                     success: function(data) {
                         if (data.success) {
                             let parameter = data.data;
-                            $('#spanModalTitle').html(`${parameter?.caption_id} Span Calibration`)
+                            $('#spanModalTitle').html(`${parameter?.caption_id} Span Calibration`);
+                            $('#spanGas').html(parameter?.caption_id);
                             $('#spanModal').modal('show');
                             btnEdit.html(`Span Calibration`);
                         }
