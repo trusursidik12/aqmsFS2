@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\m_calibration;
 use App\Models\m_configuration;
+use Exception;
 
 class Calibration extends BaseController
 {
@@ -49,5 +50,60 @@ class Calibration extends BaseController
 		if ($data["zerocal_started_at"] != "" && $data["zerocal_started_at"] != "")
 			$data["is_zerocalibrating"] = 1;
 		echo json_encode($data);
+	}
+	public function datatable(){
+		try{
+			$calibrationLogs = $this->calibrations
+				->select('sensor_readers.sensor_code, calibrations.*')
+				// ->groupBy('started_at')
+				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id')
+				->orderBy('calibrations.id','desc')->findAll(5);
+			$data['draw'] = @$this->request->getGet('draw') ?  (int) $this->request->getGet('draw') : 1;
+			$data['recordsTotal'] = 0;
+			$data['recordsFiltered'] = 0;
+			$data['data'] = $calibrationLogs;
+			return $this->response->setJson($data);
+		}catch(Exception $e){
+			return $e->getMessage();
+		}
+	}
+	function array2csv(array &$array){
+		if (count($array) == 0) {
+			return null;
+		}
+		ob_start();
+		$df = fopen("php://output", 'w');
+		fputcsv($df, array_keys(reset($array)));
+		foreach ($array as $row) {
+			fputcsv($df, $row);
+		}
+		fclose($df);
+		return ob_get_clean();
+	}
+	function download_send_headers($filename) {
+		// disable caching
+		$now = gmdate("D, d M Y H:i:s");
+		// header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+		header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+		header("Last-Modified: {$now} GMT");
+	
+		// force download  
+		header("Content-Type: application/force-download");
+		header("Content-Type: application/octet-stream");
+		header("Content-Type: application/download");
+	
+		// disposition / encoding on response body
+		header("Content-Disposition: attachment;filename={$filename}");
+		header("Content-Transfer-Encoding: binary");
+	}
+	public function export(){
+		try{
+			$started_at = $this->request->getGet('started_at');
+			$end_at = $this->request->getGet('end_at');
+			$whereRaw = "1=1";
+			$whereRaw .= "";
+		}catch(Exception $e){
+
+		}
 	}
 }
