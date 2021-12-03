@@ -30,41 +30,43 @@
                                 <?php endif; ?>
                             <?php endforeach ?>
                         </div>
-                        <?php foreach ($sensor_readers as $sensor_reader) : ?>
-                            <div class="form-group">
-                                <label><?= str_replace(".py", "", $sensor_reader->driver) ?></label>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label>Port</label>
-                                        <input type="text" name="sensor_code[<?= $sensor_reader->id ?>]" placeholder="Port" class="form-control" value="<?= $sensor_reader->sensor_code ?>">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Parameter</label>
-                                        <input type="text" name="driver[<?= $sensor_reader->id ?>]" placeholder="Parameter" class="form-control" value="<?= $sensor_reader->driver ?>">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Baud Rate</label>
-                                        <select name="baud_rate[<?= $sensor_reader->id ?>]" class="form-control">
-                                            <option value="">Baud Rate</option>
-                                            <option value="110" <?= $sensor_reader->baud_rate == 110 ? 'selected' : '' ?>> 110 </option>
-                                            <option value="300" <?= $sensor_reader->baud_rate == 300 ? 'selected' : '' ?>> 300 </option>
-                                            <option value="1200" <?= $sensor_reader->baud_rate == 1200 ? 'selected' : '' ?>> 1200 </option>
-                                            <option value="2400" <?= $sensor_reader->baud_rate == 2400 ? 'selected' : '' ?>> 2400 </option>
-                                            <option value="4800" <?= $sensor_reader->baud_rate == 4800 ? 'selected' : '' ?>> 4800 </option>
-                                            <option value="9600" <?= $sensor_reader->baud_rate == 9600 ? 'selected' : '' ?>> 9600 </option>
-                                            <option value="19200" <?= $sensor_reader->baud_rate == 19200 ? 'selected' : '' ?>> 19200 </option>
-                                            <option value="38400" <?= $sensor_reader->baud_rate == 38400 ? 'selected' : '' ?>> 38400 </option>
-                                            <option value="57600" <?= $sensor_reader->baud_rate == 57600 ? 'selected' : '' ?>> 57600 </option>
-                                            <option value="115200" <?= $sensor_reader->baud_rate == 115200 ? 'selected' : '' ?>> 115200 </option>
-                                            <option value="230400" <?= $sensor_reader->baud_rate == 230400 ? 'selected' : '' ?>> 230400 </option>
-                                            <option value="460800" <?= $sensor_reader->baud_rate == 460800 ? 'selected' : '' ?>> 460800 </option>
-                                            <option value="921600" <?= $sensor_reader->baud_rate == 921600 ? 'selected' : '' ?>> 921600 </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-
+                        <table id="export-tbl" class="table stripped">
+                            <thead>
+                                <tr>
+                                    <th>Driver</th>
+                                    <th>Port</th>
+                                    <th>Baud Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($sensor_readers as $sensor_reader) : ?>
+                                    <tr>
+                                        <td><b><?= $sensor_reader->driver; ?></b></td>
+                                        <td>
+                                            <input type="text" name="sensor_code[<?= $sensor_reader->id ?>]" placeholder="Port" class="form-control" value="<?= $sensor_reader->sensor_code ?>">
+                                        </td>
+                                        <td>
+                                            <select name="baud_rate[<?= $sensor_reader->id ?>]" class="form-control">
+                                                <option value="">Baud Rate</option>
+                                                <option value="110" <?= $sensor_reader->baud_rate == 110 ? 'selected' : '' ?>> 110 </option>
+                                                <option value="300" <?= $sensor_reader->baud_rate == 300 ? 'selected' : '' ?>> 300 </option>
+                                                <option value="1200" <?= $sensor_reader->baud_rate == 1200 ? 'selected' : '' ?>> 1200 </option>
+                                                <option value="2400" <?= $sensor_reader->baud_rate == 2400 ? 'selected' : '' ?>> 2400 </option>
+                                                <option value="4800" <?= $sensor_reader->baud_rate == 4800 ? 'selected' : '' ?>> 4800 </option>
+                                                <option value="9600" <?= $sensor_reader->baud_rate == 9600 ? 'selected' : '' ?>> 9600 </option>
+                                                <option value="19200" <?= $sensor_reader->baud_rate == 19200 ? 'selected' : '' ?>> 19200 </option>
+                                                <option value="38400" <?= $sensor_reader->baud_rate == 38400 ? 'selected' : '' ?>> 38400 </option>
+                                                <option value="57600" <?= $sensor_reader->baud_rate == 57600 ? 'selected' : '' ?>> 57600 </option>
+                                                <option value="115200" <?= $sensor_reader->baud_rate == 115200 ? 'selected' : '' ?>> 115200 </option>
+                                                <option value="230400" <?= $sensor_reader->baud_rate == 230400 ? 'selected' : '' ?>> 230400 </option>
+                                                <option value="460800" <?= $sensor_reader->baud_rate == 460800 ? 'selected' : '' ?>> 460800 </option>
+                                                <option value="921600" <?= $sensor_reader->baud_rate == 921600 ? 'selected' : '' ?>> 921600 </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

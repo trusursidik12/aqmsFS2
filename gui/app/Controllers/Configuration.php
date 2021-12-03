@@ -34,7 +34,6 @@ class Configuration extends BaseController
 		$parameters = $this->request->getPost('driver');
 		$baudrates = $this->request->getPost('baud_rate');
 		foreach ($ports as $key => $port) {
-			$data['driver'] = $parameters[$key];
 			$data['baud_rate'] = $baudrates[$key];
 			$data['sensor_code'] = $ports[$key];
 			$this->sensor_reader->update($key, $data);

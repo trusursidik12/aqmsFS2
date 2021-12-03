@@ -21,6 +21,10 @@
                         </div>
                         <p class="my-0"><?= $gas->formula ?></p>
                         <div class="d-flex justify-content-end">
+                            <button class="btn btn-sm btn-warning" data-id="<?= $gas->id ?>">
+                                Span Calibration
+                            </button>
+                            &nbsp;&nbsp;&nbsp;
                             <button class="btn btn-sm btn-info btn-edit" data-id="<?= $gas->id ?>">
                                 Edit
                             </button>
