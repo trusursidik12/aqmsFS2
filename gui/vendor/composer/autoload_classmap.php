@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/Framework/Exception/AssertionFailedError.php',
@@ -378,8 +379,6 @@ return array(
     'PHP_Token_STRING_CAST' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_STRING_VARNAME' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_SWITCH' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
-    'PHP_Token_Stream' => $vendorDir . '/phpunit/php-token-stream/src/Token/Stream.php',
-    'PHP_Token_Stream_CachingFactory' => $vendorDir . '/phpunit/php-token-stream/src/Token/Stream/CachingFactory.php',
     'PHP_Token_THROW' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_TILDE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_TRAIT' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
@@ -389,7 +388,6 @@ return array(
     'PHP_Token_UNSET_CAST' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_USE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_USE_FUNCTION' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
-    'PHP_Token_Util' => $vendorDir . '/phpunit/php-token-stream/src/Token/Util.php',
     'PHP_Token_VAR' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_VARIABLE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_WHILE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
