@@ -175,7 +175,7 @@
                     if(data?.success){
                         setTimeout(() => {
                             window.location.href = data?.download_url;
-                        }, 1000);
+                        }, 1200);
                     }
                 },
                 error : function(xhr, status, err){

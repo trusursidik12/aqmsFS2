@@ -501,7 +501,7 @@
                 toastr.error(err);
             }
         })
-        $('button[name="Save"]').click(function() {
+        $('#paramModal').find('button[name="Save"]').click(function() {
             setTimeout(() => {
                 location.reload();
             }, 1000);

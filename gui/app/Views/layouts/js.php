@@ -182,6 +182,7 @@
 
 
         } catch (err) {
+            console.log(err);
             toastr.error(err.toString());
             $('#btn-save').html('Save Changes');
         }
