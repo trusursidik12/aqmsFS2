@@ -42,8 +42,7 @@ def check_as_arduino(port):
     COM.timeout = 30
     COM.open()
     retval = str(COM.readline())
-    time.sleep(3)
-    if(retval.count("FS2_ANALYZER") > 0):
+    if(retval.count("FS2_ANALYZER") > 0 or retval.count("FS2_ANALYZER_START") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
                          "' WHERE driver LIKE 'fs2_analyzer_module.py' AND sensor_code='' LIMIT 1")
         mydb.commit()
