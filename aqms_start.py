@@ -61,11 +61,11 @@ def check_as_arduino(port):
         mydb.commit()
         print(" ==> FS2_PSU")
 
-    if(retval.count("FS2_AUTO_ZERO_VALVE") > 0):
-        mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
-                         "' WHERE driver LIKE 'fs2_autozerovalve.py' AND sensor_code='' LIMIT 1")
-        mydb.commit()
-        print(" ==> FS2_AUTO_ZERO_VALVE")
+    # if(retval.count("FS2_AUTO_ZERO_VALVE") > 0):
+    #     mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
+    #                      "' WHERE driver LIKE 'fs2_autozerovalve.py' AND sensor_code='' LIMIT 1")
+    #     mydb.commit()
+    #     print(" ==> FS2_AUTO_ZERO_VALVE")
 
 
 # def check_as_membrasens(port):
@@ -187,7 +187,7 @@ for serial_port in serial_ports:
         except Exception as e:
             sensor_reader_id = ""
         if(str(sensor_reader_id) == ""):
-            time.sleep(7)
+            time.sleep(3)
             check_as_arduino(serial_port[0])
 
 # =============================END AUTO DETECT SERIAL PORTS=================================
