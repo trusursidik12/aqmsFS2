@@ -124,7 +124,7 @@ def check_as_sds019(serialport):
 
 # =============================AUTO DETECT SERIAL PORTS=================================
 mycursor.execute(
-    "UPDATE sensor_readers SET sensor_code='' WHERE driver NOT Like 'vantagepro2.py' OR driver NOT Like 'fs2_membrasens_v4.py'")
+    "UPDATE sensor_readers SET sensor_code='' WHERE driver != 'vantagepro2.py'")
 mydb.commit()
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
