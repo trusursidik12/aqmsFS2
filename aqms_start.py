@@ -42,6 +42,7 @@ def check_as_arduino(port):
     COM.timeout = 30
     COM.open()
     retval = str(COM.readline())
+    time.sleep(3)
     if(retval.count("FS2_ANALYZER") > 0):
         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
                          "' WHERE driver LIKE 'fs2_analyzer_module.py' AND sensor_code='' LIMIT 1")
@@ -124,7 +125,7 @@ def check_as_sds019(serialport):
 
 # =============================AUTO DETECT SERIAL PORTS=================================
 mycursor.execute(
-    "UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5,7,9)")
+    "UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5,9)")
 mydb.commit()
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
@@ -186,7 +187,7 @@ for serial_port in serial_ports:
         except Exception as e:
             sensor_reader_id = ""
         if(str(sensor_reader_id) == ""):
-            time.sleep(5)
+            time.sleep(7)
             check_as_arduino(serial_port[0])
 
 # =============================END AUTO DETECT SERIAL PORTS=================================
