@@ -170,12 +170,12 @@ for serial_port in serial_ports:
         if(str(sensor_reader_id) == ""):
             check_as_sds019(serial_port[0])
 
-        mycursor.execute(
-            "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
-        try:
-            sensor_reader_id = mycursor.fetchone()[0]
-        except Exception as e:
-            sensor_reader_id = ""
+        # mycursor.execute(
+        #     "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
+        # try:
+        #     sensor_reader_id = mycursor.fetchone()[0]
+        # except Exception as e:
+        #     sensor_reader_id = ""
         # if(str(sensor_reader_id) == ""):
             # check_as_ventagepro2(serial_port[0])
 
