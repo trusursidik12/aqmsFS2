@@ -67,24 +67,24 @@ def check_as_arduino(port):
         print(" ==> FS2_AUTO_ZERO_VALVE")
 
 
-def check_as_membrasens(port):
-    try:
-        rs485 = minimalmodbus.Instrument(port, 1)
-        rs485.serial.baudrate = 19200
-        rs485.serial.parity = serial.PARITY_EVEN
-        rs485.serial.bytesize = 8
-        rs485.serial.stopbits = 1
-        rs485.mode = minimalmodbus.MODE_RTU
-        rs485.serial.timeout = 0.2
+# def check_as_membrasens(port):
+#     try:
+#         rs485 = minimalmodbus.Instrument(port, 1)
+#         rs485.serial.baudrate = 19200
+#         rs485.serial.parity = serial.PARITY_EVEN
+#         rs485.serial.bytesize = 8
+#         rs485.serial.stopbits = 1
+#         rs485.mode = minimalmodbus.MODE_RTU
+#         rs485.serial.timeout = 0.2
 
-        regConcentration = rs485.read_registers(1000, 8, 3)
-        mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
-                         "' WHERE driver LIKE 'fs2_membrasens_v4.py' AND sensor_code='' LIMIT 1")
-        mydb.commit()
-        print(" ==> FS2_MEMBRASENS_V4")
-        return None
-    except Exception as e:
-        None
+#         regConcentration = rs485.read_registers(1000, 8, 3)
+#         mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
+#                          "' WHERE driver LIKE 'fs2_membrasens_v4.py' AND sensor_code='' LIMIT 1")
+#         mydb.commit()
+#         print(" ==> FS2_MEMBRASENS_V4")
+#         return None
+#     except Exception as e:
+#         None
 
 
 def check_as_sds019(serialport):
@@ -109,22 +109,22 @@ def check_as_sds019(serialport):
         None
 
 
-def check_as_ventagepro2(port):
-    try:
-        COM_WS = VantagePro2.from_url("serial:%s:%s:8N1" % (port, 19200))
-        ws_data = COM_WS.get_current_data()
-        WS = ws_data.to_csv(';', False)
-        mycursor.execute(
-            "UPDATE sensor_readers SET sensor_code='/dev/ttyWS' WHERE driver LIKE 'vantagepro2.py' LIMIT 1")
-        mydb.commit()
-        print(" ==> VANTAGEPRO2")
-    except Exception as e:
-        None
+# def check_as_ventagepro2(port):
+#     try:
+#         COM_WS = VantagePro2.from_url("serial:%s:%s:8N1" % (port, 19200))
+#         ws_data = COM_WS.get_current_data()
+#         WS = ws_data.to_csv(';', False)
+#         mycursor.execute(
+#             "UPDATE sensor_readers SET sensor_code='/dev/ttyWS' WHERE driver LIKE 'vantagepro2.py' LIMIT 1")
+#         mydb.commit()
+#         print(" ==> VANTAGEPRO2")
+#     except Exception as e:
+#         None
 
 
 # =============================AUTO DETECT SERIAL PORTS=================================
 mycursor.execute(
-    "UPDATE sensor_readers SET sensor_code='' WHERE driver != 'vantagepro2.py'")
+    "UPDATE sensor_readers SET sensor_code='' WHERE driver != 'vantagepro2.py' OR driver != 'fs2_membrasens_v4.py'")
 mydb.commit()
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
@@ -159,7 +159,7 @@ serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
     if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("ttyACM") > 0 or str(serial_port[0]).count("COM") > 0):
-        check_as_membrasens(serial_port[0])
+        # check_as_membrasens(serial_port[0])
 
         mycursor.execute(
             "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
