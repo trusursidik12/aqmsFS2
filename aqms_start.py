@@ -125,7 +125,7 @@ def check_as_sds019(serialport):
 
 # =============================AUTO DETECT SERIAL PORTS=================================
 mycursor.execute(
-    "UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5,9)")
+    "UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5)")
 mydb.commit()
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
