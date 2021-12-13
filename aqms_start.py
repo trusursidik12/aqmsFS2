@@ -115,7 +115,7 @@ def check_as_ventagepro2(port):
         ws_data = COM_WS.get_current_data()
         WS = ws_data.to_csv(';', False)
         mycursor.execute(
-            "UPDATE sensor_readers SET sensor_code='/dev/ttyWS' WHERE driver LIKE 'vantagepro2.py' AND sensor_code='' LIMIT 1")
+            "UPDATE sensor_readers SET sensor_code='/dev/ttyWS' WHERE driver LIKE 'vantagepro2.py' LIMIT 1")
         mydb.commit()
         print(" ==> VANTAGEPRO2")
     except Exception as e:
@@ -176,8 +176,8 @@ for serial_port in serial_ports:
             sensor_reader_id = mycursor.fetchone()[0]
         except Exception as e:
             sensor_reader_id = ""
-        if(str(sensor_reader_id) == ""):
-            check_as_ventagepro2(serial_port[0])
+        # if(str(sensor_reader_id) == ""):
+            # check_as_ventagepro2(serial_port[0])
 
         mycursor.execute(
             "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
