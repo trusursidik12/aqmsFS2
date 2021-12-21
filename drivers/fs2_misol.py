@@ -42,15 +42,16 @@ while True:
         time.sleep(30)
         f = open(json_path)
         misol_json = json.load(f)
-        pressure = "0";
-        sr = "0";
-        ws = str(misol_json['wind_avg_km_h']);
-        wd = str(misol_json['wind_dir_deg'])
-        humidity = str(misol_json['humidity'])
-        temperature = str(misol_json['temperature_C'])
-        rain_intensity = str(misol_json['rain_mm'])
-        WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
-        update_sensor_value(str(sys.argv[1]),WS[0:149])
+        if(misol_json['id'] == 80):
+            pressure = "0";
+            sr = "0";
+            ws = str(misol_json['wind_avg_km_h']);
+            wd = str(misol_json['wind_dir_deg'])
+            humidity = str(misol_json['humidity'])
+            temperature = str(misol_json['temperature_C'])
+            rain_intensity = str(misol_json['rain_mm'])
+            WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
+            update_sensor_value(str(sys.argv[1]),WS[0:149])
 
     except Exception as e2:
         print(e2)
