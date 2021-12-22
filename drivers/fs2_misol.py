@@ -20,7 +20,6 @@ def update_sensor_value(sensor_reader_id,value):
             sensor_value_id = mycursor.fetchone()[0]
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
-            print("updated!")
         except Exception as e:
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
@@ -39,19 +38,22 @@ while True:
         if os.path.exists(json_path):
             os.remove(json_path)
         sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
-        time.sleep(60)
-        f = open(json_path)
-        misol_json = json.load(f)
-        if(misol_json['id'] == 80):
-            pressure = "0";
-            sr = "0";
-            ws = str(misol_json['wind_avg_km_h']);
-            wd = str(misol_json['wind_dir_deg'])
-            humidity = str(misol_json['humidity'])
-            temperature = str(misol_json['temperature_C'])
-            rain_intensity = str(misol_json['rain_mm'])
-            WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
-            update_sensor_value(str(sys.argv[1]),WS[0:149])
+        # time.sleep(60)
+        while (os.stat(json_path).st_size > 0):
+            f = open(json_path)
+            misol_json = json.load(f)
+            if(misol_json['id'] == 80):
+                pressure = "0";
+                sr = "0";
+                ws = str(misol_json['wind_avg_km_h']);
+                wd = str(misol_json['wind_dir_deg'])
+                humidity = str(misol_json['humidity'])
+                temperature = str(misol_json['temperature_C'])
+                rain_intensity = str(misol_json['rain_mm'])
+                WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
+                update_sensor_value(str(sys.argv[1]),WS[0:149])
+                if os.path.exists(json_path):
+                    os.remove(json_path)
 
     except Exception as e2:
         print(e2)
