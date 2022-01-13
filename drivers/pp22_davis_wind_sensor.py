@@ -58,7 +58,6 @@ try:
             SENSOR = str(COM.readline())
             if(SENSOR.count("PP22_DavisWindSensor") <= 0):
                 SENSOR = "PP22_DavisWindSensor;0.00;0;\\r\\n'"
-            print(SENSOR)
             update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
             
         except Exception as e2:
