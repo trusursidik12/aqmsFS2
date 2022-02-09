@@ -109,7 +109,7 @@ class FormulaMeasurementLogs extends BaseCommand
 					// Check PM AQMS FS1 Value
 					$sensor_value = @eval("\$parameter->formula;");
 				} else{
-					$sensor_value = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
+					$sensor_value = (float) @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
 				}
 				$measurement_logs = [
 					"parameter_id" => $parameter->id,
