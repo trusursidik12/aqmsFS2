@@ -107,7 +107,7 @@
         $('#connect').html(disconnect);
 
         function testInternet() {
-            const pingUrl = 'https://ispumaps.id/server_side/api/is_connect.php';
+            const pingUrl = 'http://api.trusur.tech/api/is_connect.php';
             fetch(`${pingUrl}?_t=` + parseInt(Math.random() * 10000)).then((result) => {
                 $('#connect').html(connected);
             }).catch((err) => {
