@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body login-card-body">
-                        <form method="POST" action="<?= base_url('login') ?>" id="formLogin">
+                        <form method="POST" action="<?= base_url('login') ?>" id="formLogin" autocomplete="off">
                             <input type="hidden" name="url_direction" value="<?= @$url_direction; ?>">
                             <div class="input-group mb-3">
                                 <input name="username" class="form-control" placeholder="Username">
