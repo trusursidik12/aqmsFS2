@@ -90,6 +90,8 @@ def zeroing():
         time.sleep(1)
         rs485.write_registers(1220,[0,0,0,0])
         time.sleep(3)
+        rs485.write_registers(1210,[0,0,0,0])
+        time.sleep(3)
         
         
         mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'calibrator_name'")
