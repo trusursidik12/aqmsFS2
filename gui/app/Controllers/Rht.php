@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\m_sensor_value;
+use App\Models\m_configuration;
 
 class Rht extends BaseController
 {
@@ -11,6 +12,7 @@ class Rht extends BaseController
 	{
 		parent::__construct();
 		$this->sensor_values = new m_sensor_value();
+		$this->configurations = new m_configuration();
 	}
 
 	public function index()
@@ -70,5 +72,16 @@ class Rht extends BaseController
 		$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[12] * 1;
 
 		echo json_encode($data);
+	}
+
+	public function savingSetSpan($board, $port, $span)
+	{
+		$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
+		if ($configuration_id > 0)
+			$this->configuration->set('content', $board . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
+		else
+			$this->configuration->save(["name" => "setSpan", "content" => $board . ";" . $port . ";" . $span]);
+
+		echo json_encode(["response" => "OK", "board" => $board, "port" => $port, "span" => $span]);
 	}
 }
