@@ -159,7 +159,7 @@ def check_is_span():
             print("Span Ended")
         
     except Exception as e:
-        print(e)
+        # print(e)
         return None
         
 
