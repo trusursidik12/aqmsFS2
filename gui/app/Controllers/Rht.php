@@ -76,12 +76,16 @@ class Rht extends BaseController
 
 	public function savingSetSpan($board, $port, $span)
 	{
-		$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
-		if ($configuration_id > 0)
-			$this->configuration->set('content', $board . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
-		else
-			$this->configuration->save(["name" => "setSpan", "content" => $board . ";" . $port . ";" . $span]);
+		$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
+		if ($sensor_reader_id > 0) {
+			$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
+			if ($configuration_id > 0)
+				$this->configuration->set('content', $sensor_reader_id . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
+			else
+				$this->configuration->save(["name" => "setSpan", "content" => $sensor_reader_id . ";" . $port . ";" . $span]);
 
-		echo json_encode(["response" => "OK", "board" => $board, "port" => $port, "span" => $span]);
+			echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id, "port" => $port, "span" => $span]);
+		} else
+			echo json_encode(["response" => "Error", "board" => $board, "port" => $port, "span" => $span]);
 	}
 }

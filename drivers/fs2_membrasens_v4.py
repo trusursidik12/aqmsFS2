@@ -120,10 +120,54 @@ def zeroing():
         print(e)
         return None
 
+def check_is_span():
+    try:
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
+        setSpan = mycursor.fetchone()[0]
+        setSpans = setSpan.split(";")
+        print("setSpan : " + setSpan)
+        
+        if(str(setSpans[0]) == str(sys.argv[1])):        
+            mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+            sensor_reader = mycursor.fetchone()
+        
+            rs485=minimalmodbus.Instrument(sensor_reader[0],1)
+            rs485.serial.baudrate=sensor_reader[1]
+            rs485.serial.parity=serial.PARITY_EVEN
+            rs485.serial.bytesize=8
+            rs485.serial.stopbits=1
+            rs485.mode=minimalmodbus.MODE_RTU
+            rs485.serial.timeout=0.2
+        
+            port = int(setSpans[1])
+            span = float(setSpans[2])
+            spanAddress = 1230 + port;
+            
+            mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'setSpan'")
+            mydb.commit()
+            
+            print("Spaning...")
+            print("Port : " + str(port))
+            print("Span Address : " + str(spanAddress))
+            print("Span Concentration: " + str(span))
+            rs485.write_registers(1200,[0,0,0,0])
+            time.sleep(1)
+            rs485.write_register(spanAddress,span,unit=1)
+            time.sleep(3)
+            rs485.write_registers(1210,[0,0,0,0])
+            time.sleep(3)
+            print("Span Ended")
+        
+    except Exception as e:
+        print(e)
+        return None
+        
 
 try:
     while True:
         try:
+            check_is_span()
+            
             mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
             is_zerocal = mycursor.fetchone()[0]
             mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
