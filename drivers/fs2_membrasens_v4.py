@@ -140,7 +140,7 @@ def check_is_span():
             rs485.serial.timeout=0.2
         
             port = int(setSpans[1])
-            span = float(setSpans[2])
+            span = int(setSpans[2])
             spanAddress = 1230 + port;
             
             mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'setSpan'")
@@ -160,7 +160,7 @@ def check_is_span():
             print("Span Ended")
         
     except Exception as e:
-        # print(e)
+        print(e)
         return None
         
 
