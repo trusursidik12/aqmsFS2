@@ -150,7 +150,7 @@ def check_is_span():
             print("Port : " + str(port))
             print("Span Address : " + str(spanAddress))
             print("Span Concentration: " + str(span))
-            rs485.write_registers(1200,[0,0,0,0])
+            rs485.write_registers(1200,[0])
             time.sleep(1)
             rs485.write_registers(spanAddress,[span])
             # rs485.write_register(spanAddress,span,unit=1)
