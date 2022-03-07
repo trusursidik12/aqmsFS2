@@ -140,7 +140,7 @@ def check_is_span():
             rs485.serial.timeout=0.2
         
             port = int(setSpans[1])
-            span = float(setSpans[2])
+            span = int(setSpans[2])
             spanAddress = 1230 + port;
             
             mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'setSpan'")
@@ -152,8 +152,8 @@ def check_is_span():
             print("Span Concentration: " + str(span))
             rs485.write_registers(1200,[0])
             time.sleep(3)
-            # rs485.write_registers(spanAddress,[span])
-            rs485.write_register(spanAddress+1,span)
+            rs485.write_registers(spanAddress,[0,span])
+            # rs485.write_register(spanAddress,span)
             time.sleep(3)
             # rs485.write_registers(1210,[0,0,0,0])
             # time.sleep(3)
