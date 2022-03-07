@@ -153,7 +153,7 @@ def check_is_span():
             rs485.write_registers(1200,[0])
             time.sleep(3)
             # rs485.write_registers(spanAddress,[span])
-            rs485.write_register(spanAddress,span)
+            rs485.write_register(spanAddress+1,span)
             time.sleep(3)
             # rs485.write_registers(1210,[0,0,0,0])
             # time.sleep(3)
