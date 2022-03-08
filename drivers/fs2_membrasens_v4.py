@@ -125,7 +125,7 @@ def check_is_span():
         mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
         setSpan = mycursor.fetchone()[0]
         setSpans = setSpan.split(";")
-        print("setSpan : " + setSpan)
+        # print("setSpan : " + setSpan)
         
         if(str(setSpans[0]) == str(sys.argv[1])):        
             mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
@@ -150,9 +150,9 @@ def check_is_span():
             print("Port : " + str(port))
             print("Span Address : " + str(spanAddress))
             print("Span Concentration: " + str(span))
-            rs485.write_registers(1200,[0])
+            # rs485.write_registers(1200,[0])
             time.sleep(3)
-            rs485.write_registers(spanAddress,[span])
+            # rs485.write_registers(spanAddress,[span])
             # rs485.write_register(spanAddress,span)
             time.sleep(3)
             # rs485.write_registers(1210,[0,0,0,0])
