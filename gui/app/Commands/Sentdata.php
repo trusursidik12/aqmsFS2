@@ -76,7 +76,7 @@ class Sentdata extends BaseCommand
 	public function run(array $params)
 	{
 		while (true) {
-			$server_host = "103.247.11.149";
+			$server_host = "api.trusur.tech";
 			$measurement_ids = "";
 			$is_exist = false;
 			$arr["id_stasiun"] = @$this->configurations->where("name", "id_stasiun")->findAll()[0]->content;
@@ -107,7 +107,7 @@ class Sentdata extends BaseCommand
 				$data = json_encode($arr);
 				$curl = curl_init();
 				curl_setopt_array($curl, array(
-					CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
+					CURLOPT_URL => "https://" . $server_host . "/api/put_data.php",
 					CURLOPT_RETURNTRANSFER => true,
 					CURLOPT_ENCODING => "",
 					CURLOPT_MAXREDIRS => 10,
