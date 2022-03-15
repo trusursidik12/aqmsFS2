@@ -107,7 +107,7 @@ class Sentdata extends BaseCommand
 				$data = json_encode($arr);
 				$curl = curl_init();
 				curl_setopt_array($curl, array(
-					CURLOPT_URL => "http://" . $server_host . "/server_side/api/put_data.php",
+					CURLOPT_URL => "https://" . $server_host . "/server_side/api/put_data.php",
 					CURLOPT_RETURNTRANSFER => true,
 					CURLOPT_ENCODING => "",
 					CURLOPT_MAXREDIRS => 10,
