@@ -32,9 +32,9 @@ class Export extends BaseController
 		if (isset($begindate) && isset($enddate)) { // Filter Date
 			$where = "DATE_FORMAT(time_group, '%Y-%m-%d') >= '{$begindate}' ";
 			$where .= "AND DATE_FORMAT(time_group, '%Y-%m-%d') <= '{$enddate}' ";
-			$tGroups = $this->measurement->where($where)->groupBy('time_group')->orderBy('time_group', 'DESC')->findAll(100);
+			$tGroups = $this->measurement->selectMax('id')->select('time_group')->where($where)->groupBy('time_group')->orderBy('time_group', 'DESC')->findAll(100);
 		} else {
-			$tGroups = $this->measurement->groupBy('time_group')->orderBy('time_group', 'DESC')->findAll(100);
+			$tGroups = $this->measurement->selectMax('id')->select('time_group')->groupBy('time_group')->orderBy('time_group', 'DESC')->findAll(100);
 		}
 		$parameters = [];
 		foreach ($tGroups as $key => $tGroup) {
