@@ -3,7 +3,10 @@
 namespace App\Commands;
 
 use App\Database\Migrations\Measurements;
+use App\Models\m_configuration;
 use App\Models\m_measurement;
+use App\Models\m_measurement_log;
+use App\Models\m_parameter;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -64,10 +67,30 @@ class Iotconnect extends BaseCommand
 			$client = \Config\Services::curlrequest([
 				'timeout' => 3
 			]);
-			$url = $baseIotServer."?";
+			$MeasurementLogs = new m_measurement_log();
+			$data = $MeasurementLogs
+					->select('measurement_logs.value, parameters.caption_id')
+					->join('parameters','parameters.id = measurement_logs.parameter_id')
+					->where('parameters.p_type = "particulate" AND parameters.is_view = "1"')
+					->where('measurement_logs.id < 30')
+					->findAll();
+			print_r($data);
+			$url = $baseIotServer."device-connect/?";
+			exit();
 			while (true) {
+				// Check command
+				$requestToServer = $client->get($url,[]);
+				$response = $requestToServer->getJSON();
+				// Check if command exists
+				if($response['hasCommand']){
+					$commands = $response['commands'];
+					foreach ($commands as $command) {
+						$this->executeCommand($command['code']['code'],$command['content']);
+					}
+				}
 				$problems = $this->getMeasurements();
-				if(count($problems) > 0){
+				$dateI = (int) date('i');
+				if(count($problems) > 0 && ($dateI == 0 || $dateI == 30)){ //Sent problem every 30 min
 					foreach ($problems as $key => $problem) {
 						$url.="code[{$key}]={$problem['code']}&";
 						$url.="content[{$key}]={$problem['content']}&";
@@ -75,18 +98,9 @@ class Iotconnect extends BaseCommand
 					// Send Device Status Problem
 					$requestToServer = $client->get($url,[]);
 					$response = $requestToServer->getJSON();
-
-					// Check if command exists
-					if($response['hasCommand']){
-						$commands = $response['commands'];
-						foreach ($commands as $key => $command) {
-						}
-					}
 				}
-				sleep(30);
+				sleep(30); // Sleep 30sec
 			}
-			
-
 		} catch (\Throwable $th) {
 			throw $th;
 		}
@@ -95,7 +109,7 @@ class Iotconnect extends BaseCommand
 	public function getMeasurements(){
 		$Measurement = new m_measurement();
 		$i = (int) date('i');
-		if($i == 0 || $i == 30){
+		if($i == 0 || $i == 30){ // Cek menit ke 0 dan 30
 			$problems = [];
 			$dateStart = date('Y-m-d H:i:s',strtotime('-30 min'));
 			$dateEnd = date('Y-m-d H:i:s');
@@ -203,5 +217,94 @@ class Iotconnect extends BaseCommand
 				break;
 		}
 		return $code;
+	}
+
+	/**
+	 * execute controlling & request command from server
+	 *
+	 * @param [string] $code
+	 * @param [string] $content
+	 * @return [int] $idCommand
+	 */
+	public function executeCommand($code, $content){
+		$Configuration = new m_configuration();
+		switch ($content) {
+			case '10': // Request Active PUMP
+				$pumpState = @$Configuration->where('name','pump_state')->content;
+				$data = @$pumpState ? $pumpState : 'Cant detect pump state';
+				break;
+			case '20': // Request PM 2.5 & PM 10 Value
+				break;
+			case '30': // Request Gass Concetrate
+				break;
+			case '40': // Request Meteorologi
+				break;
+			case '331': // Request Formula NO2
+				$data = $this->getParameterFormula('no2');
+				break;
+			case '332': // Request Formula O3
+				$data = $this->getParameterFormula('o3');
+				break;
+			case '333': // Request Formula CO
+				$data = $this->getParameterFormula('co');
+				break;
+			case '334': // Request Formula SO2
+				$data = $this->getParameterFormula('so2');
+				break;
+			case '335': // Request Formula HC
+				$data = $this->getParameterFormula('hc');
+				break;
+			case '331.1': // Update Formula NO2
+				$isUpdated  = $this->updateParameterFormula('no2',$content);
+				$data = $isUpdated ? 'Update formula for NO2 successfully!' : 'Cant update formula!';
+				break;
+			case '332.1': // Update Formula O3
+				$isUpdated  = $this->updateParameterFormula('o3',$content);
+				$data = $isUpdated ? 'Update formula for O3 successfully!' : 'Cant update formula!';
+				break;
+			case '333.1': // Update Formula CO
+				$isUpdated  = $this->updateParameterFormula('co',$content);
+				$data = $isUpdated ? 'Update formula for CO successfully!' : 'Cant update formula!';
+				break;
+			case '334.1': // Update Formula SO2
+				$isUpdated  = $this->updateParameterFormula('so2',$content);
+				$data = $isUpdated ? 'Update formula for SO2 successfully!' : 'Cant update formula!';
+				break;
+			case '335.1': // Update Formula HC
+				$isUpdated  = $this->updateParameterFormula('hc',$content);
+				$data = $isUpdated ? 'Update formula for HC successfully!' : 'Cant update formula!';
+				break;
+			case '11': // Update to PUMP 1
+				$isUpdated = $Configuration->set(['content' => 0])->where('name','pump_state')->update();
+				$data = $isUpdated ? 'Update PUMP to PUMP 1 successfully!' : 'Cant update PUMP State!';
+				break;
+			case '12': // Update to PUMP 2
+				$isUpdated = $Configuration->set(['content' => 1])->where('name','pump_state')->update();
+				$data = $isUpdated ? 'Update PUMP to PUMP 1 successfully!' : 'Cant update PUMP State!';
+				break;
+			case '90': // Request Screenshoot
+				break;
+			
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * get formula from paramters table
+	 *
+	 * @param [type] $param / code parameter
+	 * @return string
+	 */
+	public function getParameterFormula($param){
+		$Parameter = new m_parameter();
+		$formula = @$Parameter->where('code',$param)->first()->formula; 
+		return $formula;
+	}
+	
+	public function updateParameterFormula($param,$content){
+		$Parameter = new m_parameter();
+		$isUpdated = $Parameter->set(['formula' => $content])->where('code',$param)->update(); 
+		return $isUpdated;
 	}
 }
