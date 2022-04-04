@@ -26,10 +26,12 @@ class Measurementlog extends BaseController
 			'now' => date('Y-m-d H:i:s'),
 		];
 		try {
-			$measurementlog_id = $this->measurement_log->selectMax('id')->groupBy('parameter_id');
-			$data['logs'] = $this->measurement_log->whereIn('measurement_logs.id', function (BaseBuilder $builder) use ($measurementlog_id) {
-				return $measurementlog_id;
-			})->join('parameters', 'measurement_logs.parameter_id = parameters.id AND parameters.is_view = 1', 'left')->groupBy('parameter_id')->findAll();
+			$measurementlogs = $this->measurement_log->selectMax('id')->groupBy('parameter_id')->findAll();
+			$measurement_logs = [];
+			foreach ($measurementlogs as $key => $measurementlog) {
+				$measurement_logs[$key] = $this->measurement_log->join('parameters', 'measurement_logs.parameter_id = parameters.id AND parameters.is_view = 1', 'left')->find($measurementlog->id);
+			}
+			$data['logs'] = $measurement_logs;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			$data = null;
