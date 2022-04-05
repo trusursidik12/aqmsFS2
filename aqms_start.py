@@ -60,11 +60,11 @@ def check_as_arduino(port):
         mydb.commit()
         print(" ==> FS2_PSU")
 
-if(retval.count("FS2_AUTO_ZERO_VALVE") > 0):
-    mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
-                     "' WHERE driver LIKE 'fs2_autozerovalve.py' AND sensor_code='' LIMIT 1")
-    mydb.commit()
-    print(" ==> FS2_AUTO_ZERO_VALVE")
+    if(retval.count("FS2_AUTO_ZERO_VALVE") > 0):
+        mycursor.execute("UPDATE sensor_readers SET sensor_code='" + port +
+                         "' WHERE driver LIKE 'fs2_autozerovalve.py' AND sensor_code='' LIMIT 1")
+        mydb.commit()
+        print(" ==> FS2_AUTO_ZERO_VALVE")
 
 
 def check_as_membrasens(port):
