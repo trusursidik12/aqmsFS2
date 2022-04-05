@@ -122,9 +122,8 @@ def check_as_ventagepro2(port):
         None
 
 
-=============================AUTO DETECT SERIAL PORTS=================================
-mycursor.execute(
-    "UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5)")
+#=============================AUTO DETECT SERIAL PORTS=================================
+mycursor.execute("UPDATE sensor_readers SET sensor_code='' WHERE id IN (3,4,5)")
 mydb.commit()
 mycursor.execute("TRUNCATE TABLE serial_ports")
 mydb.commit()
@@ -135,8 +134,7 @@ for port in serial_ports():
     port_desc = ""
 
     if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-        p = subprocess.Popen('dmesg | grep ' + str(port).replace('/dev/',
-                             '') + ' | tail -1', stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen('dmesg | grep ' + str(port).replace('/dev/','') + ' | tail -1', stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
         port_desc = output.decode("utf-8")
@@ -148,8 +146,7 @@ for port in serial_ports():
 
     print(port_desc)
     try:
-        mycursor.execute(
-            "INSERT INTO serial_ports (port,description) VALUES ('" + port + "','" + port_desc + "')")
+        mycursor.execute("INSERT INTO serial_ports (port,description) VALUES ('" + port + "','" + port_desc + "')")
         mydb.commit()
     except Exception as e:
         None
@@ -159,10 +156,9 @@ serial_ports = mycursor.fetchall()
 for serial_port in serial_ports:
     print(serial_port[0])
     if(str(serial_port[0]).count("ttyUSB") > 0 or str(serial_port[0]).count("ttyACM") > 0 or str(serial_port[0]).count("COM") > 0):
-check_as_membrasens(serial_port[0])
+        check_as_membrasens(serial_port[0])
 
-mycursor.execute(
-    "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
+mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
 try:
     sensor_reader_id = mycursor.fetchone()[0]
 except Exception as e:
@@ -170,17 +166,15 @@ except Exception as e:
 if(str(sensor_reader_id) == ""):
     check_as_sds019(serial_port[0])
 
-mycursor.execute(
-    "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
+mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
 try:
     sensor_reader_id = mycursor.fetchone()[0]
 except Exception as e:
     sensor_reader_id = ""
 if(str(sensor_reader_id) == ""):
-check_as_ventagepro2(serial_port[0])
+    check_as_ventagepro2(serial_port[0])
 
-mycursor.execute(
-    "SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
+mycursor.execute("SELECT id FROM sensor_readers WHERE sensor_code = '" + serial_port[0] + "'")
 try:
     sensor_reader_id = mycursor.fetchone()[0]
 except Exception as e:
