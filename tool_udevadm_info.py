@@ -44,7 +44,7 @@ for port in serial_ports():
         
     print(port_desc)
     try:
-        mycursor.execute("INSERT INTO serial_ports (port,description) VALUES ('" + port + "','" + port_desc + "')")
+        mycursor.execute("INSERT INTO serial_ports (port,id_product,id_vendor,serial,description) VALUES ('" + port + "','','','','" + port_desc + "')")
         mydb.commit()
     except Exception as e:
         print(e)
