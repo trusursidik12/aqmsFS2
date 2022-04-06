@@ -28,6 +28,9 @@ def serial_ports():
         except (OSError, serial.SerialException):
             pass
     return result
+    
+mycursor.execute("TRUNCATE TABLE serial_ports")
+mydb.commit()
 
 for port in serial_ports():
     print("Adding port " + port)
