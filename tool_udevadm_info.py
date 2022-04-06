@@ -49,7 +49,7 @@ for port in serial_ports():
         serialno = port_descs[0]
         port_descs = port_desc.split("{idVendor}==")
         port_descs = port_descs[1].split("\n")
-        id_vendor = port_desc[0]
+        id_vendor = port_descs[0]
         port_descs = port_desc.split("{idProduct}==")
         port_descs = port_descs[1].split("\n")
         id_product = port_descs[0]
