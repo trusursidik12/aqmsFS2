@@ -45,7 +45,7 @@ for port in serial_ports():
         p_status = p.wait()
         port_desc = output.decode("utf-8").replace('"',"")
         port_descs = port_desc.split("{serial}==")
-        port_descs = port_descs[1].split("\n\r")
+        port_descs = port_descs[1].split("\n")
         serialno = port_descs[0]
         
     print(serialno)
