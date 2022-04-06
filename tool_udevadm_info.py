@@ -35,7 +35,7 @@ for port in serial_ports():
 
     if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
         # p = subprocess.Popen('dmesg | grep ' + str(port).replace('/dev/','') + ' | tail -1', stdout=subprocess.PIPE, shell=True)
-        p = subprocess.Popen("udevadm info -a -n /dev/ttyUSB0 | grep '{manufacturer}\|{product}\|{serial}\|{idVendor}\|{idProduct}' -m5", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("udevadm info -a -n " + port + " | grep '{manufacturer}\|{product}\|{serial}\|{idVendor}\|{idProduct}' -m5", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
         port_desc = output.decode("utf-8")
