@@ -35,16 +35,22 @@ mydb.commit()
 for port in serial_ports():
     print("Adding port " + port)
     port_desc = ""
+    id_product = ""
+    id_vendor = ""
+    serialno = ""
 
     if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
         p = subprocess.Popen("udevadm info -a -n " + port + " | grep '{manufacturer}\|{product}\|{serial}\|{idVendor}\|{idProduct}' -m5", stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         p_status = p.wait()
-        port_desc = output.decode("utf-8").replace('"',"");
+        port_desc = output.decode("utf-8").replace('"',"")
+        port_descs = port_desc.split("{serial}==")
+        port_descs = port_descs[1].split("\n\r")
+        serialno = port_descs[0]
         
-    print(port_desc)
+    print(serialno)
     try:
-        mycursor.execute("INSERT INTO serial_ports (port,id_product,id_vendor,serial,description) VALUES ('" + port + "','','','','" + port_desc + "')")
+        mycursor.execute("INSERT INTO serial_ports (port,id_product,id_vendor,serial,description) VALUES ('" + port + "','" + id_product + "','" + id_vendor + "','" + serialno + "','" + port_desc + "')")
         mydb.commit()
     except Exception as e:
         print(e)
