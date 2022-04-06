@@ -53,10 +53,7 @@ for port in serial_ports():
         port_descs = port_desc.split("{idProduct}==")
         port_descs = port_descs[1].split("\n")
         id_product = port_descs[0]
-        
-    print(serialno)
-    print(id_product)
-    print(id_vendor)
+
     try:
         mycursor.execute("INSERT INTO serial_ports (port,id_product,id_vendor,serial,description) VALUES ('" + port + "','" + id_product + "','" + id_vendor + "','" + serialno + "','" + port_desc + "')")
         mydb.commit()
