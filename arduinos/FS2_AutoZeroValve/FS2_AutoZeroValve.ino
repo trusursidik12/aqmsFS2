@@ -8,13 +8,16 @@ void setup() {
     pinMode(valve1, OUTPUT);
     pinMode(valve2, OUTPUT);
     Serial.println("FS2_AUTO_ZERO_VALVE_START");
+//    digitalWrite(valve1,HIGH);
+//    delay(100);
+//    digitalWrite(valve2,LOW);
+//    delay(1000);
+//    digitalWrite(valve1,LOW);
+//    delay(100);
+//    digitalWrite(valve2,HIGH);
+//    delay(1000);
     digitalWrite(valve1,HIGH);
-    digitalWrite(valve2,LOW);
-    delay(1000);
-    digitalWrite(valve1,LOW);
-    digitalWrite(valve2,HIGH);
-    delay(1000);
-    digitalWrite(valve1,HIGH);
+    delay(500);
     digitalWrite(valve2,LOW);
     activeValve = 1;
     delay(1000);
@@ -28,13 +31,15 @@ void loop() {
         if(inChar == 'i'){
             activeValve = 1;
             digitalWrite(valve1,HIGH);
+            delay(500);
             digitalWrite(valve2,LOW);
-        }
-        if(inChar == 'j'){
+        }else if(inChar == 'j'){
             activeValve = 2;
-            digitalWrite(valve1,LOW);
             digitalWrite(valve2,HIGH);
+            delay(500);
+            digitalWrite(valve1,LOW);
         }
+        delay(1000);
     }
     Serial.print("FS2_AUTO_ZERO_VALVE;");
     Serial.print(activeValve);
