@@ -11,6 +11,10 @@ import db_connect
 is_MEMBRAPOR_connect = False
 is_zero_calibrating = False
 zerocal_finished_at = ""
+concentration0 = ""
+concentration1 = ""
+concentration2 = ""
+concentration3 = ""
 
 try:
     mydb = db_connect.connecting()
@@ -199,7 +203,10 @@ try:
         
             val = connect_membrapor(int(sys.argv[1]))
             # print(val)
-            MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]) + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
+            if(dectofloat(val[1],val[0]) != "0"):
+                concentration0 = dectofloat(val[1],val[0])
+                
+            MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
             # print(MEMBRAPOR)
         except Exception as e2:
@@ -208,7 +215,7 @@ try:
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
             
-        time.sleep(2)
+        time.sleep(1)
 
 except Exception as e:
     print(e)
