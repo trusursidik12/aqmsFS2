@@ -11,10 +11,10 @@ import db_connect
 is_MEMBRAPOR_connect = False
 is_zero_calibrating = False
 zerocal_finished_at = ""
-concentration0 = ""
-concentration1 = ""
-concentration2 = ""
-concentration3 = ""
+concentration1 = "0"
+concentration0 = "0"
+concentration2 = "0"
+concentration3 = "0"
 
 try:
     mydb = db_connect.connecting()
