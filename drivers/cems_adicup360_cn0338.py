@@ -70,7 +70,7 @@ try:
                 SENSOR = "0;0;0;0;0;0;0;0;0;\\r\\n'"
                 
             # print(SENSOR.replace("b'","'").replace("'","''"))
-            update_sensor_value(str(sys.argv[1]),SENSOR.replace("b'","'").replace("'","''"))
+            update_sensor_value(str(sys.argv[1]),SENSOR.replace("b'","").replace("'",""))
             
             time.sleep(1)
             
