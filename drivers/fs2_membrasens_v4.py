@@ -224,7 +224,7 @@ try:
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
             
-        time.sleep(2)
+        time.sleep(1)
 
 except Exception as e:
     print(e)
