@@ -23,6 +23,7 @@ class Home extends BaseController
 		$data['weathers'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'weather'])->findAll();
 		$data['flow_meters'] = $this->parameter->where(['is_view' => 1, 'p_type' => 'flowmeter'])->findAll();
 		$data['stationname'] = @$this->configuration->where(['name' => 'nama_stasiun'])->get()->getFirstRow()->content;
+		$data['is_cems'] = @$this->configuration->where(['name' => 'is_cems'])->get()->getFirstRow()->content;
 		echo view("v_home", $data);
 	}
 
