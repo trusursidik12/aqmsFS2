@@ -39,13 +39,12 @@ def connect_sensor():
         COM_SENSOR = serial.Serial(sensor_reader[0], sensor_reader[1])
         COM_SENSOR.write("\n\r".encode())
         time.sleep(1)
-        COM_SENSOR.write(b'\x03')
-        time.sleep(1)
-        COM_SENSOR.write("help\n\r".encode())
+        # COM_SENSOR.write(b'\x03')
+        COM_SENSOR.write(str("run\n\r").encode())
         time.sleep(1)
         for x in range(5):
             SENSOR = SENSOR + str(COM_SENSOR.readline())
-            
+                
         if(SENSOR.count("CN0338") > 0):
             is_SENSOR_connect = True
             print("[V] SENSOR Module " + sensor_reader[0] + " CONNECTED")
@@ -53,9 +52,10 @@ def connect_sensor():
         else:
             is_SENSOR_connect = False
             
-        time.sleep(10)
+        time.sleep(2)
         
     except Exception as e: 
+        is_SENSOR_connect = False
         return None
 
 try:
@@ -63,10 +63,9 @@ try:
         try:
             if(not is_SENSOR_connect):
                 connect_sensor()
-                time.sleep(5)
                 
             SENSOR = str(COM_SENSOR.readline())
-            if(SENSOR.count(";") < 7):
+            if(SENSOR.count("CEMS_CN0338;") <=0):
                 SENSOR = "0;0;0;0;0;0;0;0;0;\\r\\n'"
                 
             # print(SENSOR.replace("b'","'").replace("'","''"))
