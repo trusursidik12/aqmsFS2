@@ -2,12 +2,12 @@
 <?= $this->section('content') ?>
 <div class="container-md py-1">
     <div class="row justify-content-start">
-        <?php if (!$is_cems) : ?>
-            <div class="col-md-12 my-2">
-                <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
-                        <div id="location">
-                            <div id="aqm_voltage">
+        <div class="col-md-12 my-2">
+            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
+                    <div id="location">
+                        <div id="aqm_voltage">
+                            <?php if (!$is_cems) : ?>
                                 <span class="icon" style="display:inline-block;position:relative;top:-5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -16,30 +16,32 @@
                                     </svg>
                                 </span>
                                 <h2 class="h4" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
-                                <h2 class="h6 text-dark" id="date"></h2>
-                            </div>
-
+                            <?php endif ?>
+                            <h2 class="h6 text-dark" id="date"></h2>
                         </div>
-                        <div>
-                            <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                                <div class="mr-3">
-                                    <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <line x1="12" y1="12" x2="12" y2="12.01"></line>
-                                            <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
-                                            <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
-                                        </svg>
-                                    </span>
-                                    <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
-                                </div>
-                                <div>
-                                    <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
-                                    <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
-                                        <?= lang('Global.Switch') ?>
-                                    </button>
-                                </div>
+
+                    </div>
+                    <div>
+                        <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                            <div class="mr-3">
+                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
+                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
+                                    </svg>
+                                </span>
+                                <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
                             </div>
+                            <div>
+                                <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
+                                <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
+                                    <?= lang('Global.Switch') ?>
+                                </button>
+                            </div>
+                        </div>
+                        <?php if ($pump_interval > 0) : ?>
                             <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
                                 <div class="mr-3">
                                     <span class="icon" style="display:inline-block;position:relative;top:-5px;">
@@ -62,10 +64,12 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
+        </div>
+        <?php if (!$is_cems) : ?>
             <div class="col-sm mx-2">
                 <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
                 <div id="particulate">
@@ -109,29 +113,6 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-            </div>
-            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
-                    <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                        <div class="mr-3">
-                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <line x1="12" y1="12" x2="12" y2="12.01"></line>
-                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
-                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
-                                </svg>
-                            </span>
-                            <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
-                        </div>
-                        <div>
-                            <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
-                            <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
-                                <?= lang('Global.Switch') ?>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!--div class="card mt-1">
                 <div class="p-2">
