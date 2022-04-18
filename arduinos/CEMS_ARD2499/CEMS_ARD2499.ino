@@ -42,14 +42,14 @@ void loop() {
     AVG_AIN5 = AIN5 / counter;
     AVG_AIN6 = AIN6 / counter;
     AVG_AIN7 = AIN7 / counter;
-    AVG_AIN8 = AIN8 / counter;
+    /*AVG_AIN8 = AIN8 / counter;
     AVG_AIN9 = AIN9 / counter;
     AVG_AIN10 = AIN10 / counter;
     AVG_AIN11 = AIN11 / counter;
     AVG_AIN12 = AIN12 / counter;
     AVG_AIN13 = AIN13 / counter;
     AVG_AIN14 = AIN14 / counter;
-    AVG_AIN15 = AIN15 / counter;
+    AVG_AIN15 = AIN15 / counter;*/
     AIN0 = 0;
     AIN1 = 0;
     AIN2 = 0;
@@ -58,16 +58,17 @@ void loop() {
     AIN5 = 0;
     AIN6 = 0;
     AIN7 = 0;
-    AIN8 = 0;
+    /*AIN8 = 0;
     AIN9 = 0;
     AIN10 = 0;
     AIN11 = 0;
     AIN12 = 0;
     AIN13 = 0;
     AIN14 = 0;
-    AIN15 = 0;
+    AIN15 = 0;*/
     counter = 0;
   }
-  Serial.println(String((AVG_AIN0*2.048/16777216), 6) + ";" + String((AVG_AIN1*2.048/16777216), 6) + ";" + String((AVG_AIN2*2.048/16777216), 6) + ";" + String((AVG_AIN3*2.048/16777216), 6) + ";" + String((AVG_AIN4*2.048/16777216), 6) + ";" + String((AVG_AIN5*2.048/16777216), 6) + ";" + String((AVG_AIN6*2.048/16777216), 6) + ";" + String((AVG_AIN7*2.048/16777216), 6) + ";" + String((AVG_AIN8*2.048/16777216), 6) + ";" + String((AVG_AIN9*2.048/16777216), 6) + ";" + String((AVG_AIN10*2.048/16777216), 6) + ";" + String((AVG_AIN11*2.048/16777216), 6) + ";" + String((AVG_AIN12*2.048/16777216), 6) + ";" + String((AVG_AIN13*2.048/16777216), 6) + ";" + String((AVG_AIN14*2.048/16777216), 6) + ";" + String((AVG_AIN15*2.048/16777216), 6) + ";");
+  //Serial.println("CEMS_ARD2499;" + String((AVG_AIN0*2.048/16777216), 6) + ";" + String((AVG_AIN1*2.048/16777216), 6) + ";" + String((AVG_AIN2*2.048/16777216), 6) + ";" + String((AVG_AIN3*2.048/16777216), 6) + ";" + String((AVG_AIN4*2.048/16777216), 6) + ";" + String((AVG_AIN5*2.048/16777216), 6) + ";" + String((AVG_AIN6*2.048/16777216), 6) + ";" + String((AVG_AIN7*2.048/16777216), 6) + ";" + String((AVG_AIN8*2.048/16777216), 6) + ";" + String((AVG_AIN9*2.048/16777216), 6) + ";" + String((AVG_AIN10*2.048/16777216), 6) + ";" + String((AVG_AIN11*2.048/16777216), 6) + ";" + String((AVG_AIN12*2.048/16777216), 6) + ";" + String((AVG_AIN13*2.048/16777216), 6) + ";" + String((AVG_AIN14*2.048/16777216), 6) + ";" + String((AVG_AIN15*2.048/16777216), 6) + ";");
+  Serial.println("CEMS_ARD2499;" + String((AVG_AIN0*2.048/16777216), 6) + ";" + String((AVG_AIN1*2.048/16777216), 6) + ";" + String((AVG_AIN2*2.048/16777216), 6) + ";" + String((AVG_AIN3*2.048/16777216), 6) + ";" + String((AVG_AIN4*2.048/16777216), 6) + ";" + String((AVG_AIN5*2.048/16777216), 6) + ";" + String((AVG_AIN6*2.048/16777216), 6) + ";" + String((AVG_AIN7*2.048/16777216), 6) + ";");
     
 }
