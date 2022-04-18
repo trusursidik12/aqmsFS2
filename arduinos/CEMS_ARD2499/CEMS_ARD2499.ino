@@ -7,6 +7,7 @@ void setup() {
   Wire1.begin();
   ard2499board.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ);
   ard2499board.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
+  Serial.println("CEMS_ARD2499_START");
 }
 
 int32_t AIN0, AIN1, AIN2, AIN3, AIN4, AIN5, AIN6, AIN7,AIN8, AIN9, AIN10, AIN11, AIN12, AIN13, AIN14, AIN15;
