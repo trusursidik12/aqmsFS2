@@ -69,7 +69,7 @@ UOptions *const pOptions = (UOptions *) (&Options);
 
 SOptions::SOptions(void)
 {
-   baud_rate = 9600;
+   baud_rate = 115200;
    ndir_frequency = 0.25f;
    adc_frequency = 10.0008f;
 
