@@ -107,6 +107,7 @@ class FormulaMeasurementLogs extends BaseCommand
 						// $arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
 						// $arr_sensor_value = explode("])", $arr_sensor_value)[0];
 						// $sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
+						$sensor_value = (float) @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
 					} elseif ((count(explode(",", $sensor_check)) == 7) && (count(explode(";", $sensor_check)) == 2)) {
 						// Check PM AQMS FS1 Value
 						$sensor_value = @eval("\$parameter->formula;");
