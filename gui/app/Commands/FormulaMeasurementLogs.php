@@ -106,9 +106,9 @@ class FormulaMeasurementLogs extends BaseCommand
 					if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
 						try {
 							echo '$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[';
-							$arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
-							$arr_sensor_value = explode("])", $arr_sensor_value)[0];
-							$sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
+							// $arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
+							// $arr_sensor_value = explode("])", $arr_sensor_value)[0];
+							// $sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
 						} catch (Exception $e) {
 							echo $e->getMessage();
 						}
