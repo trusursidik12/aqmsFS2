@@ -100,9 +100,6 @@ class FormulaMeasurementLogs extends BaseCommand
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if ($parameter->formula != "") @eval("\$data[$parameter->id] = $parameter->formula;");
 				else $data[$parameter->id] = 0;
-
-				echo $parameter->formula;
-
 				$sensor_check = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1];
 				$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
 				if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
