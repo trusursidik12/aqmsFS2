@@ -103,9 +103,10 @@ class FormulaMeasurementLogs extends BaseCommand
 					$sensor_check = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1];
 					$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
 					if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
-						$arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
-						$arr_sensor_value = explode("])", $arr_sensor_value)[0];
-						$sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
+						echo '$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[';
+						// $arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
+						// $arr_sensor_value = explode("])", $arr_sensor_value)[0];
+						// $sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
 					} elseif ((count(explode(",", $sensor_check)) == 7) && (count(explode(";", $sensor_check)) == 2)) {
 						// Check PM AQMS FS1 Value
 						$sensor_value = @eval("\$parameter->formula;");
