@@ -10,7 +10,6 @@ use App\Models\m_measurement;
 use App\Models\m_measurement_log;
 use App\Models\m_measurement_history;
 use App\Models\m_parameter;
-use Exception;
 
 class FormulaMeasurementLogs extends BaseCommand
 {
@@ -99,31 +98,28 @@ class FormulaMeasurementLogs extends BaseCommand
 			}
 
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
-				try {
-					@eval("try { \$data[$parameter->id] = $parameter->formula; } catch (Exception \$e) {} ");
-					$sensor_check = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1];
-					$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
-					if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
-						$arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
-						$arr_sensor_value = explode("])", $arr_sensor_value)[0];
-						$sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
-					} elseif ((count(explode(",", $sensor_check)) == 7) && (count(explode(";", $sensor_check)) == 2)) {
-						// Check PM AQMS FS1 Value
-						$sensor_value = @eval("\$parameter->formula;");
-					} else {
-						$sensor_value = (float) @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
-					}
-					$measurement_logs = [
-						"parameter_id" => $parameter->id,
-						"value" => ($data[$parameter->id] < 0) ? 0 : $data[$parameter->id],
-						"sensor_value" => $sensor_value,
-						"is_averaged" => 0
-					];
-					$this->measurement_logs->save($measurement_logs);
-					// $this->measurement_histories->save($measurement_logs);
-				} catch (Exception $e) {
-					echo $e->getMessage();
+				if ($parameter->formula != "") @eval("\$data[$parameter->id] = $parameter->formula;");
+				else $data[$parameter->id] = 0;
+				$sensor_check = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1];
+				$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
+				if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
+					$arr_sensor_value = explode('$sensor[' . $sensor_value->sensor_reader_id . '][' . $sensor_value->pin . '])[', $parameter->formula)[1];
+					$arr_sensor_value = explode("])", $arr_sensor_value)[0];
+					$sensor_value = explode(";", @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1])[$arr_sensor_value + 4];
+				} elseif ((count(explode(",", $sensor_check)) == 7) && (count(explode(";", $sensor_check)) == 2)) {
+					// Check PM AQMS FS1 Value
+					$sensor_value = @eval("\$parameter->formula;");
+				} else {
+					$sensor_value = (float) @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
 				}
+				$measurement_logs = [
+					"parameter_id" => $parameter->id,
+					"value" => ($data[$parameter->id] < 0) ? 0 : $data[$parameter->id],
+					"sensor_value" => $sensor_value,
+					"is_averaged" => 0
+				];
+				$this->measurement_logs->save($measurement_logs);
+				// $this->measurement_histories->save($measurement_logs);
 			}
 			sleep(1);
 		}
