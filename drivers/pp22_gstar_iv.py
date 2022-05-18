@@ -42,9 +42,7 @@ def connect_sensor():
         while i <= 12:
             SENSOR = SENSOR + str(COM.readline());
             i += 1
-            
-        print(SENSOR)
-                
+                            
         if(SENSOR.count("$GPGGA") > 0):
             is_connect = True
             print("[V] Sensor " + sensor_reader[0] + " CONNECTED")
@@ -70,12 +68,9 @@ try:
                 SENSOR = SENSOR + str(COM.readline());
                 i += 1
                 
-            print(SENSOR)
-            
             if(SENSOR.count("$GPGGA") > 0):
                 try:
                     GPGGA = SENSOR.split("$GPGGA,")[1];
-                    print(GPGGA)
                     GPGGA = GPGGA.split("\\r\\n")[0];
                 except Exception as x:
                     GPGGA = ""
