@@ -27,6 +27,7 @@ def read_ws():
         content = content[len(content)-1]
         return content
     except Exception as e:
+        print(e)
         # is_SENSOR_connect = False
         return ""
     
