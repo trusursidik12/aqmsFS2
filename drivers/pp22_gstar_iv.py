@@ -55,6 +55,7 @@ def connect_sensor():
         return None
     
 connect_sensor()
+time.sleep(3)
 
 try:
     while True :
