@@ -21,16 +21,13 @@ except Exception as e:
     
 def read_ws(path):
     global is_SENSOR_connect
-    # is_SENSOR_connect = True
     try:
         f = open(path + "/rtl_433_output.txt", "r")
         contents = str(f.read()).split("Fineoffset-WHx080")
-        print(contents)
         content = contents[len(contents)-1]
         return content
     except Exception as e:
         print(e)
-        # is_SENSOR_connect = False
         return ""
     
 def update_sensor_value(sensor_reader_id,value):
@@ -70,28 +67,21 @@ try:
                 connect_sensor()
                 
             ws_content = read_ws(filepath)    
-            # print(ws_content)
             if(ws_content != ""):
                 outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
-                print(outdoor_temperature)
                 wind_speed = float(ws_content.split("Wind avg speed: ")[1].split("\n")[0])
-                print(wind_speed)
                 wind_dirs = ws_content.split("Wind Direction: ")[1].split("\n")[0]
-                print(wind_dirs)
                 outdoor_humidity = ws_content.split("Humidity  : ")[1].split(" %")[0]
-                print(outdoor_humidity)
                 rain = float(ws_content.split("Total rainfall: ")[1].split("\n")[0])
-                print(rain)
                 
                 WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
-                print(WS)
                 update_sensor_value(str(sys.argv[1]),WS.replace("'","''"))
                 
                 f = open(filepath + "/rtl_433_output.txt", "w")
                 f.write("")
                 f.close()
                 
-            # print(WS)
+            print(WS)
             
         except Exception as e2:
             print(e2)
