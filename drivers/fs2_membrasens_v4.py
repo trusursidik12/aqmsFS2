@@ -51,14 +51,13 @@ def connect_membrapor():
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
-        print(sensor_reader)
     
-        rs485=minimalmodbus.Instrument(sensor_reader[0],1)
+        rs485=minimalmodbus.Instrument(sensor_reader[0],1,'rtu',False)
         rs485.serial.baudrate=sensor_reader[1]
         rs485.serial.parity=serial.PARITY_EVEN
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
-        rs485.mode=minimalmodbus.MODE_RTU
+        # rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=0.2
         
         regConcentration = rs485.read_registers(1000,8,3)
