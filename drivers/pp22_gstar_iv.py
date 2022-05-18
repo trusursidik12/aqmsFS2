@@ -42,6 +42,8 @@ def connect_sensor():
         while i <= 12:
             SENSOR = SENSOR + str(COM.readline());
             i += 1
+            
+        print(SENSOR)
                 
         if(SENSOR.count("$GPGGA") > 0):
             is_connect = True
