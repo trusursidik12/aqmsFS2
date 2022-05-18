@@ -74,7 +74,8 @@ try:
             
             if(SENSOR.count("$GPGGA") > 0):
                 try:
-                    GPGGA = gps_data.split("$GPGGA,")[1];
+                    GPGGA = SENSOR.split("$GPGGA,")[1];
+                    print(GPGGA)
                     GPGGA = GPGGA.split("\\r\\n")[0];
                 except Exception as x:
                     GPGGA = ""
