@@ -71,24 +71,26 @@
         </div>
         <?php if (!$is_cems) : ?>
             <div class="col-sm mx-2">
-                <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
-                <div id="particulate">
-                    <?php foreach ($particulates as $particulate) : ?>
-                        <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,0.6);background-image: url(../img/black_metal_texture.png);">
-                            <span class="h6 py-0 font-weight-bold text-light"><?= $particulate->caption_id ?></span>
-                            <div class="m-0 d-flex justify-content-between">
-                                <div class="d-flex align-items-center text-light">
-                                    <h3 class="h1 mr-1 text-light" id="value_<?= $particulate->code ?>">0</h3>
-                                    <p><?= $particulate->default_unit ?></p>
-                                </div>
-                                <div class="d-flex align-items-center" style="color:#FFFF00">
-                                    <h3 class="h5 mr-1" id="value_<?= $particulate->code ?>_flow" style="color:#FFFF00"></h3>
-                                    l/mnt
+                <?php if (count($particulates) > 0) : ?>
+                    <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
+                    <div id="particulate">
+                        <?php foreach ($particulates as $particulate) : ?>
+                            <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,0.6);background-image: url(../img/black_metal_texture.png);">
+                                <span class="h6 py-0 font-weight-bold text-light"><?= $particulate->caption_id ?></span>
+                                <div class="m-0 d-flex justify-content-between">
+                                    <div class="d-flex align-items-center text-light">
+                                        <h3 class="h1 mr-1 text-light" id="value_<?= $particulate->code ?>">0</h3>
+                                        <p><?= $particulate->default_unit ?></p>
+                                    </div>
+                                    <div class="d-flex align-items-center" style="color:#FFFF00">
+                                        <h3 class="h5 mr-1" id="value_<?= $particulate->code ?>_flow" style="color:#FFFF00"></h3>
+                                        l/mnt
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif ?>
 
                 <div class="text-center rounded my-1" id="chartdiv">
                 </div>
