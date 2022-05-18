@@ -78,14 +78,14 @@ try:
                 rain = float(ws_content.split("Total rainfall: ")[1].split(" ")[0])
                 
                 WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
-                
+                print(WS)
                 update_sensor_value(str(sys.argv[1]),WS.replace("'","''"))
                 
-                f = open("~/rtl_433_output.txt", "w")
+                f = open(filepath + "/rtl_433_output.txt", "w")
                 f.write("")
                 f.close()
                 
-            print(WS)
+            # print(WS)
             
         except Exception as e2:
             print(e2)
