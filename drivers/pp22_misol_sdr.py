@@ -3,6 +3,7 @@ import sys
 import serial
 import subprocess
 import time
+import datetime
 import db_connect
 
 is_SENSOR_connect = False
