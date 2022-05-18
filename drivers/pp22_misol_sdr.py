@@ -23,9 +23,9 @@ def read_ws(path):
     # is_SENSOR_connect = True
     try:
         f = open(path + "/rtl_433_output.txt", "r")
-        print(f.read())
-        content = str(f.read()).split("Fineoffset-WHx080")
-        content = content[len(content)-1]
+        contents = str(f.read()).split("Fineoffset-WHx080")
+        print(contents)
+        content = contents[len(contents)-1]
         return content
     except Exception as e:
         print(e)
