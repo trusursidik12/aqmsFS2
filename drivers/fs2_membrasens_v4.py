@@ -54,7 +54,7 @@ def connect_membrapor():
     
         rs485=minimalmodbus.Instrument(sensor_reader[0],1,'rtu',False)
         rs485.serial.baudrate=sensor_reader[1]
-        rs485.serial.parity=serial.PARITY_NONE
+        rs485.serial.parity=serial.PARITY_ODD
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
         rs485.serial.timeout=3
