@@ -7,6 +7,7 @@ import db_connect
 
 is_SENSOR_connect = False
 WS = ";0;0;0;0;0;0;0;0;0;0;0;0;0.0;0;0;0;0"
+filepath = "/home/admin"
 
 try:
     mydb = db_connect.connecting()
@@ -17,11 +18,11 @@ try:
 except Exception as e: 
     print("[X]  SENSOR Module ID: " + str(sys.argv[1]) + " " + e)
     
-def read_ws():
+def read_ws(path):
     global is_SENSOR_connect
     # is_SENSOR_connect = True
     try:
-        f = open("~/rtl_433_output.txt", "r")
+        f = open(path + "/rtl_433_output.txt", "r")
         print(f.read())
         content = str(f.read()).split("Fineoffset-WHx080")
         content = content[len(content)-1]
@@ -45,10 +46,12 @@ def update_sensor_value(sensor_reader_id,value):
         return None
         
 def connect_sensor():
-    global is_SENSOR_connect
+    global is_SENSOR_connect,filepath
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
+        
+        filepath = sensor_reader[0]
         
         if(sensor_reader[0] != ""):
             subprocess.Popen("rtl_433 > ~/rtl_433_output.txt &", shell=True)
@@ -65,7 +68,7 @@ try:
             if(not is_SENSOR_connect):
                 connect_sensor()
                 
-            ws_content = read_ws()    
+            ws_content = read_ws(filepath)    
             print(ws_content)
             if(ws_content != ""):
                 outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
