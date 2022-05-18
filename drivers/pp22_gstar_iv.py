@@ -107,20 +107,24 @@ try:
                 
             update_sensor_value(str(sys.argv[1]),GPS)
             
+            sql = "UPDATE configurations SET content='" + lat + "' WHERE data = 'latitude'";
+            mycursor.execute(sql)
+            mydb.commit()
+            sql = "UPDATE configurations SET content='" + lon + "' WHERE data = 'longitude'";
+            mycursor.execute(sql)
+            mydb.commit() 
+            
         except Exception as e2:
             print(e2)
             is_connect = False
             print("Reconnect Sensor ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),";;0")
-            sql = "UPDATE aqm_configuration SET content='' WHERE data = 'sta_lat'";
+            sql = "UPDATE configurations SET content='' WHERE data = 'latitude'";
             mycursor.execute(sql)
             mydb.commit()
-            sql = "UPDATE aqm_configuration SET content='' WHERE data = 'sta_lon'";
+            sql = "UPDATE configurations SET content='' WHERE data = 'longitude'";
             mycursor.execute(sql)
             mydb.commit() 
-            sql = "UPDATE aqm_configuration SET content='0' WHERE data = 'altitude'";
-            mycursor.execute(sql)
-            mydb.commit()
         
         time.sleep(1)
         
