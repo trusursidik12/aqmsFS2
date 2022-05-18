@@ -68,6 +68,8 @@ try:
                 SENSOR = SENSOR + str(COM.readline());
                 i += 1
                 
+            print(SENSOR)
+            
             if(SENSOR.count("$GPGGA") > 0):
                 try:
                     GPGGA = gps_data.split("$GPGGA,")[1];
