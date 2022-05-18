@@ -177,7 +177,6 @@ def check_is_span():
             time.sleep(1)
         
     except Exception as e:
-        print("setSpan configurations not found")
         return None
         
 
