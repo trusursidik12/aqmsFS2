@@ -60,7 +60,7 @@ def connect_sensor():
 try:
     while True :
         try:
-            if(not is_connect):
+            if(is_connect == False):
                 COM = connect_sensor()
             
             i = 0
