@@ -126,8 +126,13 @@ def zeroing():
 
 def check_is_span():
     try:
-        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
-        setSpan = mycursor.fetchone()[0]
+        try:
+            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
+            setSpan = mycursor.fetchone()[0]        
+        except Exception as e4:
+            setSpan = "";
+            print("setSpan configurations not found")
+
         setSpans = setSpan.split(";")
         # print("setSpan : " + setSpan)
         
@@ -172,7 +177,7 @@ def check_is_span():
             time.sleep(1)
         
     except Exception as e:
-        print(e)
+        print("setSpan configurations not found")
         return None
         
 
@@ -184,12 +189,14 @@ try:
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
                 is_zerocal = mycursor.fetchone()[0]
             except Exception as e4:
+                is_zerocal = "0"
                 print("is_zerocal configurations not found")
             
             try:
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
                 zerocal_finished_at = mycursor.fetchone()[0]
             except Exception as e4:
+                zerocal_finished_at = "";
                 print("zerocal_finished_at configurations not found")
             
             # print(is_zerocal + " : " + zerocal_finished_at)
