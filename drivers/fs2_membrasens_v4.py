@@ -46,11 +46,12 @@ def update_sensor_value(sensor_reader_id,value):
     except Exception as e2:
         return None
 
-def connect_membrapor(membrapormode):
+def connect_membrapor():
     global is_MEMBRAPOR_connect
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
+        print(sensor_reader)
     
         rs485=minimalmodbus.Instrument(sensor_reader[0],1)
         rs485.serial.baudrate=sensor_reader[1]
@@ -217,7 +218,7 @@ try:
                 except Exception as e3:
                     print(e3)
         
-            val = connect_membrapor(int(sys.argv[1]))
+            val = connect_membrapor()
             # print(val)
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
