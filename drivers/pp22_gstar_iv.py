@@ -107,10 +107,10 @@ try:
                 
             update_sensor_value(str(sys.argv[1]),GPS)
             
-            sql = "UPDATE configurations SET content='" + lat + "' WHERE data = 'latitude'";
+            sql = "UPDATE configurations SET content='" + lat + "' WHERE name = 'latitude'";
             mycursor.execute(sql)
             mydb.commit()
-            sql = "UPDATE configurations SET content='" + lon + "' WHERE data = 'longitude'";
+            sql = "UPDATE configurations SET content='" + lon + "' WHERE name = 'longitude'";
             mycursor.execute(sql)
             mydb.commit() 
             
@@ -119,10 +119,10 @@ try:
             is_connect = False
             print("Reconnect Sensor ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),";;0")
-            sql = "UPDATE configurations SET content='' WHERE data = 'latitude'";
+            sql = "UPDATE configurations SET content='' WHERE name = 'latitude'";
             mycursor.execute(sql)
             mydb.commit()
-            sql = "UPDATE configurations SET content='' WHERE data = 'longitude'";
+            sql = "UPDATE configurations SET content='' WHERE name = 'longitude'";
             mycursor.execute(sql)
             mydb.commit() 
         
