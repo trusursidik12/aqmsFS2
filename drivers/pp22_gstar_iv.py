@@ -54,8 +54,8 @@ def connect_sensor():
     except Exception as e: 
         return None
     
-connect_sensor()
-time.sleep(3)
+# connect_sensor()
+# time.sleep(3)
 
 try:
     while True :
