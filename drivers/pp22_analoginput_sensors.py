@@ -52,7 +52,7 @@ connect_sensor()
 try:
     while True :
         try:
-            if(not is_SENSOR_connect):
+            if(is_SENSOR_connect == False):
                 COM_SENSOR = connect_sensor()
                 
             SENSOR = str(COM_SENSOR.readline())
