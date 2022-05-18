@@ -69,13 +69,18 @@ try:
                 connect_sensor()
                 
             ws_content = read_ws(filepath)    
-            print(ws_content)
+            # print(ws_content)
             if(ws_content != ""):
                 outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
+                print(outdoor_temperature)
                 wind_speed = float(ws_content.split("Wind avg speed: ")[1].split(" ")[0])
+                print(wind_speed)
                 wind_dirs = ws_content.split("Wind Direction: ")[1].split(" ")[0]
+                print(wind_dirs)
                 outdoor_humidity = ws_content.split("Humidity  : ")[1].split(" %")[0]
+                print(outdoor_humidity)
                 rain = float(ws_content.split("Total rainfall: ")[1].split(" ")[0])
+                print(rain)
                 
                 WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
                 print(WS)
