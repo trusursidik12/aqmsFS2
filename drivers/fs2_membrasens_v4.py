@@ -180,11 +180,18 @@ try:
     while True:
         try:
             check_is_span()
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
+                is_zerocal = mycursor.fetchone()[0]
+            except Exception as e4:
+                print("is_zerocal configurations not found")
             
-            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
-            is_zerocal = mycursor.fetchone()[0]
-            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
-            zerocal_finished_at = mycursor.fetchone()[0]
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+                zerocal_finished_at = mycursor.fetchone()[0]
+            except Exception as e4:
+                print("zerocal_finished_at configurations not found")
+            
             # print(is_zerocal + " : " + zerocal_finished_at)
             
             if(int(is_zerocal) == 1 and zerocal_finished_at != ""):
