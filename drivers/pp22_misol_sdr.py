@@ -73,9 +73,9 @@ try:
             # print(ws_content)
             if(ws_content != ""):
                 outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
-                print("outdoor_temperature" + str(outdoor_temperature))
+                print(outdoor_temperature)
                 wind_speed = float(ws_content.split("Wind avg speed: ")[1].split("\n")[0])
-                print("wind_speed" + wind_speed)
+                print(wind_speed)
                 wind_dirs = ws_content.split("Wind Direction: ")[1].split("\n")[0]
                 print(wind_dirs)
                 outdoor_humidity = ws_content.split("Humidity  : ")[1].split(" %")[0]
