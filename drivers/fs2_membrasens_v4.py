@@ -58,7 +58,7 @@ def connect_membrapor():
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
         # rs485.mode=minimalmodbus.MODE_RTU
-        rs485.serial.timeout=0.2
+        rs485.serial.timeout=3
         
         regConcentration = rs485.read_registers(1000,8,3)
         regVoltage = rs485.read_registers(1010,8,3)
