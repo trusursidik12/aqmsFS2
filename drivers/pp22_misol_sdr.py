@@ -19,14 +19,14 @@ except Exception as e:
     
 def read_ws():
     global is_SENSOR_connect
-    is_SENSOR_connect = True
+    # is_SENSOR_connect = True
     try:
         f = open("~/rtl_433_output.txt", "r")
         content = str(f.read()).split("Fineoffset-WHx080")
         content = content[len(content)-1]
         return content
     except Exception as e:
-        is_SENSOR_connect = False
+        # is_SENSOR_connect = False
         return ""
     
 def update_sensor_value(sensor_reader_id,value):
@@ -64,6 +64,7 @@ try:
                 connect_sensor()
                 
             ws_content = read_ws()    
+            print(ws_content)
             if(ws_content != ""):
                 outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
                 wind_speed = float(ws_content.split("Wind avg speed: ")[1].split(" ")[0])
@@ -73,7 +74,7 @@ try:
                 
                 WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
                 
-                update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
+                update_sensor_value(str(sys.argv[1]),WS.replace("'","''"))
                 
                 f = open("~/rtl_433_output.txt", "w")
                 f.write("")
@@ -85,7 +86,7 @@ try:
             print(e2)
             is_SENSOR_connect = False
             print("Reconnect SENSOR Module ID: " + str(sys.argv[1]));
-            update_sensor_value(str(sys.argv[1]),";0;0;0;0;0;0;0;0;0;0;0;0;0.0;0;0;0;0")
+            # update_sensor_value(str(sys.argv[1]),";0;0;0;0;0;0;0;0;0;0;0;0;0.0;0;0;0;0")
         
         time.sleep(10)
         
