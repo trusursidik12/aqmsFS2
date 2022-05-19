@@ -58,7 +58,7 @@ try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
                 
-            ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
+            ANALYZER += str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
                 
