@@ -33,11 +33,9 @@ def connect_analyzer():
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
-        print(sensor_reader)
         
         COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1])
-        ANALYZER = str(COM_ANALYZER.read_until("#"))
-        print(ANALYZER)
+        ANALYZER = str(COM_ANALYZER.readline())
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
@@ -57,7 +55,7 @@ try:
             if(not is_ANALYZER_connect):
                 COM_ANALYZER = connect_analyzer()
                 
-            ANALYZER = str(COM_ANALYZER.read_until("#"))
+            ANALYZER = str(COM_ANALYZER.readline())
             print(ANALYZER)
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
