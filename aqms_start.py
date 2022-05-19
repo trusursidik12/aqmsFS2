@@ -201,7 +201,7 @@ mycursor.execute(
     "SELECT id,driver FROM sensor_readers WHERE sensor_code <> ''")
 sensor_readers = mycursor.fetchall()
 for sensor_reader in sensor_readers:
-    time.sleep(3)
+    time.sleep(5)
     command = "python drivers/" + \
         sensor_reader[1] + " " + str(sensor_reader[0])
     if sys.platform.startswith('win') == False:
