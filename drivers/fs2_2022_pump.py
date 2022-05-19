@@ -36,7 +36,7 @@ def connect_pump():
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
         
-        COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1])
+        COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,2)
         time.sleep(5)
         PUMP = str(COM_PUMP.read_until(str("#").encode()))
         if(PUMP.count("$MCU_PUMP") > 0):
