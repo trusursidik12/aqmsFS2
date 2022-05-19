@@ -63,29 +63,34 @@ class Iotconnect extends BaseCommand
 	{
 		
 		try {
-			$baseIotServer = "http://api.localhost:8000/";
+			// $baseIotServer = "http://localhost:8000/iot/";
+			$baseIotServer = "http://api.trusur.tech/iot/";
 			$client = \Config\Services::curlrequest([
 				'timeout' => 3
 			]);
 			$MeasurementLogs = new m_measurement_log();
-			$data = $MeasurementLogs
-					->select('measurement_logs.value, parameters.caption_id')
-					->join('parameters','parameters.id = measurement_logs.parameter_id')
-					->where('parameters.p_type = "particulate" AND parameters.is_view = "1"')
-					->where('measurement_logs.id < 30')
-					->findAll();
-			print_r($data);
-			$url = $baseIotServer."device-connect/?";
-			exit();
+			$MConfig = new m_configuration();
+			// $data = $MeasurementLogs
+			// 		->select('measurement_logs.value, parameters.caption_id')
+			// 		->join('parameters','parameters.id = measurement_logs.parameter_id')
+			// 		->where('parameters.p_type = "particulate" AND parameters.is_view = "1"')
+			// 		->where('measurement_logs.id < 30')
+			// 		->findAll();
+			$stationId = $MConfig->where('name','id_stasiun')->first()->content;
 			while (true) {
+				$url = $baseIotServer."device-connect/?station_id={$stationId}";
 				// Check command
 				$requestToServer = $client->get($url,[]);
-				$response = $requestToServer->getJSON();
+				$json = json_decode($requestToServer->getJSON());
+				$response = json_decode($json, true);
 				// Check if command exists
+				$content = [];
 				if($response['hasCommand']){
 					$commands = $response['commands'];
-					foreach ($commands as $command) {
-						$this->executeCommand($command['code']['code'],$command['content']);
+					foreach ($commands as $key => $command) {
+						$commandId = $command['id'];
+						$code = $command['code']['code'];
+						$url.="&content[$commandId]=".urlencode($this->executeCommand($code,$command['content']));
 					}
 				}
 				$problems = $this->getMeasurements();
@@ -93,39 +98,38 @@ class Iotconnect extends BaseCommand
 				if(count($problems) > 0 && ($dateI == 0 || $dateI == 30)){ //Sent problem every 30 min
 					foreach ($problems as $key => $problem) {
 						$url.="code[{$key}]={$problem['code']}&";
-						$url.="content[{$key}]={$problem['content']}&";
 					}
 					// Send Device Status Problem
 					$requestToServer = $client->get($url,[]);
 					$response = $requestToServer->getJSON();
+				}else{
+					$url.="&code[0]=200";
 				}
+				$requestToServer = $client->get($url,[]);
+				$json = json_decode($requestToServer->getJSON());
 				sleep(30); // Sleep 30sec
 			}
-		} catch (\Throwable $th) {
-			throw $th;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
 		}
 	}
 
 	public function getMeasurements(){
 		$Measurement = new m_measurement();
-		$i = (int) date('i');
-		if($i == 0 || $i == 30){ // Cek menit ke 0 dan 30
-			$problems = [];
-			$dateStart = date('Y-m-d H:i:s',strtotime('-30 min'));
-			$dateEnd = date('Y-m-d H:i:s');
-			$whereRaw = "time_group >= '{$dateStart}' AND time_group <= '{$dateEnd}'";
-			$measurements = $Measurement->select('parameters.p_type, parameters.code, measurements.value')
-			->where($whereRaw)
-			->findAll();
-			foreach ($measurements as $measurement) {
-				$isAbnormal = $this->isAbnormal($measurement);
-				if($isAbnormal['abnormal']){
-					$problems[] = $isAbnormal['code'];
-				}
+		$problems = [];
+		$dateStart = date('Y-m-d H:i:s',strtotime('-30 min'));
+		$dateEnd = date('Y-m-d H:i:s');
+		$whereRaw = "time_group >= '{$dateStart}' AND time_group <= '{$dateEnd}'";
+		$measurements = $Measurement->select('parameters.p_type, parameters.code, measurements.value')
+		->where($whereRaw)
+		->findAll();
+		foreach ($measurements as $measurement) {
+			$isAbnormal = $this->isAbnormal($measurement);
+			if($isAbnormal['abnormal']){
+				$problems[] = $isAbnormal['code'];
 			}
-			return $problems;
 		}
-		return [];
+		return $problems;
 
 	}
 
@@ -228,7 +232,8 @@ class Iotconnect extends BaseCommand
 	 */
 	public function executeCommand($code, $content){
 		$Configuration = new m_configuration();
-		switch ($content) {
+		$data = "";
+		switch ($code) {
 			case '10': // Request Active PUMP
 				$pumpState = @$Configuration->where('name','pump_state')->content;
 				$data = @$pumpState ? $pumpState : 'Cant detect pump state';
@@ -238,6 +243,7 @@ class Iotconnect extends BaseCommand
 			case '30': // Request Gass Concetrate
 				break;
 			case '40': // Request Meteorologi
+				$data = "Test data meteorologi"; 
 				break;
 			case '331': // Request Formula NO2
 				$data = $this->getParameterFormula('no2');
@@ -283,11 +289,12 @@ class Iotconnect extends BaseCommand
 				$data = $isUpdated ? 'Update PUMP to PUMP 1 successfully!' : 'Cant update PUMP State!';
 				break;
 			case '90': // Request Screenshoot
-				break;
+				// break;
 			
 			default:
 				break;
 		}
+		return $data;
 	}
 
 	/**
