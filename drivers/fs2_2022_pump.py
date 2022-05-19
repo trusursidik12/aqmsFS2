@@ -90,7 +90,6 @@ try:
             rec = mycursor.fetchone()
             pump_state = int(rec[0])
             time.sleep(2)
-            print(str(cur_pump_state) + ":" + str(pump_state))
             
             if pump_state != cur_pump_state and is_PUMP_connect:
                 mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
