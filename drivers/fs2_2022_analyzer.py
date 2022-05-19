@@ -5,7 +5,7 @@ import time
 import db_connect
 
 is_ANALYZER_connect = False
-
+ANALYZER = ""
 got_pm_10 = False
 got_pm_25 = False
 
@@ -58,7 +58,7 @@ try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
                 
-            ANALYZER += str(COM_ANALYZER.read_until(str("#").encode()))
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
                 
