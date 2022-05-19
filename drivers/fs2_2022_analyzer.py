@@ -42,6 +42,8 @@ def connect_analyzer():
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
+            delay(500)
+            COM_ANALYZER.write(str("$FAN,255#").encode());
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
@@ -71,12 +73,9 @@ try:
             if(got_pm_25 == True and got_pm_10 == True):
                 got_pm_10 = False
                 got_pm_25 = False
-                print("updating...")
-                print(ANALYZER.replace("'","''"))
-                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("'","''"))
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"))
+                print(ANALYZER.replace("b'","").replace("'","''"))
                 ANALYZER = ""
-                
-            print(ANALYZER);
             
         except Exception as e2:
             print(e2)
