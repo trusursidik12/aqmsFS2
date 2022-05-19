@@ -11,6 +11,10 @@ import db_connect
 is_MEMBRAPOR_connect = False
 is_zero_calibrating = False
 zerocal_finished_at = ""
+concentration1 = "0"
+concentration0 = "0"
+concentration2 = "0"
+concentration3 = "0"
 
 try:
     mydb = db_connect.connecting()
@@ -42,19 +46,18 @@ def update_sensor_value(sensor_reader_id,value):
     except Exception as e2:
         return None
 
-def connect_membrapor(membrapormode):
+def connect_membrapor():
     global is_MEMBRAPOR_connect
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
     
-        rs485=minimalmodbus.Instrument(sensor_reader[0],1)
+        rs485=minimalmodbus.Instrument(sensor_reader[0],1,'rtu',False)
         rs485.serial.baudrate=sensor_reader[1]
         rs485.serial.parity=serial.PARITY_EVEN
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
-        rs485.mode=minimalmodbus.MODE_RTU
-        rs485.serial.timeout=0.2
+        rs485.serial.timeout=3
         
         regConcentration = rs485.read_registers(1000,8,3)
         regVoltage = rs485.read_registers(1010,8,3)
@@ -63,8 +66,11 @@ def connect_membrapor(membrapormode):
         if(is_MEMBRAPOR_connect == False):
             is_MEMBRAPOR_connect = True
             print("[V] MEMBRAPOR " + sensor_reader[0] + " CONNECTED")
-        
-        return regConcentration + regVoltage + regTemp
+            
+        try:
+            return regConcentration + regVoltage + regTemp
+        except Exception as e2:
+            return None
         
     except Exception as e:
         print("[X]  MEMBRAPOR ID: " + str(sys.argv[1]) + " " + e)
@@ -122,8 +128,13 @@ def zeroing():
 
 def check_is_span():
     try:
-        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
-        setSpan = mycursor.fetchone()[0]
+        try:
+            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
+            setSpan = mycursor.fetchone()[0]        
+        except Exception as e4:
+            setSpan = "";
+            print("setSpan configurations not found")
+
         setSpans = setSpan.split(";")
         # print("setSpan : " + setSpan)
         
@@ -168,7 +179,6 @@ def check_is_span():
             time.sleep(1)
         
     except Exception as e:
-        print(e)
         return None
         
 
@@ -176,11 +186,20 @@ try:
     while True:
         try:
             check_is_span()
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
+                is_zerocal = mycursor.fetchone()[0]
+            except Exception as e4:
+                is_zerocal = "0"
+                print("is_zerocal configurations not found")
             
-            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
-            is_zerocal = mycursor.fetchone()[0]
-            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
-            zerocal_finished_at = mycursor.fetchone()[0]
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+                zerocal_finished_at = mycursor.fetchone()[0]
+            except Exception as e4:
+                zerocal_finished_at = "";
+                print("zerocal_finished_at configurations not found")
+            
             # print(is_zerocal + " : " + zerocal_finished_at)
             
             if(int(is_zerocal) == 1 and zerocal_finished_at != ""):
@@ -197,9 +216,21 @@ try:
                 except Exception as e3:
                     print(e3)
         
-            val = connect_membrapor(int(sys.argv[1]))
+            val = connect_membrapor()
             # print(val)
-            MEMBRAPOR = "FS2_MEMBRASENS;" + dectofloat(val[1],val[0]) + ";" + dectofloat(val[3],val[2]) + ";" + dectofloat(val[5],val[4]) + ";" + dectofloat(val[7],val[6]) + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
+            try:
+                if(dectofloat(val[1],val[0]) != "0"):
+                    concentration0 = dectofloat(val[1],val[0])
+                if(dectofloat(val[3],val[2]) != "0"):
+                    concentration1 = dectofloat(val[3],val[2])
+                if(dectofloat(val[5],val[4]) != "0"):
+                    concentration2 = dectofloat(val[5],val[4])
+                if(dectofloat(val[7],val[6]) != "0"):
+                    concentration3 = dectofloat(val[7],val[6])
+            except Exception as e3:
+                print(e3)
+            
+            MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
             # print(MEMBRAPOR)
         except Exception as e2:
@@ -208,7 +239,7 @@ try:
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
             
-        time.sleep(2)
+        time.sleep(1)
 
 except Exception as e:
     print(e)
