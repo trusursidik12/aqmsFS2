@@ -64,7 +64,7 @@ try:
                 
             ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
-                ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
+                ANALYZER = ""
                 
             if(ANALYZER.count("$MCU_ANZ,PM,10,DATA,") > 0):
                 got_pm_10 = True

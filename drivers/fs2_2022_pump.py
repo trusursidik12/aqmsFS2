@@ -37,10 +37,14 @@ def connect_pump():
         sensor_reader = mycursor.fetchone()
         
         COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1])
-        PUMP = str(COM_PUMP.readline())
-        if(PUMP.count("FS2_PUMP") > 0):
+        time.sleep(5)
+        PUMP = str(COM_PUMP.read_until(str("#").encode()))
+        if(PUMP.count("$MCU_PUMP") > 0):
             is_PUMP_connect = True
             print("[V] PUMP Module " + sensor_reader[0] + " CONNECTED")
+            time.sleep(1)
+            COM_PUMP.write(str("$FAN,255#").encode())
+            time.sleep(1)
             returnval = COM_PUMP
         else:
             is_PUMP_connect = False
@@ -60,7 +64,7 @@ def connect_pump():
         cur_pump_state = pump_state
         #print(str(cur_pump_state) + ":" + str(pump_state))
             
-        COM_PUMP.write(str(speed).encode());
+        COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
         
         return returnval
             
@@ -72,14 +76,14 @@ connect_pump()
 try:
     while True :
         try:
-            if(not is_PUMP_connect):
+            if(is_PUMP_connect = False):
                 COM_PUMP = connect_pump()
                 
-            PUMP = str(COM_PUMP.readline())
-            if(PUMP.count("FS2_PUMP") <= 0):
-                PUMP = "FS2_PUMP;0;0;0;0.00;0.00;\\r\\n'"
+            PUMP = str(COM_PUMP.read_until(str("#").encode()))
+            if(PUMP.count("$MCU_PUMP") > 0):
+                PUMP = ""
                 
-            update_sensor_value(str(sys.argv[1]),PUMP.replace("'","''"))
+            update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
             
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
             rec = mycursor.fetchone()
@@ -93,7 +97,7 @@ try:
                 pump_speed = int(rec[0])
                 speed = (pump_state * 100) + pump_speed;
                 cur_pump_state = pump_state
-                COM_PUMP.write(str(speed).encode());
+                COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
             
         except Exception as e2:
             print(e2)
