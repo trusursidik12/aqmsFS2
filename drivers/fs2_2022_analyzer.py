@@ -37,7 +37,7 @@ def connect_analyzer():
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
-        COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1],8,PARITY_NONE)
+        COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,3)
         time.sleep(1)
         
         ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
