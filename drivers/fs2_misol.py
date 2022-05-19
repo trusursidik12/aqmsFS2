@@ -45,7 +45,7 @@ while True:
             print("=========================================")
             print(misol_json['id'])
             print("=========================================")
-            if(misol_json['id'] == 80):
+            if(misol_json['id'] == 103):
                 pressure = "0";
                 sr = "0";
                 ws = str(misol_json['wind_avg_km_h']);
