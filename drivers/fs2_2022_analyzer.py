@@ -76,7 +76,7 @@ try:
                 got_pm_10 = False
                 got_pm_25 = False
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"))
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 ANALYZER = ""
             
         except Exception as e2:
