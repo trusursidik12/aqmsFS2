@@ -16,7 +16,7 @@ try:
 except Exception as e: 
     print("[X]  ANALYZER Module ID: " + str(sys.argv[1]) + " " + e)
     
-def update_sensor_value(sensor_reader_id,value,pin=0):
+def update_sensor_value(sensor_reader_id,value,pin):
     try:
         try:
             mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '"+ pin +"'")
