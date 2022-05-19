@@ -76,7 +76,7 @@ connect_pump()
 try:
     while True :
         try:
-            if(is_PUMP_connect = False):
+            if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
                 
             PUMP = str(COM_PUMP.read_until(str("#").encode()))
