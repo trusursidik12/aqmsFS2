@@ -6,6 +6,9 @@ import db_connect
 
 is_ANALYZER_connect = False
 
+got_pm_10 = False
+got_pm_25 = False
+
 try:
     mydb = db_connect.connecting()
     mycursor = mydb.cursor()
@@ -33,11 +36,9 @@ def connect_analyzer():
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
-        print(sensor_reader)
         COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1])
         time.sleep(5)
         ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
-        print(ANALYZER)
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
@@ -57,12 +58,23 @@ try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
                 
-            ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
-            print(ANALYZER)
+            ANALYZER += str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
                 
-            update_sensor_value(str(sys.argv[1]),ANALYZER.replace("'","''"))
+            if(ANALYZER.count("$MCU_ANZ,PM,10,DATA,") > 0):
+                got_pm_10 = True
+                
+            if(ANALYZER.count("$MCU_ANZ,PM,2.5,DATA,") > 0):
+                got_pm_25 = True
+                
+            if(got_pm_25 == True and got_pm_10 == True):
+                got_pm_10 = False
+                got_pm_25 = False
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("'","''"))
+                print("updating...")
+                
+            print(ANALYZER);
             
         except Exception as e2:
             print(e2)
