@@ -45,20 +45,25 @@ def connect_pump():
             is_PUMP_connect = True
             print("[V] PUMP Module " + sensor_reader[0] + " CONNECTED")
             
+            print("1")
             time.sleep(1)
             COM_PUMP.write(str("$FAN,255#").encode())
             PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,FAN").encode()))
 
+            print("2")
             time.sleep(1)
             COM_PUMP.write(str("$BMP280,BEGIN#").encode())
             PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,$BMP280").encode()))
+            print("3")
             time.sleep(1)
             COM_PUMP.write(str("$BMP280,SET,AUTO#").encode())
             PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,$BMP280").encode()))
 
+            print("4")
             time.sleep(1)
             COM_ANALYZER.write(str("$PRESSURE,SET,AUTO#").encode())
             ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_PUMP,PRESSURE").encode()))
+            print("5")
             
             returnval = COM_PUMP
         else:
