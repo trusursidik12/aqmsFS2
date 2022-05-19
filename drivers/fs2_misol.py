@@ -42,7 +42,9 @@ while True:
         if (int(os.stat(json_path).st_size) > 0):
             f = open(json_path)
             misol_json = json.load(f)
-            print(misol_json)
+            print("")
+            print(misol_json['id'])
+            print("")
             if(misol_json['id'] == 80):
                 pressure = "0";
                 sr = "0";
