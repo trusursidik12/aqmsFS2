@@ -45,7 +45,7 @@ def connect_sensor():
         rs485.serial.stopbits=1
         rs485.mode=minimalmodbus.MODE_RTU
         rs485.serial.timeout=3
-        value = rs485.read_registers(0,10,3)
+        value = rs485.read_registers(0,1,3)
         if(is_connect == False):
             is_connect = True
             print("[V] SENTEC " + sensor_reader[0] + " CONNECTED")
@@ -60,7 +60,6 @@ try:
     while True:
         try:
             val = connect_sensor()
-            print(val)
             PM = "PP22_SENTEC;" + str(val[0]) + ";" + "END;"            
             update_sensor_value(str(sys.argv[1]),str(PM))
         except Exception as e2:
