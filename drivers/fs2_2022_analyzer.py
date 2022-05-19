@@ -118,14 +118,13 @@ try:
                 print("==============================")
                 
                 ANALYZER = ""
+                time.sleep(1)
             
         except Exception as e2:
             print(e2)
             is_ANALYZER_connect = False
             print("Reconnect ANALYZER Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
-        
-        time.sleep(1)
         
 except Exception as e: 
     print(e)
