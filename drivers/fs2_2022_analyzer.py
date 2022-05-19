@@ -87,7 +87,7 @@ def connect_analyzer():
         return None
     
 update_sensor_value(str(sys.argv[1]),"")
-connect_analyzer()
+COM_ANALYZER = connect_analyzer()
 
 try:
     while True :
