@@ -17,15 +17,15 @@ try:
 except Exception as e: 
     print("[X]  PUMP Module ID: " + str(sys.argv[1]) + " " + e)
     
-def update_sensor_value(sensor_reader_id,value):
+def update_sensor_value(sensor_reader_id,value,pin = 0):
     try:
         try:
-            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")
+            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '"+ str(pin) +"'")
             sensor_value_id = mycursor.fetchone()[0]
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
+            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','"+ str(pin) +"','" + value + "')")
             mydb.commit()
     except Exception as e2:
         return None
