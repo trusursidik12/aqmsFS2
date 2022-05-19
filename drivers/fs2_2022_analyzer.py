@@ -41,7 +41,7 @@ def connect_analyzer():
         time.sleep(1)
         
         ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
-        ANALYZER = ANALYZER + COM_ANALYZER.read_until(str("$MCU_ANZ,READY#").encode()))
+        ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,READY#").encode()))
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
