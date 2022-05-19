@@ -48,15 +48,15 @@ def connect_analyzer():
             
             time.sleep(1)
             COM_ANALYZER.write(str("$FAN,255#").encode())
-            print(COM_ANALYZER.read_until(str("#").encode()))
+            print(COM_ANALYZER.read_until(str("$MCU_ANZ,FAN").encode()))
 
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,BEGIN#").encode())
-            print(COM_ANALYZER.read_until(str("#").encode()))
+            print(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
 
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,SET,AUTO#").encode())
-            print(COM_ANALYZER.read_until(str("#").encode()))
+            print(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
