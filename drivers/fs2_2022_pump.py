@@ -79,11 +79,11 @@ try:
             if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
                 
-            PUMP = str(COM_PUMP.read_until(str("#").encode()))
-            if(PUMP.count("$MCU_PUMP") > 0):
-                PUMP = ""
+            # PUMP = str(COM_PUMP.read_until(str("#").encode()))
+            # if(PUMP.count("$MCU_PUMP") > 0):
+                # PUMP = ""
                 
-            update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
+            # update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
             
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
             rec = mycursor.fetchone()
@@ -99,6 +99,8 @@ try:
                 cur_pump_state = pump_state
                 COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
                 time.sleep(2)
+                PUMP = str(COM_PUMP.read_until(str("#").encode()))                    
+                update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
                 
         except Exception as e2:
             print(e2)
