@@ -153,5 +153,5 @@ if __name__ == '__main__':
     p = SPS30(port=sensor_reader[0])
     while True:
         p.run_query()
-        # print(returnval)
+        print(returnval)
         time.sleep(1)
