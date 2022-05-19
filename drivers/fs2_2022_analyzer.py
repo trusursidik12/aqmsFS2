@@ -48,15 +48,15 @@ def connect_analyzer():
             
             time.sleep(1)
             COM_ANALYZER.write(str("$FAN,255#").encode())
-            print(COM_ANALYZER.read_until(str("$MCU_ANZ,FAN").encode()))
+            COM_ANALYZER.read_until(str("$MCU_ANZ,FAN").encode())
 
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,BEGIN#").encode())
-            print(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
+            COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode())
 
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,SET,AUTO#").encode())
-            print(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
+            COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode())
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
@@ -92,7 +92,7 @@ try:
                 got_pm_25 = False
                 got_sht = False
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"))
-                # print(ANALYZER.replace("b'","").replace("'","''"))
+                print(ANALYZER.replace("b'","").replace("'","''"))
                 ANALYZER = ""
             
         except Exception as e2:
