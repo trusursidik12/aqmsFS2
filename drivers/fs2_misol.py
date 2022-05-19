@@ -37,6 +37,7 @@ while True:
     try:
         if os.path.exists(json_path):
             os.remove(json_path)
+        print("xxx")
         sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         time.sleep(10)
         print("aaa")
