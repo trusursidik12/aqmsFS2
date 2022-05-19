@@ -71,9 +71,10 @@ try:
             if(got_pm_25 == True and got_pm_10 == True):
                 got_pm_10 = False
                 got_pm_25 = False
+                print("updating...")
+                print(ANALYZER.replace("'","''"))
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("'","''"))
                 ANALYZER = ""
-                print("updating...")
                 
             print(ANALYZER);
             
