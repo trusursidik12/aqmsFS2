@@ -95,6 +95,7 @@ try:
                 COM_PUMP = connect_pump()
                         
             PUMP = str(COM_PUMP.read_until(str("#").encode()))
+            print(PUMP)
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
                 
