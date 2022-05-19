@@ -42,9 +42,9 @@ def connect_analyzer():
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
-            delay(500)
-            COM_ANALYZER.write(b'$FAN,255#');
-            delay(500)
+            time.sleep(5)
+            COM_ANALYZER.write(str("$FAN,255#").encode())
+            time.sleep(5)
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
