@@ -35,6 +35,7 @@ def connect_analyzer():
         sensor_reader = mycursor.fetchone()
         
         COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1])
+        time.sleep(5)
         ANALYZER = str(COM_ANALYZER.readline())
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
@@ -52,7 +53,7 @@ connect_analyzer()
 try:
     while True :
         try:
-            if(not is_ANALYZER_connect):
+            if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
                 
             ANALYZER = str(COM_ANALYZER.readline())
