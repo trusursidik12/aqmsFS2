@@ -43,7 +43,8 @@ def connect_analyzer():
             is_ANALYZER_connect = True
             print("[V] ANALYZER Module " + sensor_reader[0] + " CONNECTED")
             delay(500)
-            COM_ANALYZER.write(str("$FAN,255#").encode());
+            COM_ANALYZER.write("$FAN,255#".encode());
+            delay(500)
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
@@ -52,6 +53,7 @@ def connect_analyzer():
     except Exception as e: 
         return None
     
+update_sensor_value(str(sys.argv[1]),"")
 connect_analyzer()
 
 try:
