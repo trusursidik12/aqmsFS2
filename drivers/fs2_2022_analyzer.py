@@ -6,9 +6,6 @@ import db_connect
 
 is_ANALYZER_connect = False
 ANALYZER = ""
-got_pm_10 = False
-got_pm_25 = False
-got_sht = False
 
 try:
     mydb = db_connect.connecting()
@@ -19,15 +16,15 @@ try:
 except Exception as e: 
     print("[X]  ANALYZER Module ID: " + str(sys.argv[1]) + " " + e)
     
-def update_sensor_value(sensor_reader_id,value):
+def update_sensor_value(sensor_reader_id,value,pin=0):
     try:
         try:
-            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")
+            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '"+ pin +"'")
             sensor_value_id = mycursor.fetchone()[0]
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
+            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','"+ pin +"','" + value + "')")
             mydb.commit()
     except Exception as e2:
         return None
@@ -86,7 +83,13 @@ def connect_analyzer():
     except Exception as e: 
         return None
     
-update_sensor_value(str(sys.argv[1]),"")
+update_sensor_value(str(sys.argv[1]),"",0)
+update_sensor_value(str(sys.argv[1]),"",1)
+update_sensor_value(str(sys.argv[1]),"",2)
+update_sensor_value(str(sys.argv[1]),"",3)
+update_sensor_value(str(sys.argv[1]),"",4)
+update_sensor_value(str(sys.argv[1]),"",5)
+update_sensor_value(str(sys.argv[1]),"",6)
 COM_ANALYZER = connect_analyzer()
 
 try:
@@ -95,30 +98,21 @@ try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
             
-            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("#").encode()))
+            ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = ""
                 
             if(ANALYZER.count("$MCU_ANZ,PM,10,DATA,") > 0):
-                got_pm_10 = True
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,PM,2.5,DATA,") > 0):
-                got_pm_25 = True
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,SHT31,VAL,") > 0):
-                got_sht = True
-                
-            if(got_pm_25 == True and got_pm_10 == True and got_sht == True):
-                got_pm_10 = False
-                got_pm_25 = False
-                got_sht = False
-                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"))
-                # print("==============================")
-                # print(ANALYZER.replace("b'","").replace("'","''"))
-                # print("==============================")
-                
-                ANALYZER = ""
-                time.sleep(1)
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                print(ANALYZER.replace("b'","").replace("'","''"))
             
         except Exception as e2:
             print(e2)
