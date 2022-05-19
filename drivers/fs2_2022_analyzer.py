@@ -104,31 +104,31 @@ try:
                 
             if(ANALYZER.count("$MCU_ANZ,PM,10,DATA,") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,PM,2.5,DATA,") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),1)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,BMP280,VAL") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),2)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,BME280,VAL") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),3)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,SHT31,VAL") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),4)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,VAC_IN,RAW") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),5)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,VAC_OUT,RAW") > 0):
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),6)
-                print(ANALYZER.replace("b'","").replace("'","''"))
+                # print(ANALYZER.replace("b'","").replace("'","''"))
             
         except Exception as e2:
             print(e2)
