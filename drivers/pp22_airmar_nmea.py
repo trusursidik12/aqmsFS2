@@ -1,5 +1,5 @@
-#/etc/udev/rules.d/99-ftdi.rules
-#ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="xxxx", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0403 xxxx > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
+#/etc/udev/rules.d/aqmsfs2.rules
+#ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="cc60", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0403 cc60 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
 #sudo udevadm control --reload
 
 

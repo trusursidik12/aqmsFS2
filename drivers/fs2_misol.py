@@ -51,7 +51,8 @@ while True:
                 temperature = str(misol_json['temperature_C'])
                 rain_intensity = str(misol_json['rain_mm'])
                 WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
-                update_sensor_value(str(sys.argv[1]),WS[0:149])
+                print(WS)
+                update_sensor_value(str(sys.argv[1]),WS)
                 if os.path.exists(json_path):
                     os.remove(json_path)
 
