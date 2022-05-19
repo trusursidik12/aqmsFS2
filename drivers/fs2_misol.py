@@ -32,7 +32,7 @@ def update_sensor_value(sensor_reader_id,value):
 home = subprocess.check_output(['pwd'], cwd=pathlib.Path.home(),shell=True)
 home = home.decode("utf-8").replace('\n', '')
 json_path = home+"/aqmsFS2/misol.json"
-
+print(json_path)
 while True:
     try:
         if os.path.exists(json_path):
