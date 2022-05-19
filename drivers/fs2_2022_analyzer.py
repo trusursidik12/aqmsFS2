@@ -37,7 +37,7 @@ def connect_analyzer():
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
-        COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,3)
+        COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,2)
         time.sleep(1)
         
         ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
@@ -48,35 +48,38 @@ def connect_analyzer():
             
             time.sleep(1)
             COM_ANALYZER.write(str("$FAN,255#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,FAN").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,FAN").encode()))
 
             time.sleep(1)
             COM_ANALYZER.write(str("$BMP280,BEGIN#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,$BMP280").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,$BMP280").encode()))
             time.sleep(1)
             COM_ANALYZER.write(str("$BMP280,SET,AUTO#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,$BMP280").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,$BMP280").encode()))
 
             time.sleep(1)
             COM_ANALYZER.write(str("$BME280,BEGIN#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,$BME280").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,$BME280").encode()))
             time.sleep(1)
             COM_ANALYZER.write(str("$BME280,SET,AUTO#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,$BME280").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,$BME280").encode()))
 
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,BEGIN#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
             time.sleep(1)
             COM_ANALYZER.write(str("$SHT31,SET,AUTO#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,SHT31").encode()))
             
             time.sleep(1)
             COM_ANALYZER.write(str("$VAC_IN,SET,AUTO#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,VAC_IN").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,VAC_IN").encode()))
             time.sleep(1)
             COM_ANALYZER.write(str("$VAC_OUT,SET,AUTO#").encode())
-            COM_ANALYZER.read_until(str("$MCU_ANZ,VAC_OUT").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,VAC_OUT").encode()))
+            
+            print(ANALYZER)
+            
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
