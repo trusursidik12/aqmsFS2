@@ -8,6 +8,7 @@ is_ANALYZER_connect = False
 ANALYZER = ""
 got_pm_10 = False
 got_pm_25 = False
+got_sht = False
 
 try:
     mydb = db_connect.connecting()
@@ -45,6 +46,10 @@ def connect_analyzer():
             time.sleep(1)
             COM_ANALYZER.write(str("$FAN,255#").encode())
             time.sleep(1)
+            COM_ANALYZER.write(str("$SHT31,BEGIN#").encode())
+            time.sleep(1)
+            COM_ANALYZER.write(str("$SHT31,SET,AUTO#").encode())
+            time.sleep(1)
             return COM_ANALYZER
         else:
             is_ANALYZER_connect = False
@@ -61,7 +66,7 @@ try:
         try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
-                
+            
             ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("#").encode()))
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = ""
@@ -72,11 +77,15 @@ try:
             if(ANALYZER.count("$MCU_ANZ,PM,2.5,DATA,") > 0):
                 got_pm_25 = True
                 
-            if(got_pm_25 == True and got_pm_10 == True):
+            if(ANALYZER.count("$MCU_ANZ,SHT31,VAL,") > 0):
+                got_sht = True
+                
+            if(got_pm_25 == True and got_pm_10 == True and got_sht == True):
                 got_pm_10 = False
                 got_pm_25 = False
+                got_sht = False
                 update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"))
-                # print(ANALYZER.replace("b'","").replace("'","''"))
+                print(ANALYZER.replace("b'","").replace("'","''"))
                 ANALYZER = ""
             
         except Exception as e2:
