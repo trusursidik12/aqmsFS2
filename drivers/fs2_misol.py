@@ -35,8 +35,8 @@ json_path = home+"/aqmsFS2/misol.json"
 print(json_path)
 while True:
     try:
-        if os.path.exists(json_path):
-            os.remove(json_path)
+        # if os.path.exists(json_path):
+            # os.remove(json_path)
         sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         # time.sleep(10)
         if (int(os.stat(json_path).st_size) > 0):
