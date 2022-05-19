@@ -54,7 +54,7 @@ while True:
                 # print(WS)
                 update_sensor_value(str(sys.argv[1]),WS)
                 if os.path.exists(json_path):
-                    os.remove(json_path)
+                    # os.remove(json_path)
 
     except Exception as e2:
         print(e2)
