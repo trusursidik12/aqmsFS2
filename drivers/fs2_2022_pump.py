@@ -39,10 +39,6 @@ def connect_pump():
         COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,2)
         time.sleep(1)
         
-        ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
-        ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,READY#").encode()))
-        
-        
         PUMP = str(COM_PUMP.read_until(str("#").encode()))
         PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,READY#").encode()))
         if(PUMP.count("$MCU_PUMP") > 0):
@@ -98,7 +94,7 @@ try:
             if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
                         
-            PUMP = PUMP + str(COM_PUMP.read_until(str("#").encode()))
+            PUMP = str(COM_PUMP.read_until(str("#").encode()))
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
                 
