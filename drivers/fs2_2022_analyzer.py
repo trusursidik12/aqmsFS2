@@ -36,6 +36,7 @@ def connect_analyzer():
         
         COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1])
         time.sleep(5)
+        print("Aaa")
         ANALYZER = str(COM_ANALYZER.readline())
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
