@@ -39,9 +39,9 @@ while True:
             os.remove(json_path)
         sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         # time.sleep(10)
-        print(os.stat(json_path).st_size)
         while (os.stat(json_path).st_size > 0):
             f = open(json_path)
+            print(f)
             misol_json = json.load(f)
             if(misol_json['id'] == 80):
                 pressure = "0";
