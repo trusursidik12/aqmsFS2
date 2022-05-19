@@ -85,6 +85,7 @@ try:
                 
             # update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
             
+            mydb.commit()
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
             rec = mycursor.fetchone()
             pump_state = int(rec[0])
