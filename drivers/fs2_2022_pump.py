@@ -97,7 +97,6 @@ try:
                 COM_PUMP = connect_pump()
                         
             PUMP = str(COM_PUMP.read_until(str("#").encode()))
-            print(PUMP)
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
             
@@ -123,17 +122,12 @@ try:
                 cur_pump_state = pump_state
                 COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
                 time.sleep(2)
-                PUMP = str(COM_PUMP.read_until(str("#").encode()))                    
-                update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
-                print(PUMP.replace("b'","").replace("'","''"))
                 
         except Exception as e2:
             print(e2)
             is_PUMP_connect = False
             print("Reconnect PUMP Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
-        
-        time.sleep(1)
-        
+                
 except Exception as e: 
     print(e)
