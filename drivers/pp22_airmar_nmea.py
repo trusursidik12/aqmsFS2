@@ -1,3 +1,8 @@
+#/etc/udev/rules.d/99-ftdi.rules
+#ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="xxxx", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0403 xxxx > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
+#sudo udevadm control --reload
+
+
 from __future__ import print_function
 import sys
 import serial
@@ -52,13 +57,14 @@ def connect_sensor():
             
     except Exception as e: 
         return None
-    
+
+COM = connect_sensor()    
 connect_sensor()
 
 try:
     while True :
         try:
-            if(not is_connect):
+            if(is_connect == False):
                 COM = connect_sensor()
             
             i = 0
