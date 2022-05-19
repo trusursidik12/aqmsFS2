@@ -98,8 +98,14 @@ try:
             print(PUMP)
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
+            
+            if(ANALYZER.count("$MCU_PUMP,BMP280,VAL") > 0):
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                # print(ANALYZER.replace("b'","").replace("'","''"))
                 
-            update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
+            if(ANALYZER.count("$MCU_PUMP,PRESSURE,RAW") > 0):
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),1)
+                # print(ANALYZER.replace("b'","").replace("'","''"))
             
             mydb.commit()
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
