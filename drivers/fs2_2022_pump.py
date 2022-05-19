@@ -37,14 +37,33 @@ def connect_pump():
         sensor_reader = mycursor.fetchone()
         
         COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,2)
-        time.sleep(5)
+        time.sleep(1)
+        
+        ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
+        ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_ANZ,READY#").encode()))
+        
+        
         PUMP = str(COM_PUMP.read_until(str("#").encode()))
+        PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,READY#").encode()))
         if(PUMP.count("$MCU_PUMP") > 0):
             is_PUMP_connect = True
             print("[V] PUMP Module " + sensor_reader[0] + " CONNECTED")
+            
             time.sleep(1)
             COM_PUMP.write(str("$FAN,255#").encode())
+            PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,FAN").encode()))
+
             time.sleep(1)
+            COM_PUMP.write(str("$BMP280,BEGIN#").encode())
+            PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,$BMP280").encode()))
+            time.sleep(1)
+            COM_PUMP.write(str("$BMP280,SET,AUTO#").encode())
+            PUMP = PUMP + str(COM_PUMP.read_until(str("$MCU_PUMP,$BMP280").encode()))
+
+            time.sleep(1)
+            COM_ANALYZER.write(str("$PRESSURE,SET,AUTO#").encode())
+            ANALYZER = ANALYZER + str(COM_ANALYZER.read_until(str("$MCU_PUMP,PRESSURE").encode()))
+            
             returnval = COM_PUMP
         else:
             is_PUMP_connect = False
@@ -78,12 +97,12 @@ try:
         try:
             if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
+                        
+            PUMP = PUMP + str(COM_PUMP.read_until(str("#").encode()))
+            if(PUMP.count("$MCU_PUMP") <= 0):
+                PUMP = ""
                 
-            # PUMP = str(COM_PUMP.read_until(str("#").encode()))
-            # if(PUMP.count("$MCU_PUMP") > 0):
-                # PUMP = ""
-                
-            # update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
+            update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
             
             mydb.commit()
             mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
@@ -101,6 +120,7 @@ try:
                 time.sleep(2)
                 PUMP = str(COM_PUMP.read_until(str("#").encode()))                    
                 update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"))
+                print(PUMP.replace("b'","").replace("'","''"))
                 
         except Exception as e2:
             print(e2)
