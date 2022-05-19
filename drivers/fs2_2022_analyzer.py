@@ -107,11 +107,11 @@ try:
                 print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,PM,2.5,DATA,") > 0):
-                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),1)
                 print(ANALYZER.replace("b'","").replace("'","''"))
                 
             if(ANALYZER.count("$MCU_ANZ,SHT31,VAL,") > 0):
-                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),0)
+                update_sensor_value(str(sys.argv[1]),ANALYZER.replace("b'","").replace("'","''"),2)
                 print(ANALYZER.replace("b'","").replace("'","''"))
             
         except Exception as e2:
