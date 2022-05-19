@@ -65,13 +65,13 @@ def connect_pump():
         #print(str(cur_pump_state) + ":" + str(pump_state))
             
         COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
-        
+        time.sleep(2)
         return returnval
             
     except Exception as e: 
         return None
     
-connect_pump()
+COM_PUMP = connect_pump()
 
 try:
     while True :
@@ -89,7 +89,7 @@ try:
             rec = mycursor.fetchone()
             pump_state = int(rec[0])
             time.sleep(2)
-            #print(str(cur_pump_state) + ":" + str(pump_state))
+            print(str(cur_pump_state) + ":" + str(pump_state))
             
             if pump_state != cur_pump_state and is_PUMP_connect:
                 mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
@@ -98,7 +98,8 @@ try:
                 speed = (pump_state * 100) + pump_speed;
                 cur_pump_state = pump_state
                 COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
-            
+                time.sleep(2)
+                
         except Exception as e2:
             print(e2)
             is_PUMP_connect = False
