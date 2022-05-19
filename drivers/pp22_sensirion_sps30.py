@@ -153,5 +153,6 @@ if __name__ == '__main__':
     p = SPS30(port=sensor_reader[0])
     while True:
         p.run_query()
-        print(returnval)
+        # print(returnval)
+        update_sensor_value(sys.argv[1],str(returnval))
         time.sleep(1)
