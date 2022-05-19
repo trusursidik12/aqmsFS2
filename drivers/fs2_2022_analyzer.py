@@ -23,10 +23,13 @@ def update_sensor_value(sensor_reader_id,value,pin):
             sensor_value_id = mycursor.fetchone()[0]
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
+            print("update")
         except Exception as e:
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','"+ pin +"','" + value + "')")
             mydb.commit()
+            print(e)
     except Exception as e2:
+        print(e2)
         return None
         
 def connect_analyzer():
