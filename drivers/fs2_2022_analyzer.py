@@ -36,7 +36,7 @@ def connect_analyzer():
         print(sensor_reader)
         COM_ANALYZER = serial.Serial(sensor_reader[0], sensor_reader[1])
         time.sleep(5)
-        ANALYZER = str(COM_ANALYZER.read_until("b'#"))
+        ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
         print(ANALYZER)
         if(ANALYZER.count("$MCU_ANZ") > 0):
             is_ANALYZER_connect = True
@@ -57,7 +57,7 @@ try:
             if(is_ANALYZER_connect == False):
                 COM_ANALYZER = connect_analyzer()
                 
-            ANALYZER = str(COM_ANALYZER.read_until("b'#"))
+            ANALYZER = str(COM_ANALYZER.read_until(str("#").encode()))
             print(ANALYZER)
             if(ANALYZER.count("$MCU_ANZ") <= 0):
                 ANALYZER = "FS2_ANALYZER;000.000;0.0;000.000;0.0;0;0.00;0.00;0.00;0.00;\\r\\n'"
