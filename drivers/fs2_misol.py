@@ -38,7 +38,8 @@ while True:
         if os.path.exists(json_path):
             os.remove(json_path)
         sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
-        # time.sleep(60)
+        time.sleep(10)
+        print("aaa")
         while (os.stat(json_path).st_size > 0):
             f = open(json_path)
             misol_json = json.load(f)
