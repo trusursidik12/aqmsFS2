@@ -330,6 +330,7 @@
                             console.log(parseInt(m));
                             console.log(parseInt(s));
                             console.log(pumpTimer);
+                            console.log(pumpTimer.split("-"));
                             console.log(pumpTimer.split("-").length);
                             console.log("================");
                             if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0) || ` ` + pumpTimer.split("-").length > 0) {
