@@ -325,7 +325,7 @@
                             let m = Math.floor((remaining - (h * 3600)) / 60);
                             let s = Math.floor(remaining % 60);
                             let pumpTimer = `${h}:${m}:${s}`;
-                            if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0)) {
+                            if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0) || ` ` + pumpTimer.split("-").length > 0) {
                                 $('#switch_pump').click();
                             }
                             $('#pumpTimer').html(pumpTimer);
