@@ -325,17 +325,8 @@
                             let m = Math.floor((remaining - (h * 3600)) / 60);
                             let s = Math.floor(remaining % 60);
                             let pumpTimer = `${h}:${m}:${s}`;
-                            console.log("================");
-                            console.log(parseInt(h));
-                            console.log(parseInt(m));
-                            console.log(parseInt(s));
-                            console.log(pumpTimer);
-                            let pumpTimers = pumpTimer.split("-");
-                            console.log(pumpTimers);
-                            console.log(pumpTimers.length);
-                            console.log("================");
-                            if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0) || ` ` + pumpTimer.split("-").length > 0) {
-                                //$('#switch_pump').click();
+                            if (pumpTimer == `0:0:0` || parseInt(h) < 0 || parseInt(m) < 0 || parseInt(s) < 0) {
+                                $('#switch_pump').click();
                             }
                             $('#pumpTimer').html(pumpTimer);
                             $('#pumpState').html(`(Pump ${Math.floor(parseInt(pump_state)+1)})`)
