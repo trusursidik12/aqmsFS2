@@ -24,20 +24,9 @@
                                 <tr>
                                     <th>ID STASIUN</th>
                                     <th>WAKTU</th>
-                                    <th>NO2</th>
-                                    <th>O3</th>
-                                    <th>CO</th>
-                                    <th>SO2</th>
-                                    <th>HC</th>
-                                    <th>PM2.5</th>
-                                    <th>PM10</th>
-                                    <th>TEKANAN</th>
-                                    <th>ARAH ANGIN</th>
-                                    <th>KEC. ANGIN</th>
-                                    <th>TEMP</th>
-                                    <th>KELEMBABAN</th>
-                                    <th>SR</th>
-                                    <th>RAIN INT</th>
+                                    <?php foreach ($parameters as $parameter) : ?>
+                                        <th><?= $parameter->caption_en; ?></th>
+                                    <?php endforeach ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,48 +95,10 @@
                 {
                     data: 'waktu'
                 },
-                {
-                    data: 'no2'
-                },
-                {
-                    data: 'o3'
-                },
-                {
-                    data: 'co'
-                },
-                {
-                    data: 'so2'
-                },
-                {
-                    data: 'hc'
-                },
-                {
-                    data: 'pm25'
-                },
-                {
-                    data: 'pm10'
-                },
-                {
-                    data: 'pressure'
-                },
-                {
-                    data: 'wd'
-                },
-                {
-                    data: 'ws'
-                },
-                {
-                    data: 'temperature'
-                },
-                {
-                    data: 'humidity'
-                },
-                {
-                    data: 'sr'
-                },
-                {
-                    data: 'rain_intensity'
-                },
+                <?php foreach ($parameters as $parameter) : ?> {
+                        data: '<?= $parameter->code; ?>'
+                    },
+                <?php endforeach ?>
             ]
         });
     }
