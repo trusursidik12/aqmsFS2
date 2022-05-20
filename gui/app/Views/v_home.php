@@ -325,11 +325,13 @@
                             let m = Math.floor((remaining - (h * 3600)) / 60);
                             let s = Math.floor(remaining % 60);
                             let pumpTimer = `${h}:${m}:${s}`;
+                            console.log("================");
                             console.log(parseInt(h));
                             console.log(parseInt(m));
                             console.log(parseInt(s));
                             console.log(pumpTimer);
                             console.log(pumpTimer.split("-").length);
+                            console.log("================");
                             if (pumpTimer == `0:0:0` || (parseInt(h) <= 0 && parseInt(m) <= 0 && parseInt(s) <= 0) || ` ` + pumpTimer.split("-").length > 0) {
                                 //$('#switch_pump').click();
                             }
