@@ -23,6 +23,7 @@ class Rht extends BaseController
 		$data['__this'] = $this;
 		$data['__modulename'] = 'RHT'; /* Title */
 		$data['__routename'] = 'rht'; /* Route for check menu */
+		$data["sensor_values"] = $this->sensor_values->orderBy('sensor_reader_id ASC, pin ASC')->findAll();
 		echo view("rht/v_index", $data);
 	}
 
@@ -35,17 +36,17 @@ class Rht extends BaseController
 		$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
 		$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
 		$analyzers = explode(";", $analyzer);
-		$num_analyzers = count($analyzers);
-		$data["vacuum"] = round((-0.0009765625 * $analyzers[$num_analyzers - 6]) + 1, 6);
-		$data["temp_analyzer"] = $analyzers[$num_analyzers - 5] * 1;
-		$data["rh_analyzer"] = $analyzers[$num_analyzers - 4] * 1;
-		$data["temp_sensor"] = $analyzers[$num_analyzers - 3] * 1;
-		$data["rh_sensor"]  = $analyzers[$num_analyzers - 2] * 1;
-		$data["pressure"] = round((0.001953125 * explode(";", $pump)[3]) + 0, 6);
-		$data["temp_pump"] = explode(";", $pump)[4] * 1;
-		$data["rh_pump"] = explode(";", $pump)[5] * 1;
-		$data["temp_psu"] = explode(";", $psu)[1] * 1;
-		$data["rh_psu"] = explode(";", $psu)[2] * 1;
+		$num_analyzers = count(@$analyzers);
+		$data["vacuum"] = round((-0.0009765625 * @$analyzers[$num_analyzers - 6]) + 1, 6);
+		$data["temp_analyzer"] = @$analyzers[$num_analyzers - 5] * 1;
+		$data["rh_analyzer"] = @$analyzers[$num_analyzers - 4] * 1;
+		$data["temp_sensor"] = @$analyzers[$num_analyzers - 3] * 1;
+		$data["rh_sensor"]  = @$analyzers[$num_analyzers - 2] * 1;
+		$data["pressure"] = @round((0.001953125 * explode(";", $pump)[3]) + 0, 6);
+		$data["temp_pump"] = @explode(";", $pump)[4] * 1;
+		$data["rh_pump"] = @explode(";", $pump)[5] * 1;
+		$data["temp_psu"] = @explode(";", $psu)[1] * 1;
+		$data["rh_psu"] = @explode(";", $psu)[2] * 1;
 		$data["con_membrasens_0_0"] = explode(";", $membrasens_0)[1] * 1;
 		$data["con_membrasens_0_1"] = explode(";", $membrasens_0)[2] * 1;
 		$data["con_membrasens_0_2"] = explode(";", $membrasens_0)[3] * 1;
@@ -70,6 +71,7 @@ class Rht extends BaseController
 		$data["temp_membrasens_1_1"] = explode(";", $membrasens_1)[10] * 1;
 		$data["temp_membrasens_1_2"] = explode(";", $membrasens_1)[11] * 1;
 		$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[12] * 1;
+		$data["sensor_values"] =  $this->sensor_values->findAll();
 
 		echo json_encode($data);
 	}
