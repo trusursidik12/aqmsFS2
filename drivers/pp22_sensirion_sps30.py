@@ -68,7 +68,7 @@ class SPS30:
         while toRead < 47:
 
             toRead = self.ser.inWaiting()
-            print(f'Wait: {toRead}')
+            # print(f'Wait: {toRead}')
             time.sleep(1)
         raw = self.ser.read(toRead)
         
@@ -97,7 +97,7 @@ class SPS30:
         toRead = self.ser.inWaiting()
         while toRead < 7:  #24
             toRead = self.ser.inWaiting()
-            print(f'Wait: {toRead}')
+            # print(f'Wait: {toRead}')
             time.sleep(1)
         raw = self.ser.read(toRead)
         
@@ -153,6 +153,6 @@ if __name__ == '__main__':
     p = SPS30(port=sensor_reader[0])
     while True:
         p.run_query()
-        print(returnval)
+        # print(returnval)
         update_sensor_value(sys.argv[1],str(returnval))
         time.sleep(1)
