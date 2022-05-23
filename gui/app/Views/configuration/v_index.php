@@ -95,7 +95,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small">With Auto Zero Valve (0 => No ; 1 => Yes)</label>
-                                    <input type="text" name="zerocal_schedule" value="<?= $__this->findConfig('is_valve_calibrator') ?>" placeholder="<?= lang('Global.zerocal_schedule') ?>" class="form-control">
+                                    <input type="text" name="is_valve_calibrator" value="<?= $__this->findConfig('is_valve_calibrator') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
