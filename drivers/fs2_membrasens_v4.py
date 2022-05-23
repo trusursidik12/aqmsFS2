@@ -243,7 +243,7 @@ try:
             update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
             # print(MEMBRAPOR)
         except Exception as e2:
-            print(e2)
+            print(e2.args)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
