@@ -80,7 +80,7 @@ def connect_psu():
 
 update_sensor_value(str(sys.argv[1]),"",0)
 update_sensor_value(str(sys.argv[1]),"",1)    
-COM_PSU = connect_PSU()
+COM_PSU = connect_psu()
 
 try:
     while True :
