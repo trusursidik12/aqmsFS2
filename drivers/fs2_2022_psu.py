@@ -80,45 +80,43 @@ def connect_psu():
 
 update_sensor_value(str(sys.argv[1]),"",0)
 update_sensor_value(str(sys.argv[1]),"",1)    
-COM_PUMP = connect_pump()
+COM_PSU = connect_PSU()
 
 try:
     while True :
         try:
-            if(is_PUMP_connect == False):
-                COM_PUMP = connect_pump()
+            if(is_PSU_connect == False):
+                COM_PSU = connect_psu()
                         
-            PUMP = str(COM_PUMP.read_until(str("#").encode()))
-            if(PUMP.count("$MCU_PUMP") <= 0):
-                PUMP = ""
+            PSU = str(COM_PSU.read_until(str("#").encode()))
+            if(PSU.count("$MCU_PSU") <= 0):
+                PSU = ""
             
-            if(PUMP.count("$MCU_PUMP,BMP280,VAL") > 0):
-                update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"),0)
-                # print(PUMP.replace("b'","").replace("'","''"))
+            if(PSU.count("$MCU_PSU,BMP280,VAL") > 0):
+                update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),0)
+                # print(PSU.replace("b'","").replace("'","''"))
                 
-            if(PUMP.count("$MCU_PUMP,PRESSURE,RAW") > 0):
-                update_sensor_value(str(sys.argv[1]),PUMP.replace("b'","").replace("'","''"),1)
-                # print(PUMP.replace("b'","").replace("'","''"))
+            if(PSU.count("$MCU_PSU,PRESSURE,RAW") > 0):
+                update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),1)
+                # print(PSU.replace("b'","").replace("'","''"))
             
             mydb.commit()
-            mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_state'")
+            mycursor.execute("SELECT content FROM configurations WHERE name = 'is_psu_restarting'")
             rec = mycursor.fetchone()
-            pump_state = int(rec[0])
+            is_psu_restarting = int(rec[0])
             time.sleep(2)
-            
-            if pump_state != cur_pump_state and is_PUMP_connect:
-                mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
-                rec = mycursor.fetchone()
-                pump_speed = int(rec[0])
-                speed = (pump_state * 100) + pump_speed;
-                cur_pump_state = pump_state
-                COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
-                time.sleep(2)
+                
+            if(is_psu_restarting == 1):
+                mycursor.execute("UPDATE configurations SET value = '0' WHERE name = 'is_psu_restarting'")
+                mydb.commit()
+                time.sleep(1)
+                COM_PSU.write(str("$RESTART,3000#").encode());
+                time.sleep(1)
                 
         except Exception as e2:
             print(e2.args)
-            is_PUMP_connect = False
-            print("Reconnect PUMP Module ID: " + str(sys.argv[1]));
+            is_PSU_connect = False
+            print("Reconnect PSU Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
                 
 except Exception as e: 

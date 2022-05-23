@@ -4,18 +4,18 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class IsValveCalibrator extends Migration
+class IsPsuRestarting extends Migration
 {
 	public function up()
 	{
 		$data = [
-			['name' => 'is_valve_calibrator', 'content' => '1'],
+			['name' => 'is_psu_restarting', 'content' => '1'],
 		];
 		$this->db->table('configurations')->insertBatch($data);
 	}
 
 	public function down()
 	{
-		$this->db->table('configurations')->where(["code" => "is_valve_calibrator"])->delete();
+		$this->db->table('configurations')->where(["name" => "is_psu_restarting"])->delete();
 	}
 }
