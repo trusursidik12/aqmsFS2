@@ -65,7 +65,8 @@ def connect_psu():
         
         time.sleep(2)
         if(is_psu_restarting == 1):
-            mycursor.execute("UPDATE configurations SET value = '0' WHERE name = 'is_psu_restarting'")
+            print("Restarting");
+            mycursor.execute("UPDATE configurations SET content = '0' WHERE name = 'is_psu_restarting'")
             mydb.commit()
             COM_PSU.write(str("$RESTART,3000#").encode());
             time.sleep(2)
