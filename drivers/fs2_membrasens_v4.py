@@ -6,6 +6,7 @@ import serial
 import time
 import datetime
 import struct
+import subprocess
 import db_connect
 
 is_MEMBRAPOR_connect = False
