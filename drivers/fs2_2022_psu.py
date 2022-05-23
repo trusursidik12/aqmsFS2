@@ -82,15 +82,19 @@ try:
         try:
             if(is_PSU_connect == False):
                 COM_PSU = connect_psu()
+
+            try:
+                PSU = str(COM_PSU.read_until(str("#").encode()))
+                if(PSU.count("$MCU_PSU") <= 0):
+                    PSU = ""
+            
+                if(PSU.count("$MCU_PSU,BMP280,VAL") > 0):
+                    update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),0)
+                    # print(PSU.replace("b'","").replace("'","''"))
+
+            except Exception as e2:
+                None
                         
-            PSU = str(COM_PSU.read_until(str("#").encode()))
-            if(PSU.count("$MCU_PSU") <= 0):
-                PSU = ""
-            
-            if(PSU.count("$MCU_PSU,BMP280,VAL") > 0):
-                update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),0)
-                # print(PSU.replace("b'","").replace("'","''"))
-            
             mydb.commit()
             mycursor.execute("SELECT content FROM configurations WHERE name = 'is_psu_restarting'")
             rec = mycursor.fetchone()
