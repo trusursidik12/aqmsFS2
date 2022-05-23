@@ -1,5 +1,6 @@
 from mysql.connector.constants import ClientFlag
 import mysql.connector
+import subprocess
 
 def connecting():
     try:
