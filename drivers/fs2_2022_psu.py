@@ -54,10 +54,6 @@ def connect_psu():
             COM_PSU.write(str("$BMP280,SET,AUTO#").encode())
             PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,$BMP280").encode()))
 
-            time.sleep(1)
-            COM_PSU.write(str("$PRESSURE,SET,AUTO#").encode())
-            PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,PRESSURE").encode()))
-            
             returnval = COM_PSU
         else:
             is_PSU_connect = False
@@ -79,7 +75,6 @@ def connect_psu():
         return None
 
 update_sensor_value(str(sys.argv[1]),"",0)
-update_sensor_value(str(sys.argv[1]),"",1)    
 COM_PSU = connect_psu()
 
 try:
@@ -94,10 +89,6 @@ try:
             
             if(PSU.count("$MCU_PSU,BMP280,VAL") > 0):
                 update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),0)
-                # print(PSU.replace("b'","").replace("'","''"))
-                
-            if(PSU.count("$MCU_PSU,PRESSURE,RAW") > 0):
-                update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),1)
                 # print(PSU.replace("b'","").replace("'","''"))
             
             mydb.commit()
@@ -114,7 +105,7 @@ try:
                 time.sleep(1)
                 
         except Exception as e2:
-            print(e2.args)
+            print(e2)
             is_PSU_connect = False
             print("Reconnect PSU Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
