@@ -246,7 +246,10 @@ try:
         except Exception as e2:
             print(e2)
             subprocess.Popen("echo admin | sudo kill -S $(ps aux | grep '[p]hp' | awk '{print $2}')", shell=True)
-            subprocess.Popen("echo admin | sudo kill -S $(ps aux | grep '[p]ython' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo kill $(ps aux | grep 'terminal' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo kill $(ps aux | grep 'firefox' | awk '{print $2}')", shell=True)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
