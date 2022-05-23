@@ -124,7 +124,7 @@ try:
                 time.sleep(2)
                 
         except Exception as e2:
-            print(e2)
+            print(e2.args)
             is_PUMP_connect = False
             print("Reconnect PUMP Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
