@@ -1,3 +1,4 @@
+import time
 import subprocess
 
 subprocess.Popen("echo admin | sudo kill -S $(ps aux | grep '[p]hp' | awk '{print $2}')", shell=True)
