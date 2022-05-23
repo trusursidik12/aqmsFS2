@@ -65,7 +65,7 @@ def connect_psu():
         
         time.sleep(2)
         if(is_psu_restarting == 1):
-            print("Restarting");
+            print("Restarting");except Exception as e2:
             mycursor.execute("UPDATE configurations SET content = '0' WHERE name = 'is_psu_restarting'")
             mydb.commit()
             COM_PSU.write(str("$RESTART,3000#").encode());
@@ -103,7 +103,7 @@ try:
             time.sleep(2)
                 
             if(is_psu_restarting == 1):
-                mycursor.execute("UPDATE configurations SET value = '0' WHERE name = 'is_psu_restarting'")
+                mycursor.execute("UPDATE configurations SET content = '0' WHERE name = 'is_psu_restarting'")
                 mydb.commit()
                 time.sleep(1)
                 COM_PSU.write(str("$RESTART,3000#").encode());
