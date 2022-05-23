@@ -6,6 +6,7 @@ import serial
 import time
 import datetime
 import struct
+import subprocess
 import db_connect
 
 is_MEMBRAPOR_connect = False
@@ -244,6 +245,15 @@ try:
             # print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
+            subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep '[p]hp' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'python3' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'python' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'firefox' | awk '{print $2}')", shell=True)
+            time.sleep(1)
+            subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'terminal' | awk '{print $2}')", shell=True)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
