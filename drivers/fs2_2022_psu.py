@@ -65,7 +65,7 @@ def connect_psu():
         
         time.sleep(2)
         if(is_psu_restarting == 1):
-            print("Restarting");except Exception as e2:
+            print("Restarting");
             mycursor.execute("UPDATE configurations SET content = '0' WHERE name = 'is_psu_restarting'")
             mydb.commit()
             COM_PSU.write(str("$RESTART,3000#").encode());
@@ -93,7 +93,7 @@ try:
                     update_sensor_value(str(sys.argv[1]),PSU.replace("b'","").replace("'","''"),0)
                     # print(PSU.replace("b'","").replace("'","''"))
 
-            except Exception as e2:
+            except Exception as e3:
                 None
                         
             mydb.commit()
