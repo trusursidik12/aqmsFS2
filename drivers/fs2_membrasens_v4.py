@@ -200,9 +200,18 @@ try:
                 zerocal_finished_at = "";
                 print("zerocal_finished_at configurations not found")
             
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_valve_calibrator'")
+                is_valve_calibrator = mycursor.fetchone()[0]
+            except Exception as e4:
+                is_valve_calibrator = "0";
+                
             # print(is_zerocal + " : " + zerocal_finished_at)
             
-            if(int(is_zerocal) == 1 and zerocal_finished_at != ""):
+            if(int(is_valve_calibrator) == 1 and int(is_zerocal) == 1 and zerocal_finished_at != ""):
+                is_zero_calibrating = True
+                    
+            if(int(is_valve_calibrator) == 0 and int(is_zerocal) == 1):
                 is_zero_calibrating = True
                 
             if(is_zero_calibrating):
