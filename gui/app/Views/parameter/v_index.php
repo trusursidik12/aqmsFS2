@@ -218,37 +218,37 @@
                             </div>
                         </div>
                     </div>
-                    <div id="content-formula">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Sensor Value</label>
-                                    <select id="sensor_value_id" name="sensor_value_id" class="form-control">
-                                        <option value="" selected disabled>Select Sensor Value</option>
-                                        <?php foreach ($sensor_values as $sensor) : ?>
-                                            <option value="<?= $sensor->id; ?>"><?= @$sensor->driver; ?> [<?= @$sensor->sensor_reader_id; ?>][<?= $sensor->pin ?>]</option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <div class="invalid-feedback">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Sensor Value</label>
+                                <select id="sensor_value_id" name="sensor_value_id" class="form-control">
+                                    <option value="" selected disabled>Select Sensor Value</option>
+                                    <?php foreach ($sensor_values as $sensor) : ?>
+                                        <option value="<?= $sensor->id; ?>"><?= @$sensor->driver; ?> [<?= @$sensor->sensor_reader_id; ?>][<?= $sensor->pin ?>]</option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="invalid-feedback">
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label>Current Voltage</label>
-                                    <div class="input-group">
-                                        <input type="text" id="voltage" class="form-control" readonly>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-info btn-flat" onclick="$('#voltage1').val($('#voltage').val());">Set V1</button>
-                                            <button type="button" class="btn btn-info btn-flat" onclick="$('#voltage2').val($('#voltage').val());">Set V2</button>
-                                        </span>
-                                    </div>
-                                    <input type="hidden" name="" id="sensor_pin">
-                                    <input type="hidden" name="" id="sensor_reader_id">
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Current Sensor Value</label>
+                                <div class="input-group">
+                                    <textarea type="text" id="voltage" class="form-control" readonly></textarea>
+                                    <!--span class="input-group-btn">
+                                        <button type="button" class="btn btn-info btn-flat" onclick="$('#voltage1').val($('#voltage').val());">Set V1</button>
+                                        <button type="button" class="btn btn-info btn-flat" onclick="$('#voltage2').val($('#voltage').val());">Set V2</button>
+                                    </span-->
+                                </div>
+                                <input type="hidden" name="" id="sensor_pin">
+                                <input type="hidden" name="" id="sensor_reader_id">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content-formula">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
