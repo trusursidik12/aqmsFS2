@@ -55,6 +55,7 @@ def update_sensor_value(sensor_reader_id,value):
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
     except Exception as e2:
+        print(str(value))
         print("Error update_sensor_value")
         print(e2)
         return None
