@@ -31,6 +31,10 @@ def dectofloat(dec0,dec1):
     try:
         print("dec0,dec1")
         print(dec0,dec1)
+        
+        if(int(dec0) == 0 and int(dec1) == 0):
+            return "0"
+            
         hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
         return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
     except Exception as e: 
