@@ -68,8 +68,6 @@ def connect_membrapor():
         regVoltage = rs485.read_registers(1010,8,3)
         regTemp = rs485.read_registers(1070,8,3)
         
-        print(regConcentration + regVoltage + regTemp)
-        
         if(is_MEMBRAPOR_connect == False):
             is_MEMBRAPOR_connect = True
             print("[V] MEMBRAPOR " + sensor_reader[0] + " CONNECTED")
@@ -77,7 +75,7 @@ def connect_membrapor():
         try:
             return regConcentration + regVoltage + regTemp
         except Exception as e2:
-            return None
+            return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         
     except Exception as e:
         print("[X]  MEMBRAPOR ID: " + str(sys.argv[1]) + " " + e)
