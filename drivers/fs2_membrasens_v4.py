@@ -240,8 +240,12 @@ try:
             except Exception as e3:
                 print(e3)
             
-            MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
-            update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
+            try:
+                MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
+                update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
+            except Exception as e3:
+                print("ERROR!!!")
+                print(e3)
             # print(MEMBRAPOR)
         except Exception as e2:
             print(e2)
