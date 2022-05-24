@@ -10,6 +10,7 @@ class RestartSchedule extends Migration
 	{
 		$data = [
 			['name' => 'restart_schedule', 'content' => ''],
+			['name' => 'last_restart_schedule', 'content' => ''],
 		];
 		$this->db->table('configurations')->insertBatch($data);
 	}
@@ -17,5 +18,6 @@ class RestartSchedule extends Migration
 	public function down()
 	{
 		$this->db->table('configurations')->where(["name" => "restart_schedule"])->delete();
+		$this->db->table('configurations')->where(["name" => "last_restart_schedule"])->delete();
 	}
 }
