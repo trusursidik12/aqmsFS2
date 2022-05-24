@@ -95,14 +95,8 @@ try:
         try:
             if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
-            
-            try:            
-                PUMP = str(COM_PUMP.read_until(str("#").encode()))
-            except Exception as e3:
-                print("Error COM_PUMP.read_until")
-                PUMP = ""
-                time.sleep(2)
-                
+                        
+            PUMP = str(COM_PUMP.read_until(str("#").encode()))
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
             
@@ -130,7 +124,7 @@ try:
                 time.sleep(2)
                 
         except Exception as e2:
-            print(e2.args)
+            print(e2)
             is_PUMP_connect = False
             print("Reconnect PUMP Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
