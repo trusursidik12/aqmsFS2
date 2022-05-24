@@ -95,8 +95,14 @@ try:
         try:
             if(is_PUMP_connect == False):
                 COM_PUMP = connect_pump()
-                        
-            PUMP = str(COM_PUMP.read_until(str("#").encode()))
+            
+            try:            
+                PUMP = str(COM_PUMP.read_until(str("#").encode()))
+            except Exception as e3:
+                print("Error COM_PUMP.read_until")
+                PUMP = ""
+                time.sleep(2)
+                
             if(PUMP.count("$MCU_PUMP") <= 0):
                 PUMP = ""
             
