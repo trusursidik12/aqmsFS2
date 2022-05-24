@@ -50,12 +50,9 @@ def update_sensor_value(sensor_reader_id,value):
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            print(e)
-            print(str(value))
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
     except Exception as e2:
-        print(str(value))
         print("Error update_sensor_value")
         print(e2)
         return None
@@ -264,7 +261,7 @@ try:
             print(e2)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
-            update_sensor_value(str(sys.argv[1]),0)
+            update_sensor_value(str(sys.argv[1]),"0")
             
         time.sleep(1)
 
