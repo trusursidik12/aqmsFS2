@@ -75,7 +75,7 @@
                                     <label class="small"><?= lang('Global.Collect Data Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
                                     <input type="text" name="data_interval" value="<?= $__this->findConfig('data_interval') ?>" placeholder="<?= lang('Global.Collect Data Interval') ?>" class="form-control">
                                 </div>
-                            </div>restart_schedule
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.Graphic Refresh Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
