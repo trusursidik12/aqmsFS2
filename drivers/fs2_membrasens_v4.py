@@ -234,7 +234,7 @@ try:
                     print(e3)
         
             val = connect_membrapor()
-            # print(val)
+            print(val)
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
                     concentration0 = dectofloat(val[1],val[0])
