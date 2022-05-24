@@ -56,7 +56,7 @@
                 </div>
                 <div class="card mt-3">
                     <div class="bg-light px-3 py-2">
-                        <h2 class="h4">PUMP</h2>
+                        <h2 class="h4">AUTOMATION</h2>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -75,11 +75,17 @@
                                     <label class="small"><?= lang('Global.Collect Data Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
                                     <input type="text" name="data_interval" value="<?= $__this->findConfig('data_interval') ?>" placeholder="<?= lang('Global.Collect Data Interval') ?>" class="form-control">
                                 </div>
-                            </div>
+                            </div>restart_schedule
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small"><?= lang('Global.Graphic Refresh Interval') ?> <small>(<?= lang('Global.Minutes') ?>)</small></label>
                                     <input type="text" name="graph_interval" value="<?= $__this->findConfig('graph_interval') ?>" placeholder="<?= lang('Global.Graphic Refresh Interval') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">Restart Schedule</label>
+                                    <input type="time" name="restart_schedule" value="<?= $__this->findConfig('restart_schedule') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>

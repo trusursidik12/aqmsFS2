@@ -53,6 +53,7 @@ class Configuration extends BaseController
 		$this->configuration->set('content', $this->request->getPost('zerocal_schedule'))->where('name', 'zerocal_schedule')->update();
 		$this->configuration->set('content', $this->request->getPost('zerocal_duration'))->where('name', 'zerocal_duration')->update();
 		$this->configuration->set('content', $this->request->getPost('is_valve_calibrator'))->where('name', 'is_valve_calibrator')->update();
+		$this->configuration->set('content', $this->request->getPost('restart_schedule'))->where('name', 'restart_schedule')->update();
 		$data['success'] = true;
 		$data['message'] = 'Configuration has changed';
 		$data['data'] = @$_POST;
