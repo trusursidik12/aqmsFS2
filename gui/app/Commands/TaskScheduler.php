@@ -68,10 +68,12 @@ class TaskScheduler extends BaseCommand
 		while (true) {
 			try {
 				$restart_schedule = @$this->configurations->where(["name" => "restart_schedule"])->find()[0]->content;
-				$last_restart_schedule = @$this->configurations->where(["name" => "last_restart_schedule"])->find()[0]->content;
-				if (substr($restart_schedule, 0, 5) == date("H:i") && substr($restart_schedule, 0, 5) . ":00" <= date("H:i:s") && $last_restart_schedule != date("Y-m-d H:i")) {
-					$this->configurations->where(["name" => "last_restart_schedule"])->set(["content" => date("Y-m-d") . " " . substr($restart_schedule, 0, 5)])->update();
-					$this->configurations->where(["name" => "is_psu_restarting"])->set(["content" => "1"])->update();
+				if ($restart_schedule != "") {
+					$last_restart_schedule = @$this->configurations->where(["name" => "last_restart_schedule"])->find()[0]->content;
+					if (substr($restart_schedule, 0, 5) == date("H:i") && substr($restart_schedule, 0, 5) . ":00" <= date("H:i:s") && $last_restart_schedule != date("Y-m-d H:i")) {
+						$this->configurations->where(["name" => "last_restart_schedule"])->set(["content" => date("Y-m-d") . " " . substr($restart_schedule, 0, 5)])->update();
+						$this->configurations->where(["name" => "is_psu_restarting"])->set(["content" => "1"])->update();
+					}
 				}
 			} catch (Exception $e) {
 			}
