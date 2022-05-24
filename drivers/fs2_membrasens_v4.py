@@ -32,6 +32,8 @@ def dectofloat(dec0,dec1):
         hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
         return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
     except Exception as e: 
+        print("Error dectofloat")
+        print(e)
         return "0"
 
 def update_sensor_value(sensor_reader_id,value):
@@ -45,6 +47,8 @@ def update_sensor_value(sensor_reader_id,value):
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
     except Exception as e2:
+        print("Error update_sensor_value")
+        print(e2)
         return None
 
 def connect_membrapor():
@@ -124,6 +128,7 @@ def zeroing():
         return True
         
     except Exception as e:
+        print("Error zeroing")
         print(e)
         return None
 
@@ -180,6 +185,8 @@ def check_is_span():
             time.sleep(1)
         
     except Exception as e:
+        print("Error check_is_span")
+        print(e)
         return None
         
 
@@ -203,7 +210,7 @@ try:
             
             try:
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_valve_calibrator'")
-                is_valve_calibrator = mycursor.fetchone()[0]
+                is_valve_calibrator = str(mycursor.fetchone()[0])
             except Exception as e4:
                 is_valve_calibrator = "0";
                 
@@ -215,7 +222,7 @@ try:
             if(int(is_valve_calibrator) == 0 and int(is_zerocal) == 1):
                 is_zero_calibrating = True
                 
-            if(is_zero_calibrating):
+            if(is_zero_calibrating == True):
                 try:
                     currenttime = datetime.datetime.now()
                     # print(zerocal_finished_at + " ||| " + str(currenttime)[0:19])
@@ -240,21 +247,12 @@ try:
             except Exception as e3:
                 print(e3)
             
-            try:
-                MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
-                update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
-            except Exception as e3:
-                print("ERROR FS2_MEMBRASENS Update Sensor Value!")
-                print(e3)
+            MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
+            update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
             # print(MEMBRAPOR)
         except Exception as e2:
+            print("UNKNOWN ERROR FS2_MEMBRASENS !")
             print(e2)
-            # subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep '[p]hp' | awk '{print $2}')", shell=True)
-            # time.sleep(1)
-            # subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'python3' | awk '{print $2}')", shell=True)
-            # time.sleep(1)
-            # subprocess.Popen("echo admin | sudo -S kill -9 $(ps aux | grep 'python' | awk '{print $2}')", shell=True)
-            # time.sleep(3)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
             update_sensor_value(str(sys.argv[1]),0)
