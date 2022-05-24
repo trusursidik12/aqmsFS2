@@ -29,6 +29,8 @@ except Exception as e:
     
 def dectofloat(dec0,dec1):
     try:
+        print("dec0,dec1")
+        print(dec0,dec1)
         hexvalue = str(hex(int(dec0))).replace("0x","") + str(hex(int(dec1))).replace("0x","")
         return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
     except Exception as e: 
@@ -234,7 +236,7 @@ try:
                     print(e3)
         
             val = connect_membrapor()
-            print(val)
+            # print(val)
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
                     concentration0 = dectofloat(val[1],val[0])
