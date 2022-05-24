@@ -557,7 +557,7 @@
                     b = b * -1;
                     sign = "-";
                 } else sign = "+";
-                let formula = "round((" + a + " * " + "explode(\";\",$sensor[" + sensor_reader_id + "][" + pin + "])[1]) " + sign + " " + b + ") * " + molecular_mass + " / 24.45,2)";
+                let formula = "round(((" + a + " * " + "explode(\";\",$sensor[" + sensor_reader_id + "][" + pin + "])[1]) " + sign + " " + b + ") * " + molecular_mass + " / 24.45,2)";
                 // let formula = "round((" + a + " * " + "$sensor[" + sensor_reader_id + "][" + pin + "]) " + sign + " " + b + ",6)";
                 $("#formula").val(formula);
             }, 500);
