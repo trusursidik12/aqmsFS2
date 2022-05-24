@@ -177,7 +177,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Molecular Mass</label>
-                                <input type="text" name="molecular_mass" value="<?= old('molecular_mass', @$parameter->molecular_mass) ?>" placeholder="Molecular Mass" class="form-control">
+                                <input type="text" id="molecular_mass" name="molecular_mass" value="<?= old('molecular_mass', @$parameter->molecular_mass) ?>" placeholder="Molecular Mass" class="form-control">
                                 <div class="invalid-feedback">
 
                                 </div>
@@ -457,11 +457,11 @@
             }
         });
         // Span Calibration
-        $('.btn-span-calibration').click(function(){
+        $('.btn-span-calibration').click(function() {
             let param_id = $(this).attr('data-id');
             var btnEdit = $(this);
             btnEdit.html(`<i class="fas fa-spinner fa-spin"></i>`);
-            try{
+            try {
                 $.ajax({
                     url: '<?= base_url('parameter/detail') ?>',
                     data: {
@@ -478,7 +478,7 @@
                         }
                     }
                 })
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         })
@@ -548,6 +548,7 @@
                 let concentration1 = parseFloat($("#concentration1").val());
                 let voltage1 = parseFloat($("#voltage1").val());
                 let voltage2 = parseFloat($("#voltage2").val());
+                let molecular_mass = parseFloat($("#molecular_mass").val()) * 1000;
                 a = (concentration2 - concentration1) / (voltage2 - voltage1);
                 b = concentration1 - (a * voltage1);
                 console.log(a);
@@ -556,7 +557,8 @@
                     b = b * -1;
                     sign = "-";
                 } else sign = "+";
-                let formula = "round((" + a + " * " + "$sensor[" + sensor_reader_id + "][" + pin + "]) " + sign + " " + b + ",6)";
+                let formula = "round((" + a + " * " + "explode(\";\",$sensor[" + sensor_reader_id + "][" + pin + "])[1]) " + sign + " " + b + ") * " + molecular_mass + " / 24.45,2)";
+                // let formula = "round((" + a + " * " + "$sensor[" + sensor_reader_id + "][" + pin + "]) " + sign + " " + b + ",6)";
                 $("#formula").val(formula);
             }, 500);
         }
