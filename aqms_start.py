@@ -228,4 +228,4 @@ subprocess.Popen("php gui/spark command:task_scheduler", shell=True)
 print("php gui/spark command:task_scheduler")
 
 time.sleep(1)
-subprocess.Popen("python3 gui_start.py", shell=True)
+subprocess.Popen("python3 gui_start.py > /dev/null 2>&1", shell=True)
