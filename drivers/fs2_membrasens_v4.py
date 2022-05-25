@@ -45,12 +45,12 @@ def dectofloat(dec0,dec1):
 def update_sensor_value(sensor_reader_id,value):
     try:
         try:
-            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '"+ sensor_reader_id +"' AND pin = '0'")
+            mycursor.execute("SELECT id FROM sensor_values WHERE sensor_reader_id = '" + str(sensor_reader_id) + "' AND pin = '0'")
             sensor_value_id = mycursor.fetchone()[0]
-            mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
+            mycursor.execute("UPDATE sensor_values SET value = '" + str(value) + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
+            mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + str(sensor_reader_id) + "','0','" + str(value) + "')")
             mydb.commit()
     except Exception as e2:
         print("Error update_sensor_value")
@@ -85,7 +85,7 @@ def connect_membrapor():
         
     except Exception as e:
         print("[X]  MEMBRAPOR ID: " + str(sys.argv[1]) + " " + e)
-        return None
+        return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 def zeroing():
     global is_zero_calibrating
