@@ -190,7 +190,7 @@ mycursor.execute("TRUNCATE measurement_logs")
 mydb.commit()
 
 
-subprocess.Popen("php gui/spark serve", shell=True)
+subprocess.Popen("php gui/spark serve > /dev/null 2>&1", shell=True)
 time.sleep(1)
 
 mycursor.execute(
