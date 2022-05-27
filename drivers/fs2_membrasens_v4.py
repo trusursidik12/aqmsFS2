@@ -263,7 +263,7 @@ try:
                 MEMBRAPOR = "FS2_MEMBRASENS;0;0;0;0;0;0;0;0;0;0;0;0;END;"
                 print("MEMBRAPOR value error")
                 
-            print(str(datetime.datetime.now()) + " : " + MEMBRAPOR)
+            print(str(datetime.datetime.now()) + " ==> " + str(sys.argv[1]) + ":" + MEMBRAPOR)
         except Exception as e2:
             print("UNKNOWN ERROR FS2_MEMBRASENS !")
             print(e2)
