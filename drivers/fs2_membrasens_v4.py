@@ -219,6 +219,7 @@ try:
                 is_valve_calibrator = str(mycursor.fetchone()[0])
             except Exception as e4:
                 is_valve_calibrator = "0";
+                print("is_valve_calibrator configurations not found")
                 
             # print(is_zerocal + " : " + zerocal_finished_at)
             
@@ -238,9 +239,10 @@ try:
                         
                 except Exception as e3:
                     print(e3)
+                    print("error zero calibrating")
         
             val = connect_membrapor()
-            # print(val)
+            # print(str(datetime.datetime.now()) + " : " + str(val))
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
                     concentration0 = dectofloat(val[1],val[0])
@@ -251,11 +253,17 @@ try:
                 if(dectofloat(val[7],val[6]) != "0"):
                     concentration3 = dectofloat(val[7],val[6])
             except Exception as e3:
+                print("error decode concentrations")
                 print(e3)
             
-            MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
-            update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
-            # print(MEMBRAPOR)
+            try:
+                MEMBRAPOR = "FS2_MEMBRASENS;" + concentration0 + ";" + concentration1 + ";" + concentration2 + ";" + concentration3 + ";" + dectofloat(val[9],val[8]) + ";" + dectofloat(val[11],val[10]) + ";" + dectofloat(val[13],val[12]) + ";" + dectofloat(val[15],val[14]) + ";" + dectofloat(val[17],val[16]) + ";" + dectofloat(val[19],val[18]) + ";" + dectofloat(val[21],val[20]) + ";" + dectofloat(val[23],val[22]) + ";END;"            
+                update_sensor_value(str(sys.argv[1]),str(MEMBRAPOR))
+            except Exception as e3:
+                MEMBRAPOR = "FS2_MEMBRASENS;0;0;0;0;0;0;0;0;0;0;0;0;END;"
+                print("MEMBRAPOR value error")
+                
+            print(str(datetime.datetime.now()) + " : " + MEMBRAPOR)
         except Exception as e2:
             print("UNKNOWN ERROR FS2_MEMBRASENS !")
             print(e2)
