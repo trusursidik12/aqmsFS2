@@ -22,7 +22,7 @@ class Rht extends BaseController
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			return $this->saving_edit();
 		}
-		// $this->sensor_value_logs->truncate();
+		$this->sensor_value_logs->truncate();
 		$data['__this'] = $this;
 		$data['__modulename'] = 'RHT'; /* Title */
 		$data['__routename'] = 'rht'; /* Route for check menu */
@@ -49,8 +49,8 @@ class Rht extends BaseController
 		$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
 
 		try {
-			// $this->sensor_value_logs->save(["sensor_value_id " => 1, "value" => $membrasens_0]);
-			// $this->sensor_value_logs->save(["sensor_value_id " => 2, "value" => $membrasens_1]);
+			$this->sensor_value_logs->save(["sensor_value_id " => 1, "value" => $membrasens_0]);
+			$this->sensor_value_logs->save(["sensor_value_id " => 2, "value" => $membrasens_1]);
 		} catch (Exception $e) {
 		}
 
