@@ -407,7 +407,7 @@
                             datasets: datasets_
                         }
 
-                        console.log(areaChartData);
+                        // console.log(areaChartData);
 
                         var lineChartData = $.extend(true, {}, areaChartData)
                         lineChartData.datasets[0].fill = false;
@@ -426,59 +426,6 @@
             })
         }, 1000);
     });
-    /*
-        $(function() {
-            var areaChartData = {
-                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                datasets: [{
-                        borderColor: 'red',
-                        pointRadius: false,
-                        data: [28, 48, 40, 19, 86, 27, 90]
-                    },
-                    {
-                        borderColor: 'green',
-                        pointRadius: false,
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                ]
-            }
-
-            var areaChartOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false,
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display: false,
-                        }
-                    }]
-                }
-            }
-
-            //-------------
-            //- LINE CHART -
-            //--------------
-            var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-            var lineChartOptions = $.extend(true, {}, areaChartOptions)
-            var lineChartData = $.extend(true, {}, areaChartData)
-            lineChartData.datasets[0].fill = false;
-            lineChartData.datasets[1].fill = false;
-            lineChartOptions.datasetFill = false
-
-            var lineChart = new Chart(lineChartCanvas, {
-                type: 'line',
-                data: lineChartData,
-                options: lineChartOptions
-            })
-        })*/
 </script>
 
 <?= $this->endSection() ?>
