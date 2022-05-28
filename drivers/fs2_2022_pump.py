@@ -39,7 +39,7 @@ def connect_pump():
         
         ports = glob.glob(sensor_reader[0])
         if(ports[0] == sensor_reader[0]):
-            print("[V]" + str(sensor_reader[0]) + " Found")
+            print("[V] " + str(sensor_reader[0]) + " Found")
             COM_PUMP = serial.Serial(sensor_reader[0], sensor_reader[1],serial.EIGHTBITS,serial.PARITY_NONE,serial.STOPBITS_ONE,2)
             time.sleep(1)
             
@@ -87,7 +87,7 @@ def connect_pump():
             time.sleep(2)
             return returnval
         else:
-            print("[X]" + str(sensor_reader[0]) + " Not Found")
+            print("[X] " + str(sensor_reader[0]) + " Not Found")
             mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
             mydb.commit()            
             return None
