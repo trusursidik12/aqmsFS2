@@ -112,8 +112,10 @@ class Rht extends BaseController
 
 	public function sensor_value_logs()
 	{
-		$sensor_value_logs0 = $this->sensor_value_logs->where("sensor_value_id", 1)->orderBy('id', 'DESC')->limit(20)->find();
-		$sensor_value_logs1 = $this->sensor_value_logs->where("sensor_value_id", 2)->orderBy('id', 'DESC')->limit(20)->find();
+		$sensor_value_logs0 = $this->sensor_value_logs->where("sensor_value_id", 1)->orderBy('id', 'DESC')->limit(30)->find();
+		$sensor_value_logs1 = $this->sensor_value_logs->where("sensor_value_id", 2)->orderBy('id', 'DESC')->limit(30)->find();
+		$this->sensor_value_logs->where("id > " . $sensor_value_logs0[0]->id)->delete();
+		$this->sensor_value_logs->where("id > " . $sensor_value_logs1[0]->id)->delete();
 		foreach ($sensor_value_logs0 as $key => $sensor_value_log0) {
 			$labels[$key] = substr($sensor_value_log0->xtimestamp, -8);
 			$data0[0][$key] = explode(";", $sensor_value_log0->value)[1] * 1;
