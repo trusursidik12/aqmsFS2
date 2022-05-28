@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\m_sensor_value;
 use App\Models\m_configuration;
+use App\Models\m_sensor_value_log;
 
 class Rht extends BaseController
 {
@@ -13,6 +14,7 @@ class Rht extends BaseController
 		parent::__construct();
 		$this->sensor_values = new m_sensor_value();
 		$this->configurations = new m_configuration();
+		$this->sensor_value_logs = new m_sensor_value_log();
 	}
 
 	public function index()
@@ -20,10 +22,20 @@ class Rht extends BaseController
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			return $this->saving_edit();
 		}
+		// $this->sensor_value_logs->truncate();
 		$data['__this'] = $this;
 		$data['__modulename'] = 'RHT'; /* Title */
 		$data['__routename'] = 'rht'; /* Route for check menu */
 		$data["sensor_values"] = $this->sensor_values->orderBy('sensor_reader_id ASC, pin ASC')->findAll();
+		$linechartcolors[0] = "#000000";
+		$linechartcolors[1] = "#0000ff";
+		$linechartcolors[2] = "#00ff00";
+		$linechartcolors[3] = "#00ffff";
+		$linechartcolors[4] = "#ff0000";
+		$linechartcolors[5] = "#ff00ff";
+		$linechartcolors[6] = "#ffff00";
+		$linechartcolors[7] = "#888888";
+		$data["linechartcolors"] = $linechartcolors;
 		echo view("rht/v_index", $data);
 	}
 
@@ -35,6 +47,13 @@ class Rht extends BaseController
 		$psu = @$this->sensor_values->where("value LIKE '%FS2_PSU%'")->findAll()[0]->value;
 		$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
 		$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
+
+		try {
+			// $this->sensor_value_logs->save(["sensor_value_id " => 1, "value" => $membrasens_0]);
+			// $this->sensor_value_logs->save(["sensor_value_id " => 2, "value" => $membrasens_1]);
+		} catch (Exception $e) {
+		}
+
 		$analyzers = explode(";", $analyzer);
 		$num_analyzers = count(@$analyzers);
 		$data["vacuum"] = round((-0.0009765625 * @$analyzers[$num_analyzers - 6]) + 1, 6);
@@ -89,5 +108,33 @@ class Rht extends BaseController
 			echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id, "port" => $port, "span" => $span]);
 		} else
 			echo json_encode(["response" => "Error", "board" => $board, "port" => $port, "span" => $span]);
+	}
+
+	public function sensor_value_logs()
+	{
+		$sensor_value_logs0 = $this->sensor_value_logs->where("sensor_value_id", 1)->orderBy('id', 'ASC')->limit(20)->find();
+		$sensor_value_logs1 = $this->sensor_value_logs->where("sensor_value_id", 2)->orderBy('id', 'ASC')->limit(20)->find();
+		foreach ($sensor_value_logs0 as $key => $sensor_value_log0) {
+			$labels[$key] = substr($sensor_value_log0->xtimestamp, -8);
+			$data0[0][$key] = explode(";", $sensor_value_log0->value)[1] * 1;
+			$data0[1][$key] = explode(";", $sensor_value_log0->value)[2] * 1;
+			$data0[2][$key] = explode(";", $sensor_value_log0->value)[3] * 1;
+			$data0[3][$key] = explode(";", $sensor_value_log0->value)[4] * 1;
+			$data1[0][$key] = explode(";", $sensor_value_logs1[$key]->value)[1] * 1;
+			$data1[1][$key] = explode(";", $sensor_value_logs1[$key]->value)[2] * 1;
+			$data1[2][$key] = explode(";", $sensor_value_logs1[$key]->value)[3] * 1;
+			$data1[3][$key] = explode(";", $sensor_value_logs1[$key]->value)[4] * 1;
+		}
+
+		$datasets[0] = json_encode(["borderColor" => "#000000", "pointRadius" => false, "data" => json_encode($data0[0])]);
+		$datasets[1] = json_encode(["borderColor" => "#0000ff", "pointRadius" => false, "data" => json_encode($data0[1])]);
+		$datasets[2] = json_encode(["borderColor" => "#00ff00", "pointRadius" => false, "data" => json_encode($data0[2])]);
+		$datasets[3] = json_encode(["borderColor" => "#00ffff", "pointRadius" => false, "data" => json_encode($data0[3])]);
+		$datasets[4] = json_encode(["borderColor" => "#ff0000", "pointRadius" => false, "data" => json_encode($data1[0])]);
+		$datasets[5] = json_encode(["borderColor" => "#ff00ff", "pointRadius" => false, "data" => json_encode($data1[1])]);
+		$datasets[6] = json_encode(["borderColor" => "#ffff00", "pointRadius" => false, "data" => json_encode($data1[2])]);
+		$datasets[7] = json_encode(["borderColor" => "#888888", "pointRadius" => false, "data" => json_encode($data1[3])]);
+		$return = ["labels" => $labels, "datasets" => $datasets];
+		echo json_encode($return);
 	}
 }

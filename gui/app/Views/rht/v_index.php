@@ -23,49 +23,49 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Board 0 [0]</td>
+                                <td style="color:<?= $linechartcolors[0]; ?>;">Board 0 [0]</td>
                                 <td id="con_membrasens_0_0" onclick="spanbegin(0,0);">0</td>
                                 <td id="volt_membrasens_0_0">0</td>
                                 <td id="temp_membrasens_0_0">0</td>
                             </tr>
                             <tr>
-                                <td>Board 0 [1]</td>
+                                <td style="color:<?= $linechartcolors[1]; ?>;">Board 0 [1]</td>
                                 <td id="con_membrasens_0_1" onclick="spanbegin(0,1);">0</td>
                                 <td id="volt_membrasens_0_1">0</td>
                                 <td id="temp_membrasens_0_1">0</td>
                             </tr>
                             <tr>
-                                <td>Board 0 [2]</td>
+                                <td style="color:<?= $linechartcolors[2]; ?>;">Board 0 [2]</td>
                                 <td id="con_membrasens_0_2" onclick="spanbegin(0,2);">0</td>
                                 <td id="volt_membrasens_0_2">0</td>
                                 <td id="temp_membrasens_0_2">0</td>
                             </tr>
                             <tr>
-                                <td>Board 0 [3]</td>
+                                <td style="color:<?= $linechartcolors[3]; ?>;">Board 0 [3]</td>
                                 <td id="con_membrasens_0_3" onclick="spanbegin(0,3);">0</td>
                                 <td id="volt_membrasens_0_3">0</td>
                                 <td id="temp_membrasens_0_3">0</td>
                             </tr>
                             <tr>
-                                <td>Board 1 [0]</td>
+                                <td style="color:<?= $linechartcolors[4]; ?>;">Board 1 [0]</td>
                                 <td id="con_membrasens_1_0" onclick="spanbegin(1,0);">0</td>
                                 <td id="volt_membrasens_1_0">0</td>
                                 <td id="temp_membrasens_1_0">0</td>
                             </tr>
                             <tr>
-                                <td>Board 1 [1]</td>
+                                <td style="color:<?= $linechartcolors[5]; ?>;">Board 1 [1]</td>
                                 <td id="con_membrasens_1_1" onclick="spanbegin(1,1);">0</td>
                                 <td id="volt_membrasens_1_1">0</td>
                                 <td id="temp_membrasens_1_1">0</td>
                             </tr>
                             <tr>
-                                <td>Board 1 [2]</td>
+                                <td style="color:<?= $linechartcolors[6]; ?>;">Board 1 [2]</td>
                                 <td id="con_membrasens_1_2" onclick="spanbegin(1,2);">0</td>
                                 <td id="volt_membrasens_1_2">0</td>
                                 <td id="temp_membrasens_1_2">0</td>
                             </tr>
                             <tr>
-                                <td>Board 1 [3]</td>
+                                <td style="color:<?= $linechartcolors[7]; ?>;">Board 1 [3]</td>
                                 <td id="con_membrasens_1_3" onclick="spanbegin(1,3);">0</td>
                                 <td id="volt_membrasens_1_3">0</td>
                                 <td id="temp_membrasens_1_3">0</td>
@@ -77,6 +77,7 @@
                 <div class="row justify-content-start">
                     <div class="col-md-12 my-2">
                         <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+
                             <div class="card-body">
                                 <div class="chart">
                                     <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -353,48 +354,15 @@
     }
 </script>
 
-
+<script src="<?= base_url('bootstrap/js/Chart.min.js') ?>"></script>
 <script>
-    $(function() {
-        /* ChartJS
-         * -------
-         * Here we will create a few charts using ChartJS
-         */
-
-        //--------------
-        //- AREA CHART -
-        //--------------
-
-        var areaChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                    label: 'Digital Goods',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                },
-                {
-                    label: 'Electronics',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-            ]
-        }
-
+    $(document).ready(function() {
         var areaChartOptions = {
             maintainAspectRatio: false,
             responsive: true,
+            animation: {
+                duration: 0
+            },
             legend: {
                 display: false
             },
@@ -412,29 +380,50 @@
             }
         }
 
-        // This will get the first returned node in the jQuery collection.
-        new Chart(areaChartCanvas, {
-            type: 'line',
-            data: areaChartData,
-            options: areaChartOptions
-        })
-
-        //-------------
-        //- LINE CHART -
-        //--------------
         var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
         var lineChartOptions = $.extend(true, {}, areaChartOptions)
-        var lineChartData = $.extend(true, {}, areaChartData)
-        lineChartData.datasets[0].fill = false;
-        lineChartData.datasets[1].fill = false;
         lineChartOptions.datasetFill = false
 
-        var lineChart = new Chart(lineChartCanvas, {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        })
-    })
+        setInterval(() => {
+            $.ajax({
+                url: '<?= base_url('rht/sensor_value_logs') ?>',
+                dataType: 'json',
+                success: function(data) {
+                    if (data !== null) {
+                        let datasets_ = new Array();
+                        i = 0;
+                        data.datasets.forEach(function(object) {
+                            obj = JSON.parse(object);
+                            datasets_[i] = {
+                                borderColor: obj.borderColor,
+                                pointRadius: obj.pointRadius,
+                                data: JSON.parse(obj.data)
+                            };
+                            i++;
+                        });
+
+                        var areaChartData = {
+                            labels: data.labels,
+                            datasets: datasets_
+                        }
+
+                        var lineChartData = $.extend(true, {}, areaChartData)
+                        lineChartData.datasets[0].fill = false;
+                        lineChartData.datasets[1].fill = false;
+
+                        var lineChart = new Chart(lineChartCanvas, {
+                            type: 'line',
+                            data: lineChartData,
+                            options: lineChartOptions
+                        })
+                    }
+                },
+                error: function(xhr, status, err) {
+                    console.log(err);
+                }
+            })
+        }, 1000);
+    });
 </script>
 
 <?= $this->endSection() ?>
