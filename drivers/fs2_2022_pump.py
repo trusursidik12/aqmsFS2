@@ -19,6 +19,20 @@ try:
 except Exception as e: 
     print("[X]  PUMP Module ID: " + str(sys.argv[1]) + " " + e)
     
+    
+def port_check():
+    try:
+        mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+        sensor_reader = mycursor.fetchone()
+        ports = glob.glob(sensor_reader[0])
+        if(ports[0] != sensor_reader[0]):
+            print("[X] " + str(sensor_reader[0]) + " Not Found")
+            print("Try to restart signal to MCU PSU")
+            mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
+            mydb.commit()            
+            
+    except Exception as e2:
+        return None
 def update_sensor_value(sensor_reader_id,value,pin = 0):
     try:
         try:
@@ -89,11 +103,11 @@ def connect_pump():
             return returnval
         else:
             print("[X] " + str(sensor_reader[0]) + " Not Found")
-            mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
             mydb.commit()            
             return None
         
     except Exception as e: 
+        port_check()
         return None
 
 update_sensor_value(str(sys.argv[1]),"",0)
@@ -141,12 +155,12 @@ try:
                     time.sleep(2)
                 else:                    
                     print("[X] " + str(sensor_reader[0]) + " Not Found")
-                    mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
                     mydb.commit()
                 
         except Exception as e2:
             print(e2)
             is_PUMP_connect = False
+            port_check()
             print("Reconnect PUMP Module ID: " + str(sys.argv[1]));
             update_sensor_value(str(sys.argv[1]),0)
                 
