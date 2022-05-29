@@ -124,13 +124,22 @@ try:
             time.sleep(2)
             
             if pump_state != cur_pump_state and is_PUMP_connect:
-                mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
-                rec = mycursor.fetchone()
-                pump_speed = int(rec[0])
-                speed = (pump_state * 100) + pump_speed;
-                cur_pump_state = pump_state
-                COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
-                time.sleep(2)
+                mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+                sensor_reader = mycursor.fetchone()
+                ports = glob.glob(sensor_reader[0])
+                time.sleep(1)
+                if(ports[0] == sensor_reader[0]):
+                    mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
+                    rec = mycursor.fetchone()
+                    pump_speed = int(rec[0])
+                    speed = (pump_state * 100) + pump_speed;
+                    cur_pump_state = pump_state
+                    COM_PUMP.write(str("$PUMP," + str(pump_state+1) + ",SET," + str(pump_speed) + "#").encode());
+                    time.sleep(2)
+                else:                    
+                    print("[X] " + str(sensor_reader[0]) + " Not Found")
+                    mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
+                    mydb.commit()
                 
         except Exception as e2:
             print(e2)
