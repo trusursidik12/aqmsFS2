@@ -265,7 +265,7 @@ try:
                 
             # print(str(datetime.datetime.now()) + " ==> " + str(sys.argv[1]) + ":" + MEMBRAPOR)
         except Exception as e2:
-            print("UNKNOWN ERROR FS2_MEMBRASENS !")
+            print(str(datetime.datetime.now()) + " => UNKNOWN ERROR FS2_MEMBRASENS !")
             print(e2)
             is_MEMBRAPOR_connect = False
             print("Reconnect MEMBRAPOR");
