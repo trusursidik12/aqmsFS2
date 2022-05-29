@@ -22,10 +22,14 @@ except Exception as e:
     
 def port_check():
     try:
+        print("Port Checking...")
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
         ports = glob.glob(sensor_reader[0])
-        if(ports[0] != sensor_reader[0]):
+        if(ports[0] == sensor_reader[0]):
+            print(ports)
+            print("[V] " + str(sensor_reader[0]) + " Found")
+        else:
             print("[X] " + str(sensor_reader[0]) + " Not Found")
             print("Try to restart signal to MCU PSU")
             mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
