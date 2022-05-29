@@ -129,6 +129,8 @@ try:
                 ports = glob.glob(sensor_reader[0])
                 time.sleep(1)
                 if(ports[0] == sensor_reader[0]):
+                    print("[V] " + str(sensor_reader[0]) + " Found")
+                    print("Switch Pump...")
                     mycursor.execute("SELECT content FROM configurations WHERE name = 'pump_speed'")
                     rec = mycursor.fetchone()
                     pump_speed = int(rec[0])
