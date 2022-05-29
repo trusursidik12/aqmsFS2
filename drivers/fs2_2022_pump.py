@@ -34,6 +34,7 @@ def port_check():
             print("Try to restart signal to MCU PSU")
             mycursor.execute("UPDATE configurations SET content = '1' WHERE  name = 'is_psu_restarting'")
             mydb.commit()            
+            time.sleep(5)
             
     except Exception as e2:
         return None
