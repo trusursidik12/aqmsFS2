@@ -69,10 +69,22 @@ def connect_membrapor():
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
         rs485.serial.timeout=3
+
+        try:
+            regConcentration = rs485.read_registers(1000,8,3)
+        except Exception as e2:
+            return [0, 0, 0, 0, 0, 0, 0, 0]
+            
+        try:
+            regVoltage = rs485.read_registers(1010,8,3)
+        except Exception as e2:
+            return [0, 0, 0, 0, 0, 0, 0, 0]
+            
+        try:
+            regTemp = rs485.read_registers(1070,8,3)
+        except Exception as e2:
+            return [0, 0, 0, 0, 0, 0, 0, 0]
         
-        regConcentration = rs485.read_registers(1000,8,3)
-        regVoltage = rs485.read_registers(1010,8,3)
-        regTemp = rs485.read_registers(1070,8,3)
         
         if(is_MEMBRAPOR_connect == False):
             is_MEMBRAPOR_connect = True
@@ -241,7 +253,12 @@ try:
                     print(e3)
                     print("error zero calibrating")
         
-            val = connect_membrapor()
+            try:
+                val = connect_membrapor()
+            except Exception as e3:
+                print(str(datetime.datetime.now()) + " : error val = connect_membrapor()")
+                print(e3)
+                
             # print(str(datetime.datetime.now()) + " : " + str(val))
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
