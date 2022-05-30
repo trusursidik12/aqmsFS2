@@ -52,7 +52,7 @@ def connect_sensor():
         filepath = sensor_reader[0]
         
         if(sensor_reader[0] != ""):
-            subprocess.Popen("rtl_433 > ~/rtl_433_output.txt &", shell=True)
+            subprocess.Popen("rtl_433 -f 433000000 > ~/rtl_433_output.txt &", shell=True)
             is_SENSOR_connect = True
             
     except Exception as e: 
