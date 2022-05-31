@@ -54,6 +54,16 @@ class Configuration extends BaseController
 		$this->configuration->set('content', $this->request->getPost('zerocal_duration'))->where('name', 'zerocal_duration')->update();
 		$this->configuration->set('content', $this->request->getPost('is_valve_calibrator'))->where('name', 'is_valve_calibrator')->update();
 		$this->configuration->set('content', $this->request->getPost('restart_schedule'))->where('name', 'restart_schedule')->update();
+		$this->configuration->set('content', $this->request->getPost('is_sentto_klhk'))->where('name', 'is_sentto_klhk')->update();
+		$this->configuration->set('content', $this->request->getPost('klhk_api_server'))->where('name', 'klhk_api_server')->update();
+		$this->configuration->set('content', $this->request->getPost('klhk_api_username'))->where('name', 'klhk_api_username')->update();
+		$this->configuration->set('content', $this->request->getPost('klhk_api_password'))->where('name', 'klhk_api_password')->update();
+		$this->configuration->set('content', $this->request->getPost('klhk_api_key'))->where('name', 'klhk_api_key')->update();
+		$this->configuration->set('content', $this->request->getPost('is_sentto_trusur'))->where('name', 'is_sentto_trusur')->update();
+		$this->configuration->set('content', $this->request->getPost('trusur_api_server'))->where('name', 'trusur_api_server')->update();
+		$this->configuration->set('content', $this->request->getPost('trusur_api_username'))->where('name', 'trusur_api_username')->update();
+		$this->configuration->set('content', $this->request->getPost('trusur_api_password'))->where('name', 'trusur_api_password')->update();
+		$this->configuration->set('content', $this->request->getPost('trusur_api_key'))->where('name', 'trusur_api_key')->update();
 		$data['success'] = true;
 		$data['message'] = 'Configuration has changed';
 		$data['data'] = @$_POST;

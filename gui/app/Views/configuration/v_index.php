@@ -95,32 +95,80 @@
 
                 <div class="card mt-3">
                     <div class="bg-light px-3 py-2">
-                        <h2 class="h4">CALIBRATION</h2>
+                        <h2 class="h4">SERVERS</h2>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="small">With Auto Zero Valve (0 => No ; 1 => Yes)</label>
-                                    <input type="text" name="is_valve_calibrator" value="<?= $__this->findConfig('is_valve_calibrator') ?>" class="form-control">
+                                    <label class="small">Is Sent To KLHK? (0 => No ; 1 => Yes)</label>
+                                    <input type="text" name="is_sentto_klhk" value="<?= $__this->findConfig('is_sentto_klhk') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="small"><?= lang('Global.zerocal_schedule') ?></label>
-                                    <input type="text" name="zerocal_schedule" value="<?= $__this->findConfig('zerocal_schedule') ?>" placeholder="<?= lang('Global.zerocal_schedule') ?>" class="form-control">
+                                    <label class="small">KLHK API Server</label>
+                                    <input type="text" name="klhk_api_server" value="<?= $__this->findConfig('klhk_api_server') ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="small"><?= lang('Global.zerocal_duration') ?> <small>(<?= lang('Global.Seconds') ?>)</small></label>
-                                    <input type="number" name="zerocal_duration" value="<?= $__this->findConfig('zerocal_duration') ?>" placeholder="<?= lang('Global.zerocal_duration') ?>" class="form-control" min="60">
+                                    <label class="small">KLHK API Key</small></label>
+                                    <input type="text" name="klhk_api_key" value="<?= $__this->findConfig('klhk_api_key') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">KLHK API Username</small></label>
+                                    <input type="text" name="klhk_api_username" value="<?= $__this->findConfig('klhk_api_username') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">KLHK API Password</small></label>
+                                    <input type="text" name="klhk_api_password" value="<?= $__this->findConfig('klhk_api_password') ?>" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">Is Sent To TRUSUR? (0 => No ; 1 => Yes)</label>
+                                    <input type="text" name="is_sentto_trusur" value="<?= $__this->findConfig('is_sentto_trusur') ?>" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">TRUSUR API Server</label>
+                                    <input type="text" name="trusur_api_server" value="<?= $__this->findConfig('trusur_api_server') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">TRUSUR API Key</small></label>
+                                    <input type="text" name="trusur_api_key" value="<?= $__this->findConfig('trusur_api_key') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">TRUSUR API Username</small></label>
+                                    <input type="text" name="trusur_api_username" value="<?= $__this->findConfig('trusur_api_username') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">TRUSUR API Password</small></label>
+                                    <input type="text" name="trusur_api_password" value="<?= $__this->findConfig('trusur_api_password') ?>" class="form-control">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-md-6">
@@ -189,6 +237,36 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="card mt-3">
+                    <div class="bg-light px-3 py-2">
+                        <h2 class="h4">CALIBRATION</h2>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small">With Auto Zero Valve (0 => No ; 1 => Yes)</label>
+                                    <input type="text" name="is_valve_calibrator" value="<?= $__this->findConfig('is_valve_calibrator') ?>" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small"><?= lang('Global.zerocal_schedule') ?></label>
+                                    <input type="text" name="zerocal_schedule" value="<?= $__this->findConfig('zerocal_schedule') ?>" placeholder="<?= lang('Global.zerocal_schedule') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small"><?= lang('Global.zerocal_duration') ?> <small>(<?= lang('Global.Seconds') ?>)</small></label>
+                                    <input type="number" name="zerocal_duration" value="<?= $__this->findConfig('zerocal_duration') ?>" placeholder="<?= lang('Global.zerocal_duration') ?>" class="form-control" min="60">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="position-fixed" style="z-index: 999;right:11vw;bottom:20px;">
