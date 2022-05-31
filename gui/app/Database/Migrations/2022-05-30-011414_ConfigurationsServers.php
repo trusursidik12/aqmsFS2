@@ -26,10 +26,17 @@ class ConfigurationsServers extends Migration
 
 	public function down()
 	{
-		$this->db->table('configurations')->where(["name" => "is_sentto_trusur"])->delete();
+
 		$this->db->table('configurations')->where(["name" => "is_sentto_klhk"])->delete();
-		$this->db->table('configurations')->where(["name" => "trusur_api_server"])->delete();
 		$this->db->table('configurations')->where(["name" => "klhk_api_server"])->delete();
+		$this->db->table('configurations')->where(["name" => "klhk_api_username"])->delete();
+		$this->db->table('configurations')->where(["name" => "klhk_api_password"])->delete();
+		$this->db->table('configurations')->where(["name" => "klhk_api_key"])->delete();
+		$this->db->table('configurations')->where(["name" => "is_sentto_trusur"])->delete();
+		$this->db->table('configurations')->where(["name" => "trusur_api_server"])->delete();
+		$this->db->table('configurations')->where(["name" => "trusur_api_username"])->delete();
+		$this->db->table('configurations')->where(["name" => "trusur_api_password"])->delete();
+		$this->db->table('configurations')->where(["name" => "trusur_api_key"])->delete();
 		$this->db->table('configurations')->where(["name" => "iot_path"])->delete();
 	}
 }
