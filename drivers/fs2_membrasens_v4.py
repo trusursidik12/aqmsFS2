@@ -68,22 +68,22 @@ def connect_membrapor():
         rs485.serial.parity=serial.PARITY_EVEN
         rs485.serial.bytesize=8
         rs485.serial.stopbits=1
-        rs485.serial.timeout=3
+        rs485.serial.timeout=5
 
         try:
             regConcentration = rs485.read_registers(1000,8,3)
         except Exception as e2:
-            return [0, 0, 0, 0, 0, 0, 0, 0]
+            regConcentration = [0, 0, 0, 0, 0, 0, 0, 0]
             
         try:
             regVoltage = rs485.read_registers(1010,8,3)
         except Exception as e2:
-            return [0, 0, 0, 0, 0, 0, 0, 0]
+            regVoltage = [0, 0, 0, 0, 0, 0, 0, 0]
             
         try:
             regTemp = rs485.read_registers(1070,8,3)
         except Exception as e2:
-            return [0, 0, 0, 0, 0, 0, 0, 0]
+            regTemp = [0, 0, 0, 0, 0, 0, 0, 0]
         
         
         if(is_MEMBRAPOR_connect == False):
