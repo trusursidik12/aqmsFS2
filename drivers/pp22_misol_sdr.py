@@ -52,7 +52,7 @@ def connect_sensor():
         filepath = sensor_reader[0]
         
         if(sensor_reader[0] != ""):
-            subprocess.Popen("rtl_433 -f 433000000 > ~/rtl_433_output.txt &", shell=True)
+            subprocess.Popen("rtl_433 > ~/rtl_433_output.txt &", shell=True)
             is_SENSOR_connect = True
             
     except Exception as e: 
@@ -63,33 +63,37 @@ connect_sensor()
 try:
     while True :
         try:
-            if(not is_SENSOR_connect):
+            if(is_SENSOR_connect == False):
                 connect_sensor()
                 
             ws_content = read_ws(filepath)    
             if(ws_content != ""):
-                outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
-                wind_speed = float(ws_content.split("Wind avg speed: ")[1].split("\n")[0])
-                wind_dirs = ws_content.split("Wind Direction: ")[1].split("\n")[0]
-                outdoor_humidity = ws_content.split("Humidity  : ")[1].split(" %")[0]
-                rain = float(ws_content.split("Total rainfall: ")[1].split("\n")[0])
-                
-                WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
-                update_sensor_value(str(sys.argv[1]),WS.replace("'","''"))
-                
-                f = open(filepath + "/rtl_433_output.txt", "w")
-                f.write("")
-                f.close()
-                
-            # print(WS)
+                try:
+                    outdoor_temperature = float(ws_content.split("Temperature: ")[1].split(" C")[0])
+                    wind_speed = float(ws_content.split("Wind avg speed: ")[1].split("\n")[0])
+                    wind_dirs = ws_content.split("Wind Direction: ")[1].split("\n")[0]
+                    outdoor_humidity = ws_content.split("Humidity  : ")[1].split(" %")[0]
+                    rain = float(ws_content.split("Total rainfall: ")[1].split("\n")[0])
+                    
+                    WS = str(datetime.datetime.now()) + ";0;0;0;0;" + str((outdoor_temperature*9/5)+32) + ";" + str(round(wind_speed,2)) + ";" + str(round(wind_speed,2)) + ";" + wind_dirs + ";" + outdoor_humidity + ";" + str(round(rain,2)) + ";0;0;0.0;0;" + str(round(rain,2)) + ";0;0"
+                    update_sensor_value(str(sys.argv[1]),WS.replace("'","''"))
+                    
+                    f = open(filepath + "/rtl_433_output.txt", "w")
+                    f.write("")
+                    f.close()
+                except Exception as e2:
+                    None
+                    
+            print(WS)
             
         except Exception as e2:
-            print(e2)
-            is_SENSOR_connect = False
-            print("Reconnect SENSOR Module ID: " + str(sys.argv[1]));
+            None
+            #print(e2)
+            #is_SENSOR_connect = False
+            #print("Reconnect SENSOR Module ID: " + str(sys.argv[1]));
             # update_sensor_value(str(sys.argv[1]),";0;0;0;0;0;0;0;0;0;0;0;0;0.0;0;0;0;0")
         
-        time.sleep(10)
+        time.sleep(2)
         
 except Exception as e: 
     print(e)
