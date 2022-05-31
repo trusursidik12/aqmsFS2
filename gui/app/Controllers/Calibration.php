@@ -20,6 +20,16 @@ class Calibration extends BaseController
 		$data['__modulename'] = 'Calibrations'; /* Title */
 		$data['__routename'] = 'calibration'; /* Route for check menu */
 		$data['__this'] = $this;
+		$linechartcolors[0] = "#000000";
+		$linechartcolors[1] = "#0000ff";
+		$linechartcolors[2] = "#00ff00";
+		$linechartcolors[3] = "#00ffff";
+		$linechartcolors[4] = "#ff0000";
+		$linechartcolors[5] = "#ff00ff";
+		$linechartcolors[6] = "#ffff00";
+		$linechartcolors[7] = "#888888";
+		$data["linechartcolors"] = $linechartcolors;
+
 		echo view("calibrations/v_index", $data);
 	}
 
@@ -51,23 +61,25 @@ class Calibration extends BaseController
 			$data["is_zerocalibrating"] = 1;
 		echo json_encode($data);
 	}
-	public function datatable(){
-		try{
+	public function datatable()
+	{
+		try {
 			$calibrationLogs = $this->calibrations
 				->select('sensor_readers.sensor_code, calibrations.*')
 				// ->groupBy('started_at')
-				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id','left')
-				->orderBy('calibrations.id','desc')->findAll(5);
+				->join('sensor_readers', 'sensor_readers.id = calibrations.sensor_reader_id', 'left')
+				->orderBy('calibrations.id', 'desc')->findAll(5);
 			$data['draw'] = @$this->request->getGet('draw') ?  (int) $this->request->getGet('draw') : 1;
 			$data['recordsTotal'] = 0;
 			$data['recordsFiltered'] = 0;
 			$data['data'] = $calibrationLogs;
 			return $this->response->setJson($data);
-		}catch(Exception $e){
+		} catch (Exception $e) {
 			return $e->getMessage();
 		}
 	}
-	function array2csv(array &$array){
+	function array2csv(array &$array)
+	{
 		if (count($array) == 0) {
 			return null;
 		}
@@ -80,25 +92,27 @@ class Calibration extends BaseController
 		fclose($df);
 		return ob_get_clean();
 	}
-	function download_send_headers($filename) {
+	function download_send_headers($filename)
+	{
 		// disable caching
 		$now = gmdate("D, d M Y H:i:s");
 		// header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
 		header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
 		header("Last-Modified: {$now} GMT");
-	
+
 		// force download  
 		header("Content-Type: application/force-download");
 		header("Content-Type: application/octet-stream");
 		header("Content-Type: application/download");
-	
+
 		// disposition / encoding on response body
 		header("Content-Disposition: attachment;filename={$filename}");
 		header("Content-Transfer-Encoding: binary");
 	}
 
-	public function getDataExport($started_at,$end_at){
-		try{
+	public function getDataExport($started_at, $end_at)
+	{
+		try {
 			$whereRaw = "1=1";
 			$whereRaw .= !empty($started_at) ? " AND DATE_FORMAT(started_at,'%Y-%m-%d') >= '${started_at}'" : "";
 			$whereRaw .= !empty($end_at) ? " AND DATE_FORMAT(calibrations.xtimestamp,'%Y-%m-%d') <= '${end_at}'" : "";
@@ -108,36 +122,38 @@ class Calibration extends BaseController
 				->asArray()
 				->select('sensor_readers.sensor_code, calibrations.*')
 				// ->groupBy('started_at')
-				->join('sensor_readers','sensor_readers.id = calibrations.sensor_reader_id','left')
+				->join('sensor_readers', 'sensor_readers.id = calibrations.sensor_reader_id', 'left')
 				->where($whereRaw)
-				->orderBy('calibrations.id','desc')->findAll();
+				->orderBy('calibrations.id', 'desc')->findAll();
 			return $calibrationLogs;
-		}catch(Exception $e){
+		} catch (Exception $e) {
 			return [];
 		}
 	}
 
-	public function validateExport(){
-		try{
+	public function validateExport()
+	{
+		try {
 			$started_at = $this->request->getGet('started_at');
 			$end_at = $this->request->getGet('end_at');
-			if(count($this->getDataExport($started_at,$end_at)) > 0){
+			if (count($this->getDataExport($started_at, $end_at)) > 0) {
 				$data['success'] = true;
 				$data['message'] = 'Generate CSV, Please wait...';
 				$data['download_url'] = base_url("calibration/export?started_at={$started_at}&end_at={$end_at}");
 				return $this->response->setJSON($data);
 			}
-			return $this->response->setJSON(['success'=>false,'message'=> 'No data available!']);
-		}catch(Exception $e){
-			return $this->response->setJSON(['success'=>false,'message'=> $e->getMessage()]);
+			return $this->response->setJSON(['success' => false, 'message' => 'No data available!']);
+		} catch (Exception $e) {
+			return $this->response->setJSON(['success' => false, 'message' => $e->getMessage()]);
 		}
 	}
 
-	public function export(){
-		try{
+	public function export()
+	{
+		try {
 			$started_at = $this->request->getGet('started_at');
 			$end_at = $this->request->getGet('end_at');
-			$calibrationLogs = $this->getDataExport($started_at,$end_at);
+			$calibrationLogs = $this->getDataExport($started_at, $end_at);
 			$export = [];
 			foreach ($calibrationLogs as $key =>  $log) {
 				$export[$key]['Started at'] = $log['started_at'];
@@ -147,10 +163,10 @@ class Calibration extends BaseController
 				$export[$key]['PIN'] = $log['pin'];
 				$export[$key]['Value'] = $log['value'];
 			}
-			$filename = "Report Calibration {$started_at} - {$end_at} ".rand(0,99);
+			$filename = "Report Calibration {$started_at} - {$end_at} " . rand(0, 99);
 			$this->download_send_headers("{$filename}.csv");
 			return $this->array2csv($export);
-		}catch(Exception $e){
+		} catch (Exception $e) {
 			return $e->getMessage();
 		}
 	}

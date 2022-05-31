@@ -62,49 +62,73 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Board1 [0]</td>
+                            <td style="color:<?= $linechartcolors[0]; ?>;">
+                                <input id="isGraph0" type="checkbox" value="1" checked>
+                                Board1 [0]
+                            </td>
                             <td id="con_membrasens_0_0">0</td>
                             <td id="volt_membrasens_0_0">0</td>
                             <td id="temp_membrasens_0_0">0</td>
                         </tr>
                         <tr>
-                            <td>Board1 [1]</td>
+                            <td style="color:<?= $linechartcolors[1]; ?>;">
+                                <input id="isGraph1" type="checkbox" value="1" checked>
+                                Board1 [1]
+                            </td>
                             <td id="con_membrasens_0_1">0</td>
                             <td id="volt_membrasens_0_1">0</td>
                             <td id="temp_membrasens_0_1">0</td>
                         </tr>
                         <tr>
-                            <td>Board1 [2]</td>
+                            <td style="color:<?= $linechartcolors[2]; ?>;">
+                                <input id="isGraph2" type="checkbox" value="1" checked>
+                                Board1 [2]
+                            </td>
                             <td id="con_membrasens_0_2">0</td>
                             <td id="volt_membrasens_0_2">0</td>
                             <td id="temp_membrasens_0_2">0</td>
                         </tr>
                         <tr>
-                            <td>Board1 [3]</td>
+                            <td style="color:<?= $linechartcolors[3]; ?>;">
+                                <input id="isGraph3" type="checkbox" value="1" checked>
+                                Board1 [3]
+                            </td>
                             <td id="con_membrasens_0_3">0</td>
                             <td id="volt_membrasens_0_3">0</td>
                             <td id="temp_membrasens_0_3">0</td>
                         </tr>
                         <tr>
-                            <td>Board2 [0]</td>
+                            <td style="color:<?= $linechartcolors[4]; ?>;">
+                                <input id="isGraph4" type="checkbox" value="1" checked>
+                                Board2 [0]
+                            </td>
                             <td id="con_membrasens_1_0">0</td>
                             <td id="volt_membrasens_1_0">0</td>
                             <td id="temp_membrasens_1_0">0</td>
                         </tr>
                         <tr>
-                            <td>Board2 [1]</td>
+                            <td style="color:<?= $linechartcolors[5]; ?>;">
+                                <input id="isGraph5" type="checkbox" value="1" checked>
+                                Board2 [1]
+                            </td>
                             <td id="con_membrasens_1_1">0</td>
                             <td id="volt_membrasens_1_1">0</td>
                             <td id="temp_membrasens_1_1">0</td>
                         </tr>
                         <tr>
-                            <td>Board2 [2]</td>
+                            <td style="color:<?= $linechartcolors[6]; ?>;">
+                                <input id="isGraph6" type="checkbox" value="1" checked>
+                                Board2 [2]
+                            </td>
                             <td id="con_membrasens_1_2">0</td>
                             <td id="volt_membrasens_1_2">0</td>
                             <td id="temp_membrasens_1_2">0</td>
                         </tr>
                         <tr>
-                            <td>Board2 [3]</td>
+                            <td style="color:<?= $linechartcolors[7]; ?>;">
+                                <input id="isGraph7" type="checkbox" value="1" checked>
+                                Board2 [3]
+                            </td>
                             <td id="con_membrasens_1_3">0</td>
                             <td id="volt_membrasens_1_3">0</td>
                             <td id="temp_membrasens_1_3">0</td>
@@ -372,12 +396,21 @@
                         let datasets_ = new Array();
                         i = 0;
                         data.datasets.forEach(function(object) {
-                            obj = JSON.parse(object);
-                            datasets_[i] = {
-                                borderColor: obj.borderColor,
-                                pointRadius: obj.pointRadius,
-                                data: JSON.parse(obj.data)
-                            };
+                            console.log($("#isGraph0").is(":checked"));
+                            if ($("#isGraph" + i).is(":checked")) {
+                                obj = JSON.parse(object);
+                                datasets_[i] = {
+                                    borderColor: obj.borderColor,
+                                    pointRadius: obj.pointRadius,
+                                    data: JSON.parse(obj.data)
+                                };
+                            } else {
+                                datasets_[i] = {
+                                    borderColor: "",
+                                    pointRadius: false,
+                                    data: []
+                                };
+                            }
                             i++;
                         });
 

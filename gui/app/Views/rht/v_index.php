@@ -417,7 +417,6 @@
                         let datasets_ = new Array();
                         i = 0;
                         data.datasets.forEach(function(object) {
-                            console.log($("#isGraph0").is(":checked"));
                             if ($("#isGraph" + i).is(":checked")) {
                                 obj = JSON.parse(object);
                                 datasets_[i] = {
