@@ -372,21 +372,12 @@
                         let datasets_ = new Array();
                         i = 0;
                         data.datasets.forEach(function(object) {
-                            console.log($("#isGraph0").is(":checked"));
-                            if ($("#isGraph" + i).is(":checked")) {
-                                obj = JSON.parse(object);
-                                datasets_[i] = {
-                                    borderColor: obj.borderColor,
-                                    pointRadius: obj.pointRadius,
-                                    data: JSON.parse(obj.data)
-                                };
-                            } else {
-                                datasets_[i] = {
-                                    borderColor: "",
-                                    pointRadius: false,
-                                    data: []
-                                };
-                            }
+                            obj = JSON.parse(object);
+                            datasets_[i] = {
+                                borderColor: obj.borderColor,
+                                pointRadius: obj.pointRadius,
+                                data: JSON.parse(obj.data)
+                            };
                             i++;
                         });
 
