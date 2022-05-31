@@ -9,7 +9,7 @@ import db_connect
 try:
     mydb = db_connect.connecting()
     mycursor = mydb.cursor()
-    print("[V] Mi sol CONNECTED")
+    print("[V] Misol CONNECTED")
 except Exception as e: 
     print("[X]  Misol  Sensor ID: " + str(sys.argv[1]) + " " + e)
     
@@ -37,7 +37,7 @@ while True:
     try:
         if os.path.exists(json_path):
             os.remove(json_path)
-        sub = subprocess.call("rtl_433 -f 433000000 -F json -E quit >> "+json_path, shell=True)
+        sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         # time.sleep(10)
         if (int(os.stat(json_path).st_size) > 0):
             f = open(json_path)
@@ -51,7 +51,7 @@ while True:
                 temperature = str(misol_json['temperature_C'])
                 rain_intensity = str(misol_json['rain_mm'])
                 WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
-                print(WS)
+                print("WS => " + WS)
                 update_sensor_value(str(sys.argv[1]),WS)
                 if os.path.exists(json_path):
                     os.remove(json_path)
