@@ -21,7 +21,8 @@ def update_sensor_value(sensor_reader_id,value):
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            print(e)
+            print("No row sensor values")
+            print("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
     except Exception as e2:
@@ -51,7 +52,7 @@ while True:
                 rain_intensity = str(misol_json['rain_mm'])
                 WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
                 print("WS => " + WS)
-                update_sensor_value(str(sys.argv[1]),WS)
+                update_sensor_value(str(sys.argv[1]),str(WS))
                 if os.path.exists(json_path):
                     os.remove(json_path)
 
