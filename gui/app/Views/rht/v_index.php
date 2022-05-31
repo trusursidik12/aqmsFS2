@@ -278,14 +278,6 @@
 <?= $this->endSection() ?>
 <?= $this->section('js') ?>
 <script>
-    var isGraph_0 = true;
-    var isGraph_1 = true;
-    var isGraph_2 = true;
-    var isGraph_3 = true;
-    var isGraph_4 = true;
-    var isGraph_5 = true;
-    var isGraph_6 = true;
-    var isGraph_7 = true;
     var spanBeginCount = 0;
     var spanBoard = null;
     var spanPort = null;

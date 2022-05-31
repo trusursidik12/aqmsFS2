@@ -116,27 +116,40 @@
     </div>
 
     <div class="row justify-content-start">
+        <div class="col-md-12 my-2">
+            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+
+                <div class="card-body">
+                    <div class="chart">
+                        <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-start">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Zero Calibration Logs</h4>
                 </div>
                 <div class="card-body">
-                <form class="form-inline" method="get" id="formExport" action="<?=base_url("calibration/validateExport");?>">
-                    <label class="mr-1" for="started_at">Started at: </label>
-                    <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="started_at">
+                    <form class="form-inline" method="get" id="formExport" action="<?= base_url("calibration/validateExport"); ?>">
+                        <label class="mr-1" for="started_at">Started at: </label>
+                        <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="started_at">
 
-                    <label class="mr-1" for="end_at">End at :</label>
-                    <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="end_at">
-                    <button type="submit" class="btn btn-success btn-sm mb-2">Export CSV <i class="ml-1 fas fa-xs fa-download"></i></button>
-                </form>
+                        <label class="mr-1" for="end_at">End at :</label>
+                        <input type="date" class="form-control form-control-sm mb-2 mr-sm-2" name="end_at">
+                        <button type="submit" class="btn btn-success btn-sm mb-2">Export CSV <i class="ml-1 fas fa-xs fa-download"></i></button>
+                    </form>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblCalibrationLogs">
                             <thead>
                                 <th>Calibrator Name</th>
                                 <th>Start At</th>
                                 <th>Finish At</th>
-                                <th>Sensor  </th>
+                                <th>Sensor </th>
                                 <th>PIN</th>
                                 <th>Value</th>
                             </thead>
@@ -165,21 +178,21 @@
 
 <script>
     $(document).ready(function() {
-        $('#formExport').submit(function(){
+        $('#formExport').submit(function() {
             $.ajax({
-                url : $(this).attr('action'),
-                type : 'get',
-                dataType : 'json',
-                data : $(this).serialize(),
-                success : function(data){
-                    if(data?.success){
+                url: $(this).attr('action'),
+                type: 'get',
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function(data) {
+                    if (data?.success) {
                         setTimeout(() => {
                             window.location.href = data?.download_url;
                         }, 1200);
                     }
                 },
-                error : function(xhr, status, err){
-                    
+                error: function(xhr, status, err) {
+
                 }
             })
         })
@@ -250,31 +263,43 @@
         }, 1000);
 
         $('#tblCalibrationLogs').DataTable({
-                lengthChange : false,
-                scrollY : 200,
-                orderable : false,
-                fixedHeader : true,
-                ajax: {
-                    url: `<?= base_url('calibration/datatable') ?>`,
-                    data: function(data) {
-                        data.started_at = $('input[name="started)at"]').val();
-                        data.end_at = $('input[name="end_at"]').val();
-                    }
+            lengthChange: false,
+            scrollY: 200,
+            orderable: false,
+            fixedHeader: true,
+            ajax: {
+                url: `<?= base_url('calibration/datatable') ?>`,
+                data: function(data) {
+                    data.started_at = $('input[name="started)at"]').val();
+                    data.end_at = $('input[name="end_at"]').val();
+                }
+            },
+            ordering: false,
+            searching: false,
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            columns: [{
+                    data: 'calibrator_name'
                 },
-                ordering : false,
-                searching: false,
-                processing: true,
-                serverSide: true,
-                destroy: true,
-                columns: [
-                    {data:'calibrator_name'},
-                    {data:'started_at'},
-                    {data:'xtimestamp'},
-                    {data:'sensor_code'},
-                    {data:'pin'},
-                    {data:'value',width:300},
-                    
-                ]
+                {
+                    data: 'started_at'
+                },
+                {
+                    data: 'xtimestamp'
+                },
+                {
+                    data: 'sensor_code'
+                },
+                {
+                    data: 'pin'
+                },
+                {
+                    data: 'value',
+                    width: 300
+                },
+
+            ]
         });
 
 
@@ -306,4 +331,88 @@
         })
     }
 </script>
+
+
+<script src="<?= base_url('bootstrap/js/Chart.min.js') ?>"></script>
+<script>
+    $(document).ready(function() {
+        var areaChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            animation: {
+                duration: 0
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: false,
+                    }
+                }]
+            }
+        }
+
+        var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+        var lineChartOptions = $.extend(true, {}, areaChartOptions)
+        lineChartOptions.datasetFill = false
+
+        setInterval(() => {
+            $.ajax({
+                url: '<?= base_url('rht/sensor_value_logs') ?>',
+                dataType: 'json',
+                success: function(data) {
+                    if (data !== null) {
+                        let datasets_ = new Array();
+                        i = 0;
+                        data.datasets.forEach(function(object) {
+                            console.log($("#isGraph0").is(":checked"));
+                            if ($("#isGraph" + i).is(":checked")) {
+                                obj = JSON.parse(object);
+                                datasets_[i] = {
+                                    borderColor: obj.borderColor,
+                                    pointRadius: obj.pointRadius,
+                                    data: JSON.parse(obj.data)
+                                };
+                            } else {
+                                datasets_[i] = {
+                                    borderColor: "",
+                                    pointRadius: false,
+                                    data: []
+                                };
+                            }
+                            i++;
+                        });
+
+                        var areaChartData = {
+                            labels: data.labels,
+                            datasets: datasets_
+                        }
+
+                        // console.log(areaChartData);
+
+                        var lineChartData = $.extend(true, {}, areaChartData)
+
+                        var lineChart = new Chart(lineChartCanvas, {
+                            type: 'line',
+                            data: lineChartData,
+                            options: lineChartOptions
+                        })
+                    }
+                },
+                error: function(xhr, status, err) {
+                    console.log(err);
+                }
+            })
+        }, 1000);
+    });
+</script>
+
+
 <?= $this->endSection() ?>
