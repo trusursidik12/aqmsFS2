@@ -23,8 +23,6 @@ def update_sensor_value(sensor_reader_id,value):
             mycursor.execute("UPDATE sensor_values SET value = '" + value + "' WHERE id = '" + str(sensor_value_id) + "'")
             mydb.commit()
         except Exception as e:
-            print("No row sensor values")
-            print("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mycursor.execute("INSERT INTO sensor_values (sensor_reader_id,pin,value) VALUES ('" + sensor_reader_id + "','0','" + value + "')")
             mydb.commit()
     except Exception as e2:
@@ -40,6 +38,7 @@ while True:
         if os.path.exists(json_path):
             os.remove(json_path)
         if(trying == True):
+            print("Trying")
             sub = subprocess.call("rtl_433 -T 30 -F json -E quit >> "+json_path, shell=True)
         else :
             sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
@@ -57,7 +56,9 @@ while True:
                 temperature = str(misol_json['temperature_C'])
                 rain_intensity = str(misol_json['rain_mm'])
                 WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
+                print(" ")
                 print("WS => " + WS)
+                print(" ")
                 update_sensor_value(str(sys.argv[1]),str(WS))
                 trying = False
                 if os.path.exists(json_path):
