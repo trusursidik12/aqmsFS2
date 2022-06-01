@@ -39,9 +39,9 @@ while True:
             os.remove(json_path)
         if(trying == True):
             print("Trying")
-            sub = subprocess.call("rtl_433 -T 60 -F json -E quit >> "+json_path, shell=True)
-        else :
-            sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
+            subprocess.call("rtl_433 -T 60 -F json -E quit >> "+json_path, shell=True)
+        else:
+            subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         
         # time.sleep(10)
         if (int(os.stat(json_path).st_size) > 0):
@@ -67,4 +67,4 @@ while True:
     except Exception as e2:
         print(e2)
 
-    time.sleep(1)
+    time.sleep(10)
