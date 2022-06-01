@@ -39,7 +39,7 @@ while True:
             os.remove(json_path)
         if(trying == True):
             print("Trying")
-            sub = subprocess.call("rtl_433 -T 30 -F json -E quit >> "+json_path, shell=True)
+            sub = subprocess.call("rtl_433 -T 60 -F json -E quit >> "+json_path, shell=True)
         else :
             sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
         
