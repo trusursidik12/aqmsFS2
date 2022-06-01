@@ -1,7 +1,5 @@
 #!/bin/bash
 echo "Reading devices... Please wait!!"
-sleep 5s
-lsusb -t
 sleep 1s
 ls /dev/ttyUSB*
 ls /dev/ttyM*

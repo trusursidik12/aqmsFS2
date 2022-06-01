@@ -6,6 +6,8 @@ import pathlib
 import os
 import db_connect
 
+trying = True
+
 try:
     mydb = db_connect.connecting()
     mycursor = mydb.cursor()
@@ -37,7 +39,11 @@ while True:
     try:
         if os.path.exists(json_path):
             os.remove(json_path)
-        sub = subprocess.call("rtl_433 -T 30 -F json -E quit >> "+json_path, shell=True)
+        if(trying == True):
+            sub = subprocess.call("rtl_433 -T 30 -F json -E quit >> "+json_path, shell=True)
+        else :
+            sub = subprocess.call("rtl_433 -F json -E quit >> "+json_path, shell=True)
+        
         # time.sleep(10)
         if (int(os.stat(json_path).st_size) > 0):
             f = open(json_path)
@@ -53,6 +59,7 @@ while True:
                 WS = ";0;" + pressure + ";0;0;" + temperature + ";" + ws + ";0;" + wd + ";" + humidity + ";0;0;" + sr + ";0.0;0;" + rain_intensity + ";0;0"
                 print("WS => " + WS)
                 update_sensor_value(str(sys.argv[1]),str(WS))
+                trying = False
                 if os.path.exists(json_path):
                     os.remove(json_path)
 
