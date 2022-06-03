@@ -36,7 +36,7 @@ def connect_sensor():
         
         COM_SENSOR = serial.Serial(sensor_reader[0], sensor_reader[1])
         SENSOR = str(COM_SENSOR.readline())
-        if(SENSOR.count("PP22_ANALOGINPUT_SENSORS") > 0):
+        if(SENSOR.count("PP22_MeteorologySensors") > 0):
             is_SENSOR_connect = True
             print("[V] SENSOR Module " + sensor_reader[0] + " CONNECTED")
             return COM_SENSOR
@@ -57,7 +57,7 @@ try:
                 
             SENSOR = str(COM_SENSOR.readline())
             if(SENSOR.count("PP22_MeteorologySensors") <= 0):
-                SENSOR = "PP22_ANALOGINPUT_SENSORS;0.00;0.00;0.00;0.00;0.00;0.00;0.00;\\r\\n'"
+                SENSOR = "PP22_MeteorologySensors;0.00;0.00;0.00;0.00;0.00;0.00;0.00;\\r\\n'"
                 
             update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
             
