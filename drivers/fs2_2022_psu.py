@@ -90,6 +90,7 @@ try:
             currenttime = datetime.datetime.now()
             if(next_psu_checking <= str(currenttime)[0:19]):
                 next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
+                print(str(currenttime) + " => PSU CHECKING...")
                 COM_PSU.write(str("$CHECKING#").encode())
                 time.sleep(1)
                 PSU = str(COM_PSU.read_until(str("#").encode()))
