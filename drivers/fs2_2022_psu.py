@@ -92,7 +92,7 @@ try:
                 next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
                 print(str(currenttime) + " => PSU CHECKING...")
                 COM_PSU.write(str("$CHECKING#").encode())
-                PSU = str(COM_PSU.read_until(str("#").encode()))
+                PSU = str(COM_PSU.read_until(str("$MCU_PSU,CHECKING_SUCCEED#").encode()))
                 print(PSU)
                 
             if(is_PSU_connect == False):
