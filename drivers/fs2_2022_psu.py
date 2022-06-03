@@ -2,9 +2,11 @@ from __future__ import print_function
 import sys
 import serial
 import time
+import datetime
 import db_connect
 
 is_PSU_connect = False
+next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
 
 try:
     mydb = db_connect.connecting()
@@ -53,6 +55,10 @@ def connect_psu():
             time.sleep(1)
             COM_PSU.write(str("$BMP280,SET,AUTO#").encode())
             PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,$BMP280").encode()))
+            
+            time.sleep(1)
+            COM_PSU.write(str("$AUTO_RESTART,ON#").encode())
+            PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,AUTO_RESTART").encode()))
 
             returnval = COM_PSU
         else:
@@ -81,6 +87,14 @@ COM_PSU = connect_psu()
 try:
     while True :
         try:
+            currenttime = datetime.datetime.now()
+            if(next_psu_checking <= str(currenttime)[0:19]):
+                next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
+                COM_PSU.write(str("$CHECKING#").encode())
+                time.sleep(1)
+                PSU = str(COM_PSU.read_until(str("#").encode()))
+                print(PSU)
+                
             if(is_PSU_connect == False):
                 COM_PSU = connect_psu()
 
@@ -106,7 +120,7 @@ try:
                 mycursor.execute("UPDATE configurations SET content = '0' WHERE name = 'is_psu_restarting'")
                 mydb.commit()
                 time.sleep(1)
-                COM_PSU.write(str("$RESTART,3000#").encode());
+                COM_PSU.write(str("$RESTART,3000#").encode())
                 time.sleep(1)
                 
         except Exception as e2:
