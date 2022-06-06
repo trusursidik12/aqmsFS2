@@ -36,6 +36,7 @@ def connect_sensor():
         
         COM_SENSOR = serial.Serial(sensor_reader[0], sensor_reader[1])
         SENSOR = str(COM_SENSOR.readline())
+        print(SENSOR)
         if(SENSOR.count(",") > 6):
             is_SENSOR_connect = True
             print("[V] SENSOR Module " + sensor_reader[0] + " CONNECTED")
@@ -58,6 +59,8 @@ try:
             SENSOR = str(COM_SENSOR.readline())
             if(SENSOR.count(",") <= 5):
                 SENSOR = "0,0,0,0,0,0,0\\r\\n'"
+                
+            print(SENSOR)
                 
             update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
             
