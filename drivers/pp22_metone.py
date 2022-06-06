@@ -56,8 +56,8 @@ try:
                 COM_SENSOR = connect_sensor()
                 
             SENSOR = str(COM_SENSOR.readline())
-            if(SENSOR.count(",") <= 6):
-                SENSOR = "0,0,0,0,0,0,0,0\\r\\n'"
+            if(SENSOR.count(",") <= 5):
+                SENSOR = "0,0,0,0,0,0,0\\r\\n'"
                 
             update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
             
