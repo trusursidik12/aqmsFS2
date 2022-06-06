@@ -61,7 +61,7 @@ try:
                 
             # print(SENSOR)
                 
-            update_sensor_value(str(sys.argv[1]),SENSOR.replace("'","''"))
+            update_sensor_value(str(sys.argv[1]),SENSOR.replace("b'","").replace("'","''"))
             
         except Exception as e2:
             print(e2)
