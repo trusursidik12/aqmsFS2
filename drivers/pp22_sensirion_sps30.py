@@ -58,8 +58,16 @@ class SPS30:
     def stop(self):
         self.ser.write([0x7E, 0x00, 0x01, 0x00, 0xFE, 0x7E])
     
-    def read_values(self):
+    def fan_cleaning(self):
         self.ser.flushInput()
+        self.ser.write([0x7E, 0x00, 0x56, 0x00, 0x00, 0xA9, 0x7E])
+        time.sleep(10)
+        self.ser.write([0x7E, 0x00, 0x56, 0x00, 0xA9, 0x7E])
+        time.sleep(10)
+        
+    
+    def read_values(self):
+        self.ser.flushInput()        
         # Ask for data
         self.ser.write([0x7E, 0x00, 0x03, 0x00, 0xFC, 0x7E])
         toRead = self.ser.inWaiting()
@@ -123,6 +131,7 @@ class SPS30:
                 self.fanOn = time_()
                 self.is_started = True
             if self.name == SPS30.NAME:
+                self.fan_cleaning()
                 name_  = self.read_serial_number()
                 if len(name_) >0:
                     self.name = f'SPS_{name_}'
