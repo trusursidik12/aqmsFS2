@@ -423,25 +423,25 @@
                     success: function(data) {
                         if (data.success) {
                             let parameter = data.data;
-                            if (parameter?.p_type != "gas") {
+                            if (parameter.p_type != "gas") {
                                 $('#content-formula').hide();
                                 $('#btnGenerate').hide();
                             } else {
                                 $('#btnGenerate').show();
                                 $('#content-formula').show();
                             }
-                            $('input[name="id"]').val(parameter?.id);
-                            $('input[name="code"]').val(parameter?.code);
-                            $('input[name="caption_id"]').val(parameter?.caption_id);
-                            $('input[name="molecular_mass"]').val(parameter?.molecular_mass);
-                            $(`input[name="is_view"][value="${parameter?.is_view}"]`).attr('checked', true);
-                            $(`input[name="is_graph"][value="${parameter?.is_graph}"]`).attr('checked', true);
-                            $('select[name="sensor_value_id"]').val(parameter?.sensor_value_id);
-                            $('input[name="voltage1"]').val(parameter?.voltage1);
-                            $('input[name="voltage2"]').val(parameter?.voltage2);
-                            $('input[name="concentration1"]').val(parameter?.concentration1);
-                            $('input[name="concentration2"]').val(parameter?.concentration2);
-                            $('input[name="formula"]').val(parameter?.formula);
+                            $('input[name="id"]').val(parameter.id);
+                            $('input[name="code"]').val(parameter.code);
+                            $('input[name="caption_id"]').val(parameter.caption_id);
+                            $('input[name="molecular_mass"]').val(parameter.molecular_mass);
+                            $(`input[name="is_view"][value="${parameter.is_view}"]`).attr('checked', true);
+                            $(`input[name="is_graph"][value="${parameter.is_graph}"]`).attr('checked', true);
+                            $('select[name="sensor_value_id"]').val(parameter.sensor_value_id);
+                            $('input[name="voltage1"]').val(parameter.voltage1);
+                            $('input[name="voltage2"]').val(parameter.voltage2);
+                            $('input[name="concentration1"]').val(parameter.concentration1);
+                            $('input[name="concentration2"]').val(parameter.concentration2);
+                            $('input[name="formula"]').val(parameter.formula);
                             $('#paramModal').modal('show');
                             btnEdit.html(`Edit`);
                             clearInterval(intervalFirst);
@@ -471,8 +471,8 @@
                     success: function(data) {
                         if (data.success) {
                             let parameter = data.data;
-                            $('#spanModalTitle').html(`${parameter?.caption_id} Span Calibration`);
-                            $('#spanGas').html(parameter?.caption_id);
+                            $('#spanModalTitle').html(`${parameter.caption_id} Span Calibration`);
+                            $('#spanGas').html(parameter.caption_id);
                             $('#spanModal').modal('show');
                             btnEdit.html(`Span Calibration`);
                         }
@@ -520,11 +520,11 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        if (data?.success) {
+                        if (data.success) {
                             try {
-                                $('#voltage').val(data?.data?.value);
-                                $('#sensor_pin').val(data?.data?.pin);
-                                $('#sensor_reader_id').val(data?.data?.sensor_reader_id);
+                                $('#voltage').val(data.data.value);
+                                $('#sensor_pin').val(data.data.pin);
+                                $('#sensor_reader_id').val(data.data.sensor_reader_id);
                             } catch (err) {
                                 toastr.error(err);
                             }

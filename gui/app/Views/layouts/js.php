@@ -57,11 +57,11 @@
                 url: 'http://ip-api.com/json',
                 dataType: 'json',
                 success: function(data) {
-                    let regionName = data?.regionName;
-                    let timezone = data?.timezone;
-                    let isp = data?.isp;
-                    let ipAddress = data?.query;
-                    let asIsp = data?.as;
+                    let regionName = data.regionName;
+                    let timezone = data.timezone;
+                    let isp = data.isp;
+                    let ipAddress = data.query;
+                    let asIsp = data.as;
                     $('#regionName').html(regionName);
                     $('#timezone').html(timezone);
                     $('#isp').html(`${isp} (${asIsp})`);
@@ -129,7 +129,7 @@
         dataType: 'json',
         success: function(data) {
             setTimeout(() => {
-                if (data?.loggedin == true)
+                if (data.loggedin == true)
                     $("#logout_nav").removeClass("d-none");
             }, 100);
         }
@@ -165,13 +165,13 @@
                 success: function(data) {
                     setTimeout(() => {
                         $('#btn-save').html('Save Changes');
-                        if(!data?.success){
-                            toastr.error(data?.message);
+                        if(!data.success){
+                            toastr.error(data.message);
                         }else{
-                            toastr.success(data?.message);
+                            toastr.success(data.message);
                         }
-                        if (data?.url_direction != undefined)
-                            window.location = "<?= base_url(); ?>/" + data?.url_direction;
+                        if (data.url_direction != undefined)
+                            window.location = "<?= base_url(); ?>/" + data.url_direction;
                     }, 1000);
                 },
                 error: function(xhr, status, err) {

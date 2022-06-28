@@ -281,11 +281,11 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data !== null) {
-                        data?.logs.map(function(value, index) {
+                        data.logs.map(function(value, index) {
                             try {
-                                let param_value = cleanStr(value?.value);
-                                let molecular_mass = cleanStr(value?.molecular_mass);
-                                let p_type = value?.p_type
+                                let param_value = cleanStr(value.value);
+                                let molecular_mass = cleanStr(value.molecular_mass);
+                                let p_type = value.p_type
                                 if (p_type == 'gas') {
                                     switch (beginUnit) {
                                         case 2:
@@ -300,14 +300,14 @@
                                     }
                                 }
                                 $(`#value_${value.code}`).html(param_value);
-                                $(`#svalue_${value.code}`).html(cleanStr(value?.sensor_value) + " Volt");
+                                $(`#svalue_${value.code}`).html(cleanStr(value.sensor_value) + " Volt");
                                 // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
                             }
-                            if (value?.code == 'wd') {
+                            if (value.code == 'wd') {
                                 try {
-                                    rotateCompass(parseInt(cleanStr(value?.value)) * 10 / 9);
+                                    rotateCompass(parseInt(cleanStr(value.value)) * 10 / 9);
                                 } catch (er) {
                                     console.error(er);
                                 }
@@ -315,10 +315,10 @@
 
                         });
                         try {
-                            let pump_state = data?.config?.pump_state;
-                            let curent = new Date(data?.config?.now);
-                            let pump_last = new Date(data?.config?.pump_last);
-                            let pump_interval = data?.config?.pump_interval;
+                            let pump_state = data.config.pump_state;
+                            let curent = new Date(data.config.now);
+                            let pump_last = new Date(data.config.pump_last);
+                            let pump_interval = data.config.pump_interval;
                             let pump_state_time = (curent - pump_last) / 1000;
                             let remaining = (pump_interval * 60) - pump_state_time;
                             let h = Math.floor(remaining / 3600);

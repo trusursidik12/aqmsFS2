@@ -115,7 +115,7 @@
             if (form.find('input').eq(0).val() === "" || form.find('input').eq(1).val() === "") {
                 toastr.error('Anda harus menentukan range waktu!');
             } else {
-                let filter = form?.serialize();
+                let filter = form.serialize();
                 requestDatatable(filter);
             }
         });
