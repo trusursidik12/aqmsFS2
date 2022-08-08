@@ -272,10 +272,19 @@ try:
                     # print(hexvalue1 + ":" + hexvalue2 + " ==> " + concentration0)
                 if(dectofloat(val[3],val[2]) != "0"):
                     concentration1 = dectofloat(val[3],val[2])
+                    hexvalue1 = str(hex(int(val[3]))).replace("0x","")
+                    hexvalue2 = str(hex(int(val[2]))).replace("0x","")
+                    # print(hexvalue1 + ":" + hexvalue2 + " ==> " + concentration0)
                 if(dectofloat(val[5],val[4]) != "0"):
                     concentration2 = dectofloat(val[5],val[4])
+                    hexvalue1 = str(hex(int(val[5]))).replace("0x","")
+                    hexvalue2 = str(hex(int(val[4]))).replace("0x","")
+                    # print(hexvalue1 + ":" + hexvalue2 + " ==> " + concentration0)
                 if(dectofloat(val[7],val[6]) != "0"):
                     concentration3 = dectofloat(val[7],val[6])
+                    hexvalue1 = str(hex(int(val[7]))).replace("0x","")
+                    hexvalue2 = str(hex(int(val[6]))).replace("0x","")
+                    # print(hexvalue1 + ":" + hexvalue2 + " ==> " + concentration0)
             except Exception as e3:
                 print("error decode concentrations")
                 print(e3)
