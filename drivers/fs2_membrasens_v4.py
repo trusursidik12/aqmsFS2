@@ -12,8 +12,8 @@ import db_connect
 is_MEMBRAPOR_connect = False
 is_zero_calibrating = False
 zerocal_finished_at = ""
-concentration1 = "0"
 concentration0 = "0"
+concentration1 = "0"
 concentration2 = "0"
 concentration3 = "0"
 
@@ -267,13 +267,16 @@ try:
             try:
                 if(dectofloat(val[1],val[0]) != "0"):
                     concentration0 = dectofloat(val[1],val[0])
+                    #print(" concentration0 ==> " + str(concentration0))
                 if(dectofloat(val[3],val[2]) != "0"):
                     concentration1 = dectofloat(val[3],val[2])
+                    #print(" concentration1 ==> " + str(concentration1))
                 if(dectofloat(val[5],val[4]) != "0"):
                     concentration2 = dectofloat(val[5],val[4])
+                    #print(" concentration2 ==> " + str(concentration2))
                 if(dectofloat(val[7],val[6]) != "0"):
                     concentration3 = dectofloat(val[7],val[6])
-            except Exception as e3:
+                    #print(" concentration3 ==> " + str(concentration3))
                 print("error decode concentrations")
                 print(e3)
             
