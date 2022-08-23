@@ -110,7 +110,7 @@
                         <div class="m-0 d-flex justify-content-center">
                             <div class="d-flex align-items-center">
                                 <h3 class="h3 mr-1 text-light" id="value_<?= $gas->code ?>">0</h3>
-                                &nbsp;&nbsp;<p class="switch-unit" style="color:#FFFF00"><?= $gas->default_unit ?></p>
+                                &nbsp;&nbsp;<p <?php if ($gas->default_unit == "µg/m<sup>3") : ?> class="switch-unit" <?php endif ?> style="color:#FFFF00"><?= $gas->default_unit ?></p>
                             </div>
                         </div>
                     </div>
@@ -284,9 +284,10 @@
                         data?.logs.map(function(value, index) {
                             try {
                                 let param_value = cleanStr(value?.value);
+                                let default_unit = cleanStr(value?.default_unit);
                                 let molecular_mass = cleanStr(value?.molecular_mass);
                                 let p_type = value?.p_type
-                                if (p_type == 'gas') {
+                                if (p_type == 'gas' && default_unit == "µg/m<sup>3") {
                                     switch (beginUnit) {
                                         case 2:
                                             param_value = calculatePpm(param_value, molecular_mass);
