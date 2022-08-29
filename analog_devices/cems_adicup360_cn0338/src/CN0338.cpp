@@ -157,7 +157,8 @@ float CN0338_GetKelvin(void)
    auto temperature = (2.349422e7f
                        / (7.88e4f + 5.963e3f * logf((1.20003e5f * ntc_data) / (1.217287684096e13f - 1.1584e5f * ntc_data))));
 
-   return temperature;
+   //return temperature;
+   return 1;
 }
 
 /**
