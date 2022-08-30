@@ -104,7 +104,10 @@ class FormulaMeasurementLogs extends BaseCommand
 			foreach ($this->parameters->where("is_view", 1)->findAll() as $parameter) {
 				if ($parameter->formula != "") {
 					if (substr($parameter->formula, 0, 21) != "formula_references==>") {
-						@eval("\$data[$parameter->id] = $parameter->formula;");
+						try {
+							@eval("\$data[$parameter->id] = $parameter->formula;");
+						} catch (Exception $e) {
+						}
 						$sensor_check = @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1];
 						$sensor_value = @$this->sensor_values->where("id", $parameter->sensor_value_id)->findAll()[0];
 						if (strpos(" " . @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1], "FS2_MEMBRASENS") > 0) {
@@ -117,7 +120,10 @@ class FormulaMeasurementLogs extends BaseCommand
 							}
 						} elseif ((count(explode(",", $sensor_check)) == 7) && (count(explode(";", $sensor_check)) == 2)) {
 							// Check PM AQMS FS1 Value
-							$sensor_value = @eval("\$parameter->formula;");
+							try {
+								$sensor_value = @eval("\$parameter->formula;");
+							} catch (Exception $e) {
+							}
 						} else {
 							$sensor_value = (float) @$sensor[@$sensor_value->sensor_reader_id * 1][@$sensor_value->pin * 1] * 1;
 						}
@@ -126,9 +132,17 @@ class FormulaMeasurementLogs extends BaseCommand
 						$x = 0;
 						$data[$parameter->id] = 0;
 						$sensor_value = 0;
-						@eval("\$x = $parameter_formulas[1];");
+						try {
+							@eval("\$x = $parameter_formulas[1];");
+						} catch (Exception $e) {
+						}
 						$formula_references = @$this->formula_references->where("parameter_id", $parameter->id)->where("(" . $x . ") BETWEEN min_value AND max_value")->findAll()[0];
-						@eval("\$data[$parameter->id] = $formula_references->formula;");
+						if (@$formula_references->id > 0) {
+							try {
+								@eval("\$data[$parameter->id] = $formula_references->formula;");
+							} catch (Exception $e) {
+							}
+						}
 						$sensor_value = $x;
 					}
 				} else {
