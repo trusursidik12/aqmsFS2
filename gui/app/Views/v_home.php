@@ -372,7 +372,11 @@
                 ug = parseFloat(ug);
                 molecular_mass = parseFloat(molecular_mass);
                 let value = (ug * 24.45) / (1000 * molecular_mass);
-                return value.toFixed(1);
+                <?php if (!$is_cems) : ?>
+                    return value.toFixed(3);
+                <?php else : ?>
+                    return value.toFixed(1);
+                <?php endif ?>
             } catch (err) {
                 toastr.error(err);
                 return 0;
