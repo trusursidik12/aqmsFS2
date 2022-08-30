@@ -372,7 +372,7 @@
                 ug = parseFloat(ug);
                 molecular_mass = parseFloat(molecular_mass);
                 let value = (ug * 24.45) / (1000 * molecular_mass);
-                return `${value}`.substr(0, 5);
+                return value.toFixed(1);
             } catch (err) {
                 toastr.error(err);
                 return 0;
