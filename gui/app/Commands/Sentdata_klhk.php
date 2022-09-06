@@ -148,7 +148,7 @@ class Sentdata_klhk extends BaseCommand
 						echo "cURL Error #:" . $err;
 					} else {
 						$response = json_decode($response, true);
-						$token = $response["token"];
+						$token = @$response["token"];
 					}
 
 					if ($token != "") {
