@@ -42,7 +42,6 @@ def connect_sensor():
         if(SENSOR.count("cems_mq8") > 0):
             is_SENSOR_connect = True
             print("[V] SENSOR Module " + sensor_reader[0] + " CONNECTED")
-            # COM_SENSOR.write(str("run\n\r").encode())
         else:
             is_SENSOR_connect = False
             
@@ -59,13 +58,11 @@ try:
                 connect_sensor()
                 
             SENSOR = str(COM_SENSOR.readline())
-            if(SENSOR.count("cems_mq8;") <=0):
+            if(SENSOR.count("cems_mq8") <=0):
                 SENSOR = "0;\\r\\n'"
                 
             # print(SENSOR.replace("b'","'").replace("'","''"))
             update_sensor_value(str(sys.argv[1]),SENSOR.replace("b'","").replace("'",""))
-            
-            time.sleep(1)
             
         except Exception as e2:
             print(e2)
