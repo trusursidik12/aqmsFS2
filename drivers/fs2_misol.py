@@ -28,6 +28,9 @@ def update_sensor_value(sensor_reader_id,value):
     except Exception as e2:
         print(e2)
         return None    
+        
+mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
+sensor_reader = mycursor.fetchone()
 
 home = subprocess.check_output(['pwd'], cwd=pathlib.Path.home(),shell=True)
 home = home.decode("utf-8").replace('\n', '')
@@ -48,7 +51,8 @@ while True:
             f = open(json_path)
             misol_json = json.load(f)
             print(misol_json)
-            if(misol_json['id'] == 103 or misol_json['id'] == 80 or misol_json['id'] == 137):
+            # if(misol_json['id'] == 103 or misol_json['id'] == 80 or misol_json['id'] == 137):
+            if(str(misol_json['id']) == str(sensor_reader[0])):
                 pressure = "0";
                 sr = "0";
                 ws = str(misol_json['wind_avg_km_h']);
