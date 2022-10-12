@@ -36,9 +36,9 @@ def datetime_():
 
 class SPS30:
     NAME = 'SPS30'
-    WARMUP = 20 # seconds
+    WARMUP = 9 # seconds
     
-    def __init__(self, port, INTERVAL=10):
+    def __init__(self, port, INTERVAL=1):
         self.port = port
         self.interval = INTERVAL
         self.warmup = SPS30.WARMUP
