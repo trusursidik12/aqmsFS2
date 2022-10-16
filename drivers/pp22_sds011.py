@@ -62,7 +62,7 @@ try:
             else:
                 PM = "SDS011;0;0;END;"
                 
-            print(PM)
+            # print(PM)
             update_sensor_value(str(sys.argv[1]),str(PM))
         except Exception as e2:
             print(e2)
@@ -70,7 +70,7 @@ try:
             print("Reconnect SDS011");
             update_sensor_value(str(sys.argv[1]),0)
             
-        time.sleep(1)
+        time.sleep(5)
 
 except Exception as e:
     print(e)
