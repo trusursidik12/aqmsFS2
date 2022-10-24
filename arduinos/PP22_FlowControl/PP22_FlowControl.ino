@@ -1,6 +1,6 @@
 int ntcpin = A0;
 int flowpin = A1;
-int pwmpin = 10;
+int pwmpin = 11;
 int heaterpin = 12;
 int adjpin = 0;
 int pumpspeed = 60;
