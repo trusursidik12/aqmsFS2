@@ -3,14 +3,14 @@ int flowpin = A1;
 int pwmpin = 11;
 int heaterpin = 12;
 int adjpin = A2;
-int pumpspeed = 60; // edit sesuai start awal kecepatan pompa yang diinginkan dalam persen
+int pumpspeed = 20; // edit sesuai start awal kecepatan pompa yang diinginkan dalam persen
 int sccm = 0;
 int adj = 0;
 int ntc = 0;
 int ntcmax = 800; // edit sesuai suhu maksimal heater
 int ntcmin = 700; // edit sesuai suhu minimal heater
-int sccmmin = 1990; // edit sesuai flow toleransi minimum
-int sccmmax = 2010; // edit sesuai flow toleransi maksimum
+int sccmmin = 300; // edit sesuai flow toleransi minimum
+int sccmmax = 450; // edit sesuai flow toleransi maksimum
 int heaterstate = LOW;
 
 void setup() {
@@ -24,7 +24,7 @@ void setup() {
 
 void loop() {
     //Pump
-    sccm = map(analogRead(flowpin),0,1023,0,3000);
+    sccm = analogRead(flowpin);
     adj = map(analogRead(adjpin),0,1023,-512,512);
     sccm = sccm + adj;
     Serial.println("Adj \t\t= " + String(adj)); 
