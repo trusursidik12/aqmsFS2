@@ -3,12 +3,14 @@ int flowpin = A1;
 int pwmpin = 11;
 int heaterpin = 12;
 int adjpin = A2;
-int pumpspeed = 60;
+int pumpspeed = 60; // edit sesuai start awal kecepatan pompa yang diinginkan dalam persen
 int sccm = 0;
 int adj = 0;
 int ntc = 0;
-int ntcmax = 800;
-int ntcmin = 700;
+int ntcmax = 800; // edit sesuai suhu maksimal heater
+int ntcmin = 700; // edit sesuai suhu minimal heater
+int sccmmin = 1990; // edit sesuai flow toleransi minimum
+int sccmmax = 2010; // edit sesuai flow toleransi maksimum
 int heaterstate = LOW;
 
 void setup() {
@@ -28,16 +30,13 @@ void loop() {
     Serial.println("Adj \t\t= " + String(adj)); 
     Serial.println("Pumpspeed \t= " + String(pumpspeed));
     Serial.println("Sccm \t\t= " + String(sccm));
-    if (sccm < 1990){
+    if (sccm < sccmmin){
       pumpspeed++;
     }
-    if (sccm > 2010){
+    if (sccm > sccmmax){
       pumpspeed --;
     }
     analogWrite(pwmpin, map(pumpspeed,0,100,0,255));
-
-
-
 
     //heater
     ntc = analogRead(ntcpin);
@@ -52,21 +51,5 @@ void loop() {
     digitalWrite(heaterpin, heaterstate);
     Serial.println("");
     
-
-
-
-
-  /*
-  //if (Serial.available() > 0) {
-  //pumpspeed = Serial.readString().toInt();
-  pumpspeed = map(analogRead(ntcpin),0,1024,0,512);
-  Serial.print(map(pumpspeed,0,511,0,100));
-  Serial.print(":");
-  Serial.print(pumpspeed);
-  Serial.print(":");
-  Serial.println(analogRead(ntcpin));
-  analogWrite(pwmpin, pumpspeed);
-  //}
-  */
-  delay(1000);
+    delay(1000);
 }
