@@ -84,6 +84,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="small">Is Auto Restart? (0 => No ; 1 => Yes)</label>
+                                    <input type="text" name="is_auto_restart" value="<?= $__this->findConfig('is_auto_restart') ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="small">Restart Schedule</label>
                                     <input type="time" name="restart_schedule" value="<?= $__this->findConfig('restart_schedule') ?>" class="form-control">
                                 </div>

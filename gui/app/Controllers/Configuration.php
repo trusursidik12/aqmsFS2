@@ -64,6 +64,7 @@ class Configuration extends BaseController
 		$this->configuration->set('content', $this->request->getPost('trusur_api_username'))->where('name', 'trusur_api_username')->update();
 		$this->configuration->set('content', $this->request->getPost('trusur_api_password'))->where('name', 'trusur_api_password')->update();
 		$this->configuration->set('content', $this->request->getPost('trusur_api_key'))->where('name', 'trusur_api_key')->update();
+		$this->configuration->set('content', $this->request->getPost('is_auto_restart'))->where('name', 'is_auto_restart')->update();
 		$data['success'] = true;
 		$data['message'] = 'Configuration has changed';
 		$data['data'] = @$_POST;

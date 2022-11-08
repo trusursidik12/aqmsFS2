@@ -7,6 +7,7 @@ import db_connect
 
 is_PSU_connect = False
 next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
+is_auto_restart = 0
 
 try:
     mydb = db_connect.connecting()
@@ -31,7 +32,7 @@ def update_sensor_value(sensor_reader_id,value,pin = 0):
         return None
         
 def connect_psu():
-    global is_PSU_connect
+    global is_PSU_connect,is_auto_restart
     try:
         mycursor.execute("SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '"+ sys.argv[1] +"'")
         sensor_reader = mycursor.fetchone()
@@ -56,9 +57,10 @@ def connect_psu():
             COM_PSU.write(str("$BMP280,SET,AUTO#").encode())
             PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,$BMP280").encode()))
             
-            time.sleep(1)
-            COM_PSU.write(str("$AUTO_RESTART,ON#").encode())
-            PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,AUTO_RESTART").encode()))
+            if(is_auto_restart == 1):
+                time.sleep(1)
+                COM_PSU.write(str("$AUTO_RESTART,ON#").encode())
+                PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,AUTO_RESTART").encode()))
 
             returnval = COM_PSU
         else:
@@ -84,17 +86,22 @@ def connect_psu():
 update_sensor_value(str(sys.argv[1]),"",0)
 COM_PSU = connect_psu()
 
+mycursor.execute("SELECT content FROM configurations WHERE name = 'is_auto_restart'")
+rec = mycursor.fetchone()
+is_auto_restart = int(rec[0])
+
 try:
     while True :
         try:
-            currenttime = datetime.datetime.now()
-            if(next_psu_checking <= str(currenttime)[0:19]):
-                next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
-                print(str(currenttime) + " => PSU CHECKING...")
-                COM_PSU.write(str("$CHECKING#").encode())
-                PSU = str(COM_PSU.read_until(str("$MCU_PSU,CHECKING_SUCCEED#").encode()))
-                if(PSU.count("CHECKING_SUCCEED") > 0):
-                    print("$MCU_PSU,CHECKING_SUCCEED#")
+            if(is_auto_restart == 1):
+                currenttime = datetime.datetime.now()
+                if(next_psu_checking <= str(currenttime)[0:19]):
+                    next_psu_checking = str(datetime.datetime.now() + datetime.timedelta(minutes=1))[0:19]
+                    print(str(currenttime) + " => PSU CHECKING...")
+                    COM_PSU.write(str("$CHECKING#").encode())
+                    PSU = str(COM_PSU.read_until(str("$MCU_PSU,CHECKING_SUCCEED#").encode()))
+                    if(PSU.count("CHECKING_SUCCEED") > 0):
+                        print("$MCU_PSU,CHECKING_SUCCEED#")
                 
             if(is_PSU_connect == False):
                 COM_PSU = connect_psu()
