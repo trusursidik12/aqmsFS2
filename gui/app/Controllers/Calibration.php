@@ -28,6 +28,7 @@ class Calibration extends BaseController
 		$linechartcolors[5] = "#ff00ff";
 		$linechartcolors[6] = "#ffff00";
 		$linechartcolors[7] = "#888888";
+		$data["is_valve_calibrator"] = @$this->configuration->where(["name" => "is_valve_calibrator"])->findAll()[0]->content;
 		$data["linechartcolors"] = $linechartcolors;
 
 		echo view("calibrations/v_index", $data);

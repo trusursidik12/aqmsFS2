@@ -364,7 +364,7 @@
         })
     }
 
-    function spanbegin(board, port) {
+    function Xspanbegin(board, port) {
         spanBeginCount++;
         if (spanBeginCount > 4) {
             spanBoard = board;

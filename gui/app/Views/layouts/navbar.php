@@ -1,7 +1,9 @@
 <nav class="sticky-top shadow-lg navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-md">
+        <div style="font-weight:bolder;font-size:30px;" onclick="showHiddenMenu();">
+            <img src="<?= base_url('/img/logo.png') ?>" width="50" height="50" class="d-inline-block align-top" alt="Logo TRUSUR">&nbsp;
+        </div>
         <a class="navbar-brand" href="<?= base_url() ?>" style="font-weight:bolder;font-size:30px;">
-            <img src="<?= base_url('/img/logo.png') ?>" width="50" height="50" class="d-inline-block align-top" alt="Logo TRUSUR">
             TRUSUR
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,10 +15,10 @@
                 <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_configuration') ?>">
                     <a class="nav-link" href="<?= base_url('configurations') ?>"><?= lang('Global.Configuration') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_parameter') ?>">
+                <li id="parameters_nav" class="nav-item hide d-none <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_parameter') ?>">
                     <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
+                <li id="calibrations_nav" class="nav-item hide d-none <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
                     <a class="nav-link" href="<?= base_url('calibrations') ?>"><?= lang('Global.Calibration') ?></a>
                 </li>
                 <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_export') ?>">
@@ -67,3 +69,15 @@
         </div>
     </div>
 </nav>
+
+<script>
+    var showHiddenMenuCount = 0;
+
+    function showHiddenMenu() {
+        showHiddenMenuCount++;
+        if (showHiddenMenuCount > 4) {
+            $("#parameters_nav").removeClass("d-none");
+            $("#calibrations_nav").removeClass("d-none");
+        }
+    }
+</script>
