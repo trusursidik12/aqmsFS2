@@ -61,6 +61,10 @@ def connect_psu():
                 time.sleep(1)
                 COM_PSU.write(str("$AUTO_RESTART,ON#").encode())
                 PSU = PSU + str(COM_PSU.read_until(str("$MCU_PSU,AUTO_RESTART").encode()))
+                print("AUTO RESTART MODE ON")
+            else:
+                print("AUTO RESTART MODE OFF")
+            
 
             returnval = COM_PSU
         else:
@@ -83,12 +87,12 @@ def connect_psu():
     except Exception as e: 
         return None
 
-update_sensor_value(str(sys.argv[1]),"",0)
-COM_PSU = connect_psu()
-
 mycursor.execute("SELECT content FROM configurations WHERE name = 'is_auto_restart'")
 rec = mycursor.fetchone()
 is_auto_restart = int(rec[0])
+
+update_sensor_value(str(sys.argv[1]),"",0)
+COM_PSU = connect_psu()
 
 try:
     while True :
