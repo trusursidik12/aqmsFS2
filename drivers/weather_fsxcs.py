@@ -103,7 +103,7 @@ try:
 
         try:
             SENSOR = "FSXCS;" + str(val[0]) + ";" + str(val[1]) + ";" + str(val[2]) + ";" + str(val[3]) + ";" + str(val[4]) + ";" + str(
-                val[5]) + ";" + str(val[6]) + ";" + str(val[7]) + ";" + str(val[8]) + ";" + str(val[9]) + ";" + ";END;"
+                val[5]) + ";" + str(val[6]) + ";" + str(val[7]) + ";" + str(val[8]) + ";" + str(val[9]) + ";END;"
             update_sensor_value(str(sys.argv[1]), str(SENSOR))
         except Exception as e3:
             SENSOR = "FSXCS;0;0;0;0;0;0;0;0;0;0;END;"
