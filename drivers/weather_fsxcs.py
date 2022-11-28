@@ -81,6 +81,10 @@ def connect_sensor():
         except Exception as e2:
             regValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+        if(is_SENSOR_connect == False):
+            is_SENSOR_connect = True
+            print("[V] SENSOR ID: " + sensor_reader[0] + " CONNECTED")
+
         return regValue
 
     except Exception as e:
