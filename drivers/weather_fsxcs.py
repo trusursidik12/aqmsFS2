@@ -54,10 +54,7 @@ def connect_sensor():
         rs485.serial.stopbits = 1
         rs485.serial.timeout = 5
 
-        try:
-            regValue = rs485.read_registers(500, 10, 3)
-        except Exception as e2:
-            regValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        regValue = rs485.read_registers(500, 10, 3)
 
         if(is_SENSOR_connect == False):
             is_SENSOR_connect = True
