@@ -5,8 +5,6 @@ import minimalmodbus
 import serial
 import time
 import datetime
-import struct
-import subprocess
 import db_connect
 
 is_SENSOR_connect = False
@@ -21,26 +19,6 @@ try:
 
 except Exception as e:
     print("[X]  SENSOR ID: " + str(sys.argv[1]) + " " + e)
-
-
-def dectofloat(dec0, dec1):
-    try:
-        if(int(dec0) == 0 and int(dec1) == 0):
-            return "0"
-
-        hexvalue1 = str(hex(int(dec0))).replace("0x", "")
-        hexvalue2 = str(hex(int(dec1))).replace("0x", "")
-        hexvalue = hexvalue1.rjust(4, "0") + hexvalue2.rjust(4, "0")
-        #print(str(hexvalue1) + ":" + str(hexvalue2) + " ==> " + hexvalue)
-        if(len(hexvalue) == 8):
-            #print("   ===> " +str(struct.unpack('!f', bytes.fromhex(hexvalue))[0]))
-            return str(struct.unpack('!f', bytes.fromhex(hexvalue))[0])
-        else:
-            return "0"
-    except Exception as e:
-        print("Error dectofloat")
-        print(e)
-        return "0"
 
 
 def update_sensor_value(sensor_reader_id, value):
