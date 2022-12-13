@@ -8,7 +8,6 @@ import db_connect
 import codecs
 import crcmod
 
-
 is_SENSOR_connect = False
 semea_tech_type = ""
 
@@ -85,9 +84,10 @@ def check_sensor_type():
         mycursor.execute(
             "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
         sensor_reader = mycursor.fetchone()
-        ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=0.2)
+        ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=2)
         ser.write(b'\x3A\x10\x01\x00\x00\x01\x00\x00\x82\xB0')
         val = wrap(ser.read(6).hex(), 2)
+        ser.close()
         semea_tech_type = types[int(val[3], 16)]
     except Exception as e:
         semea_tech_type = "N/A"
@@ -100,7 +100,7 @@ def read_concentration():
             "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
         sensor_reader = mycursor.fetchone()
 
-        ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=0.2)
+        ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=5)
         ser.write(byte_formater("3A100300000600003293"))
 
         if (is_SENSOR_connect == False):
@@ -108,6 +108,7 @@ def read_concentration():
             print("[V] SENSOR ID: " + sensor_reader[0] + " CONNECTED")
 
         val = wrap(ser.read(20).hex(), 2)
+        ser.close()
         ug = int(val[6]+val[7]+val[8]+val[9], 16)
         ppb = int(val[10]+val[11]+val[12]+val[13], 16)
         ppm = ppb/1000
@@ -135,12 +136,13 @@ def check_is_zero():
                 "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
             sensor_reader = mycursor.fetchone()
             ser = serial.Serial(
-                sensor_reader[0], sensor_reader[1], timeout=0.2)
+                sensor_reader[0], sensor_reader[1], timeout=2)
             zero_command = "3A1007000001000082D6"
             print(byte_formater(zero_command))
             print("Zeroing...")
             ser.write(byte_formater(zero_command))
             val = wrap(ser.read(10).hex(), 2)
+            ser.close()
             print(val)
             mycursor.execute(
                 "UPDATE configurations SET content = '' WHERE name LIKE 'is_zerocal'")
@@ -165,7 +167,7 @@ def check_is_span():
                 "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
             sensor_reader = mycursor.fetchone()
             ser = serial.Serial(
-                sensor_reader[0], sensor_reader[1], timeout=0.2)
+                sensor_reader[0], sensor_reader[1], timeout=2)
             span_command = "3A1009000001" + \
                 hex(int(setSpans[1])).split('0x')[1].rjust(4, '0')
             crc16 = crcmod.mkCrcFun(
@@ -201,6 +203,7 @@ def check_is_span():
             mycursor.execute(
                 "UPDATE configurations SET content = '' WHERE name LIKE 'setSpan'")
             mydb.commit()
+            ser.close()
 
     except Exception as e:
         print(e)
@@ -227,7 +230,7 @@ try:
         except Exception as e3:
             SENSOR = "SEMEATECH;;0;0;0;0;0;END"
             print("SENSOR value error")
-        time.sleep(1)
+        time.sleep(2)
 
 except Exception as e:
     print(e)
