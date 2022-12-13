@@ -230,7 +230,7 @@ try:
         except Exception as e3:
             SENSOR = "SEMEATECH;;0;0;0;0;0;END"
             print("SENSOR value error")
-        time.sleep(2)
+        time.sleep(1)
 
 except Exception as e:
     print(e)
