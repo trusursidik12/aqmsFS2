@@ -97,17 +97,38 @@ class Rht extends BaseController
 
 	public function savingSetSpan($board, $port, $span)
 	{
-		$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
-		if ($sensor_reader_id > 0) {
+		if ($board != "semeatech") {
+			$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
+			if ($sensor_reader_id > 0) {
+				$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
+				if ($configuration_id > 0)
+					$this->configuration->set('content', $sensor_reader_id . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
+				else
+					$this->configuration->save(["name" => "setSpan", "content" => $sensor_reader_id . ";" . $port . ";" . $span]);
+
+				echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id, "port" => $port, "span" => $span]);
+			} else
+				echo json_encode(["response" => "Error", "board" => $board, "port" => $port, "span" => $span]);
+		} else {
 			$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
 			if ($configuration_id > 0)
-				$this->configuration->set('content', $sensor_reader_id . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
+				$this->configuration->set('content', $port . ";" . $span)->where('name', 'setSpan')->update();
 			else
-				$this->configuration->save(["name" => "setSpan", "content" => $sensor_reader_id . ";" . $port . ";" . $span]);
+				$this->configuration->save(["name" => "setSpan", "content" => $port . ";" . $span]);
 
-			echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id, "port" => $port, "span" => $span]);
-		} else
-			echo json_encode(["response" => "Error", "board" => $board, "port" => $port, "span" => $span]);
+			echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $port, "port" => $port, "span" => $span]);
+		}
+	}
+
+	public function savingSetZero($board, $sensor_reader_id)
+	{
+		$configuration_id = @$this->configurations->where('name', 'is_zerocal')->first()->id;
+		if ($configuration_id > 0)
+			$this->configuration->set('content', $sensor_reader_id)->where('name', 'is_zerocal')->update();
+		else
+			$this->configuration->save(["name" => "is_zerocal", "content" => $sensor_reader_id]);
+
+		echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id]);
 	}
 
 	public function sensor_value_logs()

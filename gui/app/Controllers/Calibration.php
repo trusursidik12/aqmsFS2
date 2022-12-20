@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\m_calibration;
 use App\Models\m_configuration;
+use App\Models\m_sensor_value;
 use Exception;
 
 class Calibration extends BaseController
@@ -13,6 +14,7 @@ class Calibration extends BaseController
 		parent::__construct();
 		$this->calibrations = new m_calibration();
 		$this->configuration = new m_configuration();
+		$this->sensor_values = new m_sensor_value();
 	}
 
 	public function index()
@@ -30,6 +32,7 @@ class Calibration extends BaseController
 		$linechartcolors[7] = "#888888";
 		$data["is_valve_calibrator"] = @$this->configuration->where(["name" => "is_valve_calibrator"])->findAll()[0]->content;
 		$data["linechartcolors"] = $linechartcolors;
+		$data["sensor_values"] = $this->sensor_values->where("`value` LIKE 'SEMEATECH%'")->findAll();
 
 		echo view("calibrations/v_index", $data);
 	}

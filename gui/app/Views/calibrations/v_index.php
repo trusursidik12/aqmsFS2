@@ -136,6 +136,19 @@
                             <td id="volt_membrasens_1_3">0</td>
                             <td id="temp_membrasens_1_3">0</td>
                         </tr>
+
+                        <?php foreach ($sensor_values as $key => $sensor_value) : ?>
+                            <tr>
+                                <td style="color:<?= $linechartcolors[$key]; ?>;">
+                                    <input id="isGraphsemeatech<?= $sensor_value->sensor_reader_id ?>" type="checkbox" value="1" checked>
+                                    <?= explode(";", $sensor_value->value)[0]; ?>
+                                    <?= explode(";", $sensor_value->value)[1]; ?>
+                                </td>
+                                <td id="con_semeatech_<?= $sensor_value->sensor_reader_id ?>" onclick="spanbegin('semeatech',<?= $sensor_value->sensor_reader_id ?>);">0</td>
+                                <td id="volt_semeatech_<?= $sensor_value->sensor_reader_id ?>">0</td>
+                                <td id="temp_semeatech_<?= $sensor_value->sensor_reader_id ?>">0</td>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
@@ -231,9 +244,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-end">
-                        <button name="Save" type="button" class="btn btn-lg btn-primary mr-1" onclick="savingSetSpan(spanBoard,spanPort,document.getElementById('span_concetration').value);">Save</button>
+                <div class="modal-footer" style="justify-content:flex-start;">
+                    <div>
+                        <button id="SetZero" name="SetZero" type="button" class="btn btn-lg btn-success d-none" onclick="savingSetZero(spanBoard,spanPort);">Set Zero</button>
+                    </div>
+                    <div style="width:500px"></div>
+                    <div>
+                        <button name="SetSpan" type="button" class="btn btn-lg btn-primary mr-1" onclick="savingSetSpan(spanBoard,spanPort,document.getElementById('span_concetration').value);">Set Span</button>
                     </div>
 
                     <p class="alert alert-warning text-danger">
@@ -416,6 +433,21 @@
         })
     }
 
+    function savingSetZero(board, sensor_reader_id) {
+        $.ajax({
+            url: '<?= base_url('rht/savingSetZero') ?>/' + board + "/" + sensor_reader_id,
+            dataType: 'json',
+            success: function(data) {
+                if (data !== null) {
+                    console.log(data);
+                }
+            },
+            error: function(xhr, status, err) {
+                console.log(err);
+            }
+        })
+    }
+
     function spanbegin(board, port) {
         spanBeginCount++;
         if (spanBeginCount > 4) {
@@ -425,6 +457,10 @@
             $('#spanboard').val(board);
             $('#spanport').val(port);
             $('#spanModalTitle').html("Set span to Membrasense board :" + board + "; port:" + port);
+            $('#SetZero').addClass("d-none");
+            if (board.toString() == "semeatech") {
+                $('#SetZero').removeClass("d-none");
+            }
             $('#spanModal').modal('show');
         }
     }
@@ -496,7 +532,7 @@
                         let datasets_ = new Array();
                         i = 0;
                         data.datasets.forEach(function(object) {
-                            console.log($("#isGraph0").is(":checked"));
+                            // console.log($("#isGraph0").is(":checked"));
                             if ($("#isGraph" + i).is(":checked")) {
                                 obj = JSON.parse(object);
                                 datasets_[i] = {
