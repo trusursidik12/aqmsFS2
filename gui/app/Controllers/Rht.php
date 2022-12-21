@@ -47,6 +47,8 @@ class Rht extends BaseController
 		$psu = @$this->sensor_values->where("value LIKE '%FS2_PSU%'")->findAll()[0]->value;
 		$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
 		$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
+		$semeatechs = $this->sensor_values->where("value LIKE '%SEMEATECH%'")->findAll();
+		$setSpan = @$this->configuration->where(["name" => "setSpan"])->findAll()[0]->content;
 
 		try {
 			$this->sensor_value_logs->save(["sensor_value_id " => 1, "value" => $membrasens_0]);
@@ -90,6 +92,13 @@ class Rht extends BaseController
 		$data["temp_membrasens_1_1"] = explode(";", $membrasens_1)[10] * 1;
 		$data["temp_membrasens_1_2"] = explode(";", $membrasens_1)[11] * 1;
 		$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[12] * 1;
+		foreach ($semeatechs as $semeatech) {
+			$data["con_semeatech"][$semeatech->sensor_reader_id] = explode(";", $semeatech->value)[4] * 1;
+			$data["volt_semeatech"][$semeatech->sensor_reader_id] = explode(";", $semeatech->value)[2] * 1;
+			$data["temp_semeatech"][$semeatech->sensor_reader_id] = explode(";", $semeatech->value)[5] * 1;
+		}
+
+		$data["setSpan"] = $setSpan;
 		$data["sensor_values"] =  $this->sensor_values->findAll();
 
 		echo json_encode($data);

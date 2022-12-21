@@ -225,7 +225,7 @@ try:
         try:
             SENSOR = "SEMEATECH;" + semea_tech_type + ";" + str(val[0]) + ";" + str(
                 val[1]) + ";" + str(val[2]) + ";" + str(val[3]) + ";" + str(val[4]) + ";END;"
-            print(SENSOR)
+            # print(SENSOR)
             update_sensor_value(str(sys.argv[1]), str(SENSOR))
         except Exception as e3:
             SENSOR = "SEMEATECH;;0;0;0;0;0;END"

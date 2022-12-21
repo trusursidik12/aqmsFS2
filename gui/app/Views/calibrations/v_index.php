@@ -250,7 +250,7 @@
                     </div>
                     <div style="width:500px"></div>
                     <div>
-                        <button name="SetSpan" type="button" class="btn btn-lg btn-primary mr-1" onclick="savingSetSpan(spanBoard,spanPort,document.getElementById('span_concetration').value);">Set Span</button>
+                        <button id="SetSpan" name="SetSpan" type="button" class="btn btn-lg btn-primary mr-1" onclick="savingSetSpan(spanBoard,spanPort,document.getElementById('span_concetration').value);">Set Span</button>
                     </div>
 
                     <p class="alert alert-warning text-danger">
@@ -341,9 +341,40 @@
                         $("#temp_membrasens_1_2").html(data.temp_membrasens_1_2);
                         $("#temp_membrasens_1_3").html(data.temp_membrasens_1_3);
 
+                        for (var k in data.con_semeatech) {
+                            $("#con_semeatech_" + k).html(data.con_semeatech[k]);
+                            $("#volt_semeatech_" + k).html(data.volt_semeatech[k]);
+                            $("#temp_semeatech_" + k).html(data.temp_semeatech[k]);
+                        }
+
+                        // data.con_semeatech.forEach(function callback(value, index) {
+                        //     console.log(value);
+                        //     console.log(index);
+                        //     $("#con_semeatech_" + index).html(value);
+                        // });
+
                         try {
-                            $("#modal_current_concetration").val($("#con_membrasens_" + spanBoard + "_" + spanPort).html());
+                            if (spanBoard == "semeatech")
+                                $("#modal_current_concetration").val($("#con_semeatech_" + spanPort).html());
+                            else
+                                $("#modal_current_concetration").val($("#con_membrasens_" + spanBoard + "_" + spanPort).html());
+
                         } catch (err) {}
+
+                        $('#SetSpan').removeClass("btn-secondary");
+                        $('#SetSpan').addClass("btn-primary");
+                        $('#SetSpan').prop('disabled', false);
+                        $('#SetSpan').html('Set Span');
+                        try {
+                            if (data.setSpan.split(";").length == 4 && data.setSpan.split(";")[1].toString() == spanPort.toString()) {
+                                $('#SetSpan').removeClass("btn-primary");
+                                $('#SetSpan').addClass("btn-secondary");
+                                $('#SetSpan').prop('disabled', true);
+                                $('#SetSpan').html('Span <br>on process');
+
+                            }
+                        } catch (err) {}
+
                     }
 
                 },
