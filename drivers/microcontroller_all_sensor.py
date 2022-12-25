@@ -57,7 +57,7 @@ def read_concentration():
         ser.write(bytes(b'REQ,*'))
         time.sleep(1)
 
-        data = ser.readline().decode('utf-8')
+        data = ser.readline().decode('utf-8').strip('/r/n')
         # print(data)
         # ser.close()
         return (data)
@@ -84,7 +84,7 @@ def check_is_switch():
                     ser.write(b'switch,0,*')
                 elif (current_state == '1'):
                     ser.write(b'switch,1,*')
-                data = ser.readline().decode('utf-8')
+                data = ser.readline().decode('utf-8').strip('/r/n')
                 print(data)
                 return (data)
             return int(pump_state[0])
@@ -108,9 +108,9 @@ def set_pwm():
         data = 'setPWM,' + str(current_speed) + ',*'
         kutip = b''
         returnval = kutip.decode('utf-8') + data
-        ser.write(returnval.encode('ascii'))
         time.sleep(1)
-        ser.write(returnval.encode('ascii'))
+        returnval = kutip.decode('utf-8') + data
+        ser.write(returnval.encode('ascii').strip('/r/n'))
     data = ser.readline().decode('utf-8')
     print(data)
 
