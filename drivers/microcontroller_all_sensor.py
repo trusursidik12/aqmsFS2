@@ -108,10 +108,10 @@ def set_pwm():
         data = 'setPWM,' + str(current_speed) + ',*'
         kutip = b''
         returnval = kutip.decode('utf-8') + data
+        ser.write(returnval.encode('ascii'))
         time.sleep(1)
-        returnval = kutip.decode('utf-8') + data
-        ser.write(returnval.encode('ascii').strip('/r/n'))
-    data = ser.readline().decode('utf-8')
+        ser.write(returnval.encode('ascii'))
+    data = ser.readline().decode('utf-8').strip('/r/n')
     print(data)
 
 
