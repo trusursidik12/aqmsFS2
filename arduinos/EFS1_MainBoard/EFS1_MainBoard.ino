@@ -192,9 +192,9 @@ String getMEMBRASENS_PPM() {
     u.j = ((unsigned long)data[7] << 16 | data[6]); board0[3] = u.f;
   
     for(i=0; i<4; i++){    
-      if (board0[i] < 0) {
-        board0[i] = board0[i] / 10000;
-      }
+      // if (board0[i] < 0) {
+        // board0[i] = board0[i] / 10000;
+      // }
       str_return = str_return + String(board0[i],6) + ";";
     }
     delay(10);
@@ -214,9 +214,9 @@ String getMEMBRASENS_PPM() {
     u.j = ((unsigned long)data[7] << 16 | data[6]); board1[3] = u.f;
   
   for(i=0; i<4; i++){    
-      if (board1[i] < 0) {
-        board1[i] = board1[i] / 10000;
-      }
+      // if (board1[i] < 0) {
+        // board1[i] = board1[i] / 10000;
+      // }
       str_return = str_return + String(board1[i],6) + ";";
     }
     delay(10);
