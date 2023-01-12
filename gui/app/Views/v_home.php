@@ -1,81 +1,15 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
 <div class="container-md py-1">
-    <div class="row justify-content-start">
-        <div class="col-md-12 my-2">
-            <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
-                    <div id="location">
-                        <div id="aqm_voltage">
-                            <?php if (!$is_cems) : ?>
-                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="12" cy="11" r="3"></circle>
-                                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                                    </svg>
-                                </span>
-                                <h2 class="h4" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
-                            <?php endif ?>
-                            <h2 class="h6 text-dark" id="date"></h2>
-                        </div>
+    <div class="row justify-content-start bg-dark">
 
-                    </div>
-                    <div>
-                        <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                            <div class="mr-3">
-                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <line x1="12" y1="12" x2="12" y2="12.01"></line>
-                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
-                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
-                                    </svg>
-                                </span>
-                                <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
-                            </div>
-                            <div>
-                                <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
-                                <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
-                                    <?= lang('Global.Switch') ?>
-                                </button>
-                            </div>
-                        </div>
-                        <?php if ($pump_interval > 0) : ?>
-                            <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                                <div class="mr-3">
-                                    <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <rect x="3" y="3" width="6" height="6" rx="1" />
-                                            <rect x="15" y="15" width="6" height="6" rx="1" />
-                                            <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
-                                            <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
-                                        </svg>
-                                    </span>
-                                    <h7 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
-                                </div>
-                                <div>
-                                    <span id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                    <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                    <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
-
-                                        <?= lang('Global.Switch') ?>
-                                    </button>
-                                </div>
-                            </div>
-                        <?php endif ?>
-                    </div>
-                </div>
-            </div>
-        </div>
         <?php if (!$is_cems) : ?>
             <div class="col-sm mx-2">
                 <?php if (count($particulates) > 0) : ?>
                     <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
                     <div id="particulate">
                         <?php foreach ($particulates as $particulate) : ?>
-                            <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,0.6);background-image: url(../img/black_metal_texture.png);">
+                            <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,1);background: RGBA(28,183,160,0.7);">
                                 <span class="h6 py-0 font-weight-bold text-light"><?= $particulate->caption_id ?></span>
                                 <div class="m-0 d-flex justify-content-between">
                                     <div class="d-flex align-items-center text-light">
@@ -91,9 +25,6 @@
                         <?php endforeach; ?>
                     </div>
                 <?php endif ?>
-
-                <div class="text-center rounded my-1" id="chartdiv">
-                </div>
             </div>
         <?php endif ?>
         <div class="col-sm mx-2">
@@ -102,7 +33,7 @@
             <?php endif ?>
             <div id="gas-content">
                 <?php foreach ($gases as $gas) : ?>
-                    <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGBA(124,122,243,0.6);background-image: url(../img/black_metal_texture.png);">
+                    <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGB(124,122,243);background: RGBA(124,122,243,0.7);">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="h5 py-0 font-weight-bold text-light"><?= $gas->caption_id ?></span>
                             <span class="py-0 small font-weight-bold sensor d-none text-light" id="svalue_<?= $gas->code ?>">0</span>
@@ -144,7 +75,7 @@
                 <h1 class="h4 text-light" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
                 <div id="meteorologi-content">
                     <?php foreach ($weathers as $wheather) : ?>
-                        <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGBA(99,173,252,0.6);background-image: url(../img/black_metal_texture.png);">
+                        <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGB(99,173,252);background: RGBA(99,173,252,0.7);">
                             <span class="h6 font-weight-bold text-light"><?= $wheather->caption_id ?></span>
                             <div class="m-0 d-flex justify-content-center text-light">
                                 <div class="d-flex align-items-center">
@@ -160,118 +91,80 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 my-2">
+        <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
+                <div id="location">
+                    <div id="aqm_voltage">
+                        <?php if (!$is_cems) : ?>
+                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="12" cy="11" r="3"></circle>
+                                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+                                </svg>
+                            </span>
+                            <h2 class="h4" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
+                        <?php endif ?>
+                        <h2 class="h6 text-dark" id="date"></h2>
+                    </div>
 
+                </div>
+                <div>
+                    <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                        <div class="mr-3">
+                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
+                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
+                                </svg>
+                            </span>
+                            <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
+                        </div>
+                        <div>
+                            <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
+                            <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
+                                <?= lang('Global.Switch') ?>
+                            </button>
+                        </div>
+                    </div>
+                    <?php if ($pump_interval > 0) : ?>
+                        <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                            <div class="mr-3">
+                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <rect x="3" y="3" width="6" height="6" rx="1" />
+                                        <rect x="15" y="15" width="6" height="6" rx="1" />
+                                        <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
+                                        <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
+                                    </svg>
+                                </span>
+                                <h7 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
+                            </div>
+                            <div>
+                                <span id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
 
+                                    <?= lang('Global.Switch') ?>
+                                </button>
+                            </div>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
-<style>
-    #chartdiv {
-        /* width: 100%; */
-        min-width: 35vh;
-        min-height: 35vh;
-    }
-</style>
 <?= $this->endSection('css') ?>
 <?= $this->section('js') ?>
-<script src="<?= base_url('amchart/core.js') ?>"></script>
-<script src="<?= base_url('amchart/charts.js') ?>"></script>
-<script src="<?= base_url('amchart/themes/animated.js') ?>"></script>
-<script>
-    am4core.ready(function() {
-
-        am4core.useTheme(am4themes_animated);
-
-        chart = am4core.create("chartdiv", am4charts.GaugeChart);
-        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-
-        chart.startAngle = -90;
-        chart.endAngle = 270;
-
-        axis = chart.xAxes.push(new am4charts.ValueAxis());
-        axis.radiusValue = 360;
-        axis.min = 0;
-        axis.max = 360;
-
-
-        axis.renderer.line.strokeWidth = 3;
-        axis.renderer.line.strokeOpacity = 1;
-        axis.renderer.line.stroke = am4core.color("#ffff");
-        axis.renderer.inside = true;
-
-        axis.renderer.axisFills.template.disabled = true;
-        axis.renderer.grid.template.disabled = true;
-        axis.renderer.ticks.template.disabled = false
-        axis.renderer.ticks.template.length = 3;
-        axis.renderer.ticks.template.strokeOpacity = 1;
-
-        axis.renderer.labels.template.radius = -15;
-        axis.renderer.labels.template.disabled = true;
-        axis.renderer.ticks.template.disabled = true;
-
-        function createLabel(label, deg) {
-            var range = axis.axisRanges.create();
-            range.value = deg;
-            range.grid.disabled = true;
-            range.label.text = label;
-            range.label.fill = am4core.color("#fff");
-
-        }
-
-        createLabel("N", 0, '#ffff');
-        createLabel("E", 100);
-        createLabel("S", 200);
-        createLabel("W", 300);
-
-        // hands
-        northHand = chart.hands.push(new am4charts.ClockHand());
-
-        northHand.radius = am4core.percent(80);
-        northHand.startWidth = 10;
-        northHand.endWidth = 1;
-        northHand.rotationDirection = "clockWise";
-        northHand.pin.disabled = true;
-        northHand.zIndex = 0;
-        northHand.fill = am4core.color("#c00");
-        northHand.stroke = am4core.color("#c00");
-        northHand.value = 0;
-
-        southHand = chart.hands.push(new am4charts.ClockHand());
-
-        southHand.radius = am4core.percent(80);
-        southHand.startWidth = 10;
-        southHand.endWidth = 1;
-        southHand.rotationDirection = "clockWise";
-        southHand.pin.disabled = true;
-        southHand.zIndex = 0;
-        southHand.fill = am4core.color("#ffff");
-        southHand.stroke = am4core.color("#ffff");
-        southHand.value = 200;
-
-
-    }); // end am4core.ready()
-</script>
-
 
 <script>
-    var northHand, chart, axis;
-
-    function rotateCompass(value) {
-        axis.min = 0;
-        axis.max = 360;
-        northHand.value = value;
-        northHand.animate({
-            property: "value",
-            to: value
-        }, 1000, am4core.ease.cubicOut);
-        southHand.value = 200 + value;
-        southHand.animate({
-            property: "value",
-            to: 200 + value
-        }, 1000, am4core.ease.cubicOut);
-    }
     $(document).ready(function() {
         var begin = 1;
         var beginUnit = 1;
@@ -305,13 +198,6 @@
                                 // console.log('value_' + value.code + ' = ' + param_value);
                             } catch (err) {
                                 console.error(err);
-                            }
-                            if (value?.code == 'wd') {
-                                try {
-                                    rotateCompass(parseInt(cleanStr(value?.value)) * 10 / 9);
-                                } catch (er) {
-                                    console.error(er);
-                                }
                             }
 
                         });
