@@ -105,7 +105,7 @@
                                 </span>
                                 <h2 class="h4 text-light" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
                             <?php endif ?>
-                            <h2 class="h6 text-light" id="date"></h2>
+                            <h2 class="h4 text-light" id="date"></h2>
                         </div>
 
                     </div>
