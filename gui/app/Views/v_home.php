@@ -92,7 +92,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 my-2">
-        <div class="card bg-light px-3 mb-md-0 mb-3 overflow-hidden">
+        <div class="px-3 mb-md-0 mb-3 overflow-hidden">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
                 <div id="location">
                     <div id="aqm_voltage">
@@ -104,9 +104,9 @@
                                     <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
                                 </svg>
                             </span>
-                            <h2 class="h4" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
+                            <h2 class="h4 text-light" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
                         <?php endif ?>
-                        <h2 class="h6 text-dark" id="date"></h2>
+                        <h2 class="h6 text-light" id="date"></h2>
                     </div>
 
                 </div>
@@ -121,11 +121,11 @@
                                     <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
                                 </svg>
                             </span>
-                            <h7 style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
+                            <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
                         </div>
                         <div>
-                            <span id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
-                            <button type="button" class="btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
+                            <span class="text-light" id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
+                            <button type="button" class="btn-dark rounded border border-light btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
                                 <?= lang('Global.Switch') ?>
                             </button>
                         </div>
@@ -142,12 +142,12 @@
                                         <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
                                     </svg>
                                 </span>
-                                <h7 style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
+                                <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
                             </div>
                             <div>
-                                <span id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                <span id="pumpTimer" class="small" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                <button type="button" id="switch_pump" class="btn btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
+                                <span class="text-light" id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <span id="pumpTimer" class="small text-light" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                <button type="button" id="switch_pump" class="btn btn-dark rounded border border-light btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
 
                                     <?= lang('Global.Switch') ?>
                                 </button>
