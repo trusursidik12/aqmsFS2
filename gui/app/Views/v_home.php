@@ -1,12 +1,12 @@
 <?= $this->extend('layouts/layouts') ?>
 <?= $this->section('content') ?>
 <div class="container-md py-1">
-    <div class="row justify-content-start bg-dark">
+    <div class="row mt-2 justify-content-start bg-dark">
 
         <?php if (!$is_cems) : ?>
             <div class="col-sm mx-2">
                 <?php if (count($particulates) > 0) : ?>
-                    <h1 class="h4 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
+                    <h1 class="h4 mt-2 text-light" data-intro="Partikulat"><?= lang('Global.Particulate') ?></h1>
                     <div id="particulate">
                         <?php foreach ($particulates as $particulate) : ?>
                             <div class="my-1 mx-n2 shadow px-3 py-2 rounded" style="border:5px solid RGBA(28,183,160,1);background: RGBA(28,183,160,0.7);">
@@ -29,7 +29,7 @@
         <?php endif ?>
         <div class="col-sm mx-2">
             <?php if (!$is_cems) : ?>
-                <h1 class="h4 text-light" data-intro="Gas"><?= lang('Global.Gases') ?></h1>
+                <h1 class="h4 mt-2 text-light" data-intro="Gas"><?= lang('Global.Gases') ?></h1>
             <?php endif ?>
             <div id="gas-content">
                 <?php foreach ($gases as $gas) : ?>
@@ -72,7 +72,7 @@
         </div>
         <?php if (!$is_cems) : ?>
             <div class="col-sm mx-2">
-                <h1 class="h4 text-light" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
+                <h1 class="h4 mt-2 text-light" data-intro="Cuaca"><?= lang('Global.Meteorology') ?></h1>
                 <div id="meteorologi-content">
                     <?php foreach ($weathers as $wheather) : ?>
                         <div class="my-1 mx-n2 shadow px-3 rounded" style="border:5px solid RGB(99,173,252);background: RGBA(99,173,252,0.7);">
