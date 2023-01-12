@@ -78,7 +78,7 @@ def getSensorValue(mode):
     try:
         while retval.find(end_string_sensor[mode]) == -1:
             ser.write(bytes(sensor_mode[mode] + "#",'utf-8'))
-            time.sleep(1)
+            #time.sleep(1)
             retval = ser.readline().decode('utf-8').strip('/r/n')
     except Exception as e:
         None
@@ -147,7 +147,6 @@ def set_pwm():
 
 try:
     while True:
-        print(ser)
         if ser is not None:
             update_all_sensor()
         else:
@@ -162,22 +161,6 @@ try:
             
         # set_pwm()
         # check_is_switch()
-        # try:
-            # val = read_concentration()
-            # print(val)
-        # except Exception as e3:
-            # print(" : error val = connect_sensor()")
-            # print(e3)
-
-        # try:
-            # SENSOR = "MC," + str(val) + ",END,"
-            # MC,NO2,SO2,O3,CO2,VOC,PWM,Volt,Current,Power,WD(derajat)
-            # update_sensor_value(str(sys.argv[1]), str(SENSOR))
-        # except Exception as e3:
-            # print("SENSOR value error")
-        
-        
-        time.sleep(1)
 
 except Exception as e:
     print(e)
