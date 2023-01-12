@@ -20,6 +20,8 @@ ModbusMaster node;
 
 int currentPumpState, currentPumpSpeed, isStreamingAllData;
 String command;
+String currentPM1 = "";
+String currentPM2 = "";
 
 void setup() {
   Serial.begin(9600);
@@ -76,11 +78,11 @@ void loop() {
     }
     
     if(command.equals("data.pm.1")){
-      Serial.println("PM1;" + getPM1() + "END_PM1");
+      Serial.println("PM1;" + getPM1() + ";END_PM1");
     }
     
     if(command.equals("data.pm.2")){
-      Serial.println("PM2;" + getPM2() + "END_PM2");
+      Serial.println("PM2;" + getPM2() + ";END_PM2");
     }
     
     if(command.equals("data.ina219")){
@@ -127,8 +129,8 @@ void showAllData(){
   Serial.println("BEGIN");
   Serial.println("MEMBRASENS_PPM;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_PPM");
   Serial.println("MEMBRASENS_TEMP;" + getMEMBRASENS_TEMP() + "END_MEMBRASENS_TEMP");
-  Serial.println("PM1;" + getPM1() + "END_PM1");
-  Serial.println("PM2;" + getPM2() + "END_PM2");
+  Serial.println("PM1;" + getPM1() + ";END_PM1");
+  Serial.println("PM2;" + getPM2() + ";END_PM2");
   Serial.println("INA219;" + getINA219() + "END_INA219");
   Serial.println("DHT;" + getDHT() + "END_DHT");
   Serial.println("BME;" + getBME() + "END_BME");
@@ -333,21 +335,35 @@ String getPRESSURE() {
 }
 
 String getPM1(){
+  String retval = "";
   Serial2.begin(9600);
   Serial2.setTimeout(100);
   delay(50);
   if (Serial2.available() > 0) {
-    return Serial2.readString();
+    retval = Serial2.readStringUntil('*');
+    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0){
+      currentPM1 = retval;
+    }
   }
-  return "";
+  currentPM1.replace("\n","");
+  currentPM1.replace("\r","");
+  
+  return currentPM1;
 }
 
 String getPM2(){
+  String retval = "";
   Serial3.begin(9600);
   Serial3.setTimeout(100);
   delay(50);
   if (Serial3.available() > 0) {
-    return Serial3.readString();
+    retval = Serial3.readStringUntil('*');
+    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0){
+      currentPM2 = retval;
+    }
   }
-  return "";
+  currentPM2.replace("\r","");
+  currentPM2.replace("\n","");
+  
+  return currentPM2;
 }

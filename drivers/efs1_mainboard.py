@@ -8,7 +8,6 @@ is_SENSOR_connect = False
 is_connect = False
 current_state = 0
 current_speed = 0
-pump_state = 0
 sensor_mode = [""] * 10
 end_string_sensor = [""] * 10
 
@@ -70,6 +69,7 @@ try:
         "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
     sensor_reader = mycursor.fetchone()
     ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=5)
+    print("[V] MAINBOARD " + sensor_reader[0] + " CONNECTED")
 except Exception as e:
     ser = None
 
@@ -97,58 +97,45 @@ def update_all_sensor():
             
         time.sleep(1)
         
-def check_is_switch():
-    global pump_state
-    global is_connect
+def pump_switch():
     global current_state
     try:
         try:
             mycursor.execute(
                 "SELECT content FROM configurations WHERE name LIKE 'pump_state'")
             pump_state = mycursor.fetchone()[0]
-            # print(pump_state)
-            is_connect = True
-            if pump_state != current_state and is_connect:
+            if pump_state != current_state:
                 current_state = pump_state
-                if (current_state == '0'):
-                    ser.write(b'switch,0,*')
-                elif (current_state == '1'):
-                    ser.write(b'switch,1,*')
+                print("pump.switch#")
+                ser.write(b'pump.switch#')
                 data = ser.readline().decode('utf-8').strip('/r/n')
-                print(data)
-                return (data)
-            return int(pump_state[0])
-        except Exception as e4:
-            pump_state = ""
-            is_connect = False
-            print(e4)
-        print('Pump Connect:', is_connect)
+                
+        except Exception as e2:
+            print(e2)
     except Exception as e:
         print(e)
 
 
-def set_pwm():
+def pump_speed():
     global current_speed
     mycursor.execute(
         "SELECT content FROM configurations WHERE name LIKE 'pump_speed'")
     pump_speed = mycursor.fetchone()[0]
-    is_connect = True
-    if pump_speed != current_speed and is_connect:
+    if pump_speed != current_speed:
         current_speed = pump_speed
-        data = 'setPWM,' + str(current_speed) + ',*'
-        kutip = b''
-        returnval = kutip.decode('utf-8') + data
-        ser.write(returnval.encode('ascii'))
         time.sleep(1)
-        ser.write(returnval.encode('ascii'))
+        print("pump.speed." + str(current_speed) + "#")
+        ser.write(bytes('pump.speed.' + str(current_speed) + "#",'utf-8'))
     data = ser.readline().decode('utf-8').strip('/r/n')
-    print(data)
 
 
 try:
     while True:
         if ser is not None:
-            update_all_sensor()
+            
+            pump_switch()
+            pump_speed()
+            update_all_sensor()                
         else:
             try:
                 mycursor.execute(
@@ -157,10 +144,6 @@ try:
                 ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=5)
             except Exception as e:
                 ser = None
-            
-            
-        # set_pwm()
-        # check_is_switch()
 
 except Exception as e:
     print(e)
