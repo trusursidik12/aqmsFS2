@@ -46,7 +46,7 @@ void setup() {
   bme.setPressureOversampling(BME680_OS_4X);
   bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
   
-  softStartPump(100,0);
+  // softStartPump(100,0);
   isStreamingAllData = 0;
 }
 
@@ -115,6 +115,10 @@ void loop() {
       
     if(command.substring(0,11).equals("pump.speed.")){
       softStartPump(command.substring(11,command.length()).toInt(),currentPumpState);
+    }
+  
+    if(command.substring(0,11).equals("pump.state.")){
+      softStartPump(currentPumpSpeed,command.substring(11,command.length()).toInt());
     }
   
     command="";

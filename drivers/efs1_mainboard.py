@@ -106,8 +106,8 @@ def pump_switch():
             pump_state = mycursor.fetchone()[0]
             if pump_state != current_state:
                 current_state = pump_state
-                print("pump.switch#")
-                ser.write(b'pump.switch#')
+                print("pump.state." + str(current_state) + "#")
+                ser.write(bytes('pump.state.' + str(current_state) + "#",'utf-8'))
                 data = ser.readline().decode('utf-8').strip('/r/n')
                 
         except Exception as e2:
@@ -131,8 +131,7 @@ def pump_speed():
 
 try:
     while True:
-        if ser is not None:
-            
+        if ser is not None:            
             pump_switch()
             pump_speed()
             update_all_sensor()                
