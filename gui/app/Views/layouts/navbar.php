@@ -1,10 +1,10 @@
-<nav class="sticky-top shadow-lg navbar navbar-expand-lg navbar-light bg-light">
+<nav class="sticky-top shadow-lg navbar navbar-expand-lg navbar-dark">
     <div class="container-md">
         <div style="font-weight:bolder;font-size:30px;" onclick="showHiddenMenu();">
             <img src="<?= base_url('/img/logo.png') ?>" width="50" height="50" class="d-inline-block align-top" alt="Logo TRUSUR">&nbsp;
         </div>
         <a class="navbar-brand" href="<?= base_url() ?>" style="font-weight:bolder;font-size:30px;">
-            TRUSUR
+            AQMS
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,22 +12,22 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-weight:bolder;font-size:20px;">
-                <li class="nav-item <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_configuration') ?>">
+                <li class="btn-dark rounded border border-light nav-item mr-2 <?= @strtolower($__routename) == 'configuration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_configuration') ?>">
                     <a class="nav-link" href="<?= base_url('configurations') ?>"><?= lang('Global.Configuration') ?></a>
                 </li>
-                <li id="parameters_nav" class="nav-item hide d-none <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_parameter') ?>">
+                <li id="parameters_nav" class="btn-dark rounded border border-light nav-item mr-2 hide d-none <?= @strtolower($__routename) == 'parameter' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_parameter') ?>">
                     <a class="nav-link" href="<?= base_url('parameters') ?>">Parameter</a>
                 </li>
-                <li id="calibrations_nav" class="nav-item hide d-none <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
+                <li id="calibrations_nav" class="btn-dark rounded border border-light nav-item mr-2 hide d-none <?= @strtolower($__routename) == 'calibration' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_calibration') ?>">
                     <a class="nav-link" href="<?= base_url('calibrations') ?>"><?= lang('Global.Calibration') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_export') ?>">
+                <li class="btn-dark rounded border border-light nav-item mr-2 <?= @strtolower($__routename) == 'export' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_export') ?>">
                     <a class="nav-link" href="<?= base_url('exports') ?>"><?= lang('Global.Export') ?></a>
                 </li>
-                <li class="nav-item <?= @strtolower($__routename) == 'rht' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_extras') ?>">
+                <li class="btn-dark rounded border border-light nav-item mr-2 <?= @strtolower($__routename) == 'rht' ? 'active' : '' ?>" data-intro="<?= lang('Global.intro_extras') ?>">
                     <a class="nav-link" href="<?= base_url('rht') ?>"><?= lang('Global.extras') ?></a>
                 </li>
-                <li id="logout_nav" class="nav-item hide d-none" data-intro="Logout">
+                <li id="logout_nav" class="btn-dark rounded border border-light nav-item mr-2 hide d-none" data-intro="Logout">
                     <a class="nav-link" href="<?= base_url('login/logout') ?>">Logout</a>
                 </li>
             </ul>

@@ -16,8 +16,7 @@
 }
 body {
   font-family: "Lato Regular";
-  background-color: #263640;
-  background: #263640 url("../img/background.jpg") fixed center;
+  background-color: #000000;
 }
 .badge-success,
 .btn-success,
