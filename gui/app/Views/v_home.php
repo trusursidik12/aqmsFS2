@@ -89,71 +89,71 @@
             </div>
         <?php endif ?>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12 my-2">
-        <div class="px-3 mb-md-0 mb-3 overflow-hidden">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
-                <div id="location">
-                    <div id="aqm_voltage">
-                        <?php if (!$is_cems) : ?>
-                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <circle cx="12" cy="11" r="3"></circle>
-                                    <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-                                </svg>
-                            </span>
-                            <h2 class="h4 text-light" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
-                        <?php endif ?>
-                        <h2 class="h6 text-light" id="date"></h2>
-                    </div>
-
-                </div>
-                <div>
-                    <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                        <div class="mr-3">
-                            <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <line x1="12" y1="12" x2="12" y2="12.01"></line>
-                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
-                                    <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
-                                </svg>
-                            </span>
-                            <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
-                        </div>
-                        <div>
-                            <span class="text-light" id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
-                            <button type="button" class="btn-dark rounded border border-light btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
-                                <?= lang('Global.Switch') ?>
-                            </button>
-                        </div>
-                    </div>
-                    <?php if ($pump_interval > 0) : ?>
-                        <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
-                            <div class="mr-3">
+    <div class="row">
+        <div class="col-md-12 my-2">
+            <div class="px-3 mb-md-0 mb-3 overflow-hidden">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-sm-items-start">
+                    <div id="location">
+                        <div id="aqm_voltage">
+                            <?php if (!$is_cems) : ?>
                                 <span class="icon" style="display:inline-block;position:relative;top:-5px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <rect x="3" y="3" width="6" height="6" rx="1" />
-                                        <rect x="15" y="15" width="6" height="6" rx="1" />
-                                        <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
-                                        <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="12" cy="11" r="3"></circle>
+                                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
                                     </svg>
                                 </span>
-                                <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
+                                <h2 class="h4 text-light" style="display:inline-block;" data-intro="<?= lang('Global.intro_aqms_location') ?>" style="cursor: pointer;" unselectable="on" onselectstart="return false;" onmousedown="return false;"><?= @$stationname ?></h2>
+                            <?php endif ?>
+                            <h2 class="h6 text-light" id="date"></h2>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div id="unit" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                            <div class="mr-3">
+                                <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-atom" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <line x1="12" y1="12" x2="12" y2="12.01"></line>
+                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(45 12 12)"></path>
+                                        <path d="M12 2a4 10 0 0 0 -4 10a4 10 0 0 0 4 10a4 10 0 0 0 4 -10a4 10 0 0 0 -4 -10" transform="rotate(-45 12 12)"></path>
+                                    </svg>
+                                </span>
+                                <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Unit') ?></b></h7>
                             </div>
                             <div>
-                                <span class="text-light" id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                <span id="pumpTimer" class="small text-light" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
-                                <button type="button" id="switch_pump" class="btn btn-dark rounded border border-light btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
-
+                                <span class="text-light" id="unit-content" style="font-weight:bolder;font-size:18px;">(µg/m3)</span>
+                                <button type="button" class="btn-dark rounded border border-light btn btn-sm btn-info" id="btn-unit" data-intro="<?= lang('Global.intro_change_unit') ?>">
                                     <?= lang('Global.Switch') ?>
                                 </button>
                             </div>
                         </div>
-                    <?php endif ?>
+                        <?php if ($pump_interval > 0) : ?>
+                            <div id="pump" class="my-1 d-flex flex-column flex-md-row justify-content-between align-md-items-center">
+                                <div class="mr-3">
+                                    <span class="icon" style="display:inline-block;position:relative;top:-5px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-replace" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <rect x="3" y="3" width="6" height="6" rx="1" />
+                                            <rect x="15" y="15" width="6" height="6" rx="1" />
+                                            <path d="M21 11v-3a2 2 0 0 0 -2 -2h-6l3 3m0 -6l-3 3" />
+                                            <path d="M3 13v3a2 2 0 0 0 2 2h6l-3 -3m0 6l3 -3" />
+                                        </svg>
+                                    </span>
+                                    <h7 class="text-light" style="display:inline-block;"><b><?= lang('Global.Pump') ?></b></h7>
+                                </div>
+                                <div>
+                                    <span class="text-light" id="pumpState" style="font-weight:bolder;font-size:20px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                    <span id="pumpTimer" class="small text-light" style="font-weight:bolder;font-size:18px;"><i class="fas fa-spinner fa-spin"></i></span>
+                                    <button type="button" id="switch_pump" class="btn btn-dark rounded border border-light btn-sm btn-info" data-intro="<?= lang('Global.intro_change_pump') ?>">
+
+                                        <?= lang('Global.Switch') ?>
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endif ?>
+                    </div>
                 </div>
             </div>
         </div>
