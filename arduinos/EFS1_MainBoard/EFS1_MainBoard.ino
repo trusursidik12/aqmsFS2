@@ -149,9 +149,9 @@ void softStartPump(int pumpspeed,int pumpstate){
   currentPumpState = pumpstate;
   currentPumpSpeed = pumpspeed;
   analogWrite(Pump, 0);
-  delay(50)
+  delay(50);
   digitalWrite(SwitchPump,currentPumpState);
-  delay(50)
+  delay(50);
   for(i=30;i<=pumpspeed;i++){
     analogWrite(Pump, map(i, 0, 100, 0, 255));
     delay(50);
