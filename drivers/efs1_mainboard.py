@@ -95,7 +95,7 @@ def update_all_sensor():
         except Exception as e:
             None
             
-        time.sleep(1)
+        time.sleep(0.1)
         
 def pump_switch():
     global current_state
