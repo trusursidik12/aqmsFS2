@@ -87,7 +87,7 @@ def getSensorValue(mode):
     
     
 def update_all_sensor():
-    for mode in range(10):
+    for mode in range(9): #ubah ke 10 jika menggunakan SENTEC
         try:
             value = getSensorValue(mode)
             # print(value)
