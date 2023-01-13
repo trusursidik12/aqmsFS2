@@ -141,13 +141,10 @@ class Rht extends BaseController
 
 			if ($sensor_reader_id > 0) {
 				$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
-				if ($configuration_id > 0) {
-					if ($is_motherboard == "1"){
-						if ($board > 0) 
-						$port += 4;
-						$this->configuration->set('content', $sensor_reader_id . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
-					} else
-						$this->configuration->save(["name" => "setSpan", "content" => $sensor_reader_id . ";" . $port . ";" . $span]);
+				if ($configuration_id > 0)
+					$this->configuration->set('content', $sensor_reader_id . ";" . $port . ";" . $span)->where('name', 'setSpan')->update();
+				else
+					$this->configuration->save(["name" => "setSpan", "content" => $sensor_reader_id . ";" . $port . ";" . $span]);
 
 				echo json_encode(["response" => "OK", "board" => $board, "sensor_reader_id" => $sensor_reader_id, "port" => $port, "span" => $span]);
 			} else
