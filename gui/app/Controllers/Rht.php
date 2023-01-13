@@ -194,10 +194,10 @@ class Rht extends BaseController
 				$data0[1][$key] = explode(";", $sensor_value_log0->value)[2] * 1;
 				$data0[2][$key] = explode(";", $sensor_value_log0->value)[3] * 1;
 				$data0[3][$key] = explode(";", $sensor_value_log0->value)[4] * 1;
-				$data0[4][$key] = explode(";", $sensor_value_log0->value)[5] * 1;
-				$data0[5][$key] = explode(";", $sensor_value_log0->value)[6] * 1;
-				$data0[6][$key] = explode(";", $sensor_value_log0->value)[7] * 1;
-				$data0[7][$key] = explode(";", $sensor_value_log0->value)[8] * 1;
+				$data1[0][$key] = explode(";", $sensor_value_log0->value)[5] * 1;
+				$data1[1][$key] = explode(";", $sensor_value_log0->value)[6] * 1;
+				$data1[2][$key] = explode(";", $sensor_value_log0->value)[7] * 1;
+				$data1[3][$key] = explode(";", $sensor_value_log0->value)[8] * 1;
 			} else {
 				$data0[0][$key] = explode(";", $sensor_value_log0->value)[1] * 1;
 				$data0[1][$key] = explode(";", $sensor_value_log0->value)[2] * 1;
