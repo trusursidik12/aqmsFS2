@@ -344,9 +344,10 @@ String getPM1(){
   String retval = "";
   Serial2.begin(9600);
   Serial2.setTimeout(100);
-  delay(200);
   if (Serial2.available() > 0) {
+    delay(100);
     retval = Serial2.readStringUntil('\n');
+    delay(100);
 	//retval.replace("\n","");
 	//retval.replace("\r","");
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
@@ -364,9 +365,10 @@ String getPM2(){
   String retval = "";
   Serial3.begin(9600);
   Serial3.setTimeout(100);
-  delay(200);
   if (Serial3.available() > 0) {
+    delay(100);
     retval = Serial3.readStringUntil('\n');
+    delay(100);
 	//retval.replace("\r","");
 	//retval.replace("\n","");
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
