@@ -45,8 +45,14 @@ class Rht extends BaseController
 		$analyzer = @$this->sensor_values->where("value LIKE '%FS2_ANALYZER%'")->findAll()[0]->value;
 		$pump = @$this->sensor_values->where("value LIKE '%FS2_PUMP%'")->findAll()[0]->value;
 		$psu = @$this->sensor_values->where("value LIKE '%FS2_PSU%'")->findAll()[0]->value;
-		$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
-		$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
+		$is_motherboard = @$this->configuration->where(["name" => "is_motherboard"])->findAll()[0]->content;
+		if ($is_motherboard == "1") {
+			$membrasens_0 = @$this->sensor_values->where("value LIKE '%FMEMBRASENS_PPM%'")->findAll()[0]->value;
+			$membrasens_1 = @$this->sensor_values->where("value LIKE '%MEMBRASENS_TEMP%'")->findAll()[0]->value;
+		} else {
+			$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
+			$membrasens_1 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[1]->value;
+		}
 		$semeatechs = $this->sensor_values->where("value LIKE '%SEMEATECH%'")->findAll();
 		$setSpan = @$this->configuration->where(["name" => "setSpan"])->findAll()[0]->content;
 
@@ -68,30 +74,49 @@ class Rht extends BaseController
 		$data["rh_pump"] = @explode(";", $pump)[5] * 1;
 		$data["temp_psu"] = @explode(";", $psu)[1] * 1;
 		$data["rh_psu"] = @explode(";", $psu)[2] * 1;
-		$data["con_membrasens_0_0"] = explode(";", $membrasens_0)[1] * 1;
-		$data["con_membrasens_0_1"] = explode(";", $membrasens_0)[2] * 1;
-		$data["con_membrasens_0_2"] = explode(";", $membrasens_0)[3] * 1;
-		$data["con_membrasens_0_3"] = explode(";", $membrasens_0)[4] * 1;
-		$data["volt_membrasens_0_0"] = explode(";", $membrasens_0)[5] * 1;
-		$data["volt_membrasens_0_1"] = explode(";", $membrasens_0)[6] * 1;
-		$data["volt_membrasens_0_2"] = explode(";", $membrasens_0)[7] * 1;
-		$data["volt_membrasens_0_3"] = explode(";", $membrasens_0)[8] * 1;
-		$data["temp_membrasens_0_0"] = explode(";", $membrasens_0)[9] * 1;
-		$data["temp_membrasens_0_1"] = explode(";", $membrasens_0)[10] * 1;
-		$data["temp_membrasens_0_2"] = explode(";", $membrasens_0)[11] * 1;
-		$data["temp_membrasens_0_3"] = explode(";", $membrasens_0)[12] * 1;
-		$data["con_membrasens_1_0"] = explode(";", $membrasens_1)[1] * 1;
-		$data["con_membrasens_1_1"] = explode(";", $membrasens_1)[2] * 1;
-		$data["con_membrasens_1_2"] = explode(";", $membrasens_1)[3] * 1;
-		$data["con_membrasens_1_3"] = explode(";", $membrasens_1)[4] * 1;
-		$data["volt_membrasens_1_0"] = explode(";", $membrasens_1)[5] * 1;
-		$data["volt_membrasens_1_1"] = explode(";", $membrasens_1)[6] * 1;
-		$data["volt_membrasens_1_2"] = explode(";", $membrasens_1)[7] * 1;
-		$data["volt_membrasens_1_3"] = explode(";", $membrasens_1)[8] * 1;
-		$data["temp_membrasens_1_0"] = explode(";", $membrasens_1)[9] * 1;
-		$data["temp_membrasens_1_1"] = explode(";", $membrasens_1)[10] * 1;
-		$data["temp_membrasens_1_2"] = explode(";", $membrasens_1)[11] * 1;
-		$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[12] * 1;
+		if ($is_motherboard == "1") {
+			$data["con_membrasens_0_0"] = explode(";", $membrasens_0)[1] * 1;
+			$data["con_membrasens_0_1"] = explode(";", $membrasens_0)[2] * 1;
+			$data["con_membrasens_0_2"] = explode(";", $membrasens_0)[3] * 1;
+			$data["con_membrasens_0_3"] = explode(";", $membrasens_0)[4] * 1;
+			$data["con_membrasens_1_0"] = explode(";", $membrasens_0)[5] * 1;
+			$data["con_membrasens_1_1"] = explode(";", $membrasens_0)[6] * 1;
+			$data["con_membrasens_1_2"] = explode(";", $membrasens_0)[7] * 1;
+			$data["con_membrasens_1_3"] = explode(";", $membrasens_0)[8] * 1;
+			$data["temp_membrasens_0_0"] = explode(";", $membrasens_1)[1] * 1;
+			$data["temp_membrasens_0_1"] = explode(";", $membrasens_1)[2] * 1;
+			$data["temp_membrasens_0_2"] = explode(";", $membrasens_1)[3] * 1;
+			$data["temp_membrasens_0_3"] = explode(";", $membrasens_1)[4] * 1;
+			$data["temp_membrasens_1_0"] = explode(";", $membrasens_1)[5] * 1;
+			$data["temp_membrasens_1_1"] = explode(";", $membrasens_1)[6] * 1;
+			$data["temp_membrasens_1_2"] = explode(";", $membrasens_1)[7] * 1;
+			$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[8] * 1;
+		} else {
+			$data["con_membrasens_0_0"] = explode(";", $membrasens_0)[1] * 1;
+			$data["con_membrasens_0_1"] = explode(";", $membrasens_0)[2] * 1;
+			$data["con_membrasens_0_2"] = explode(";", $membrasens_0)[3] * 1;
+			$data["con_membrasens_0_3"] = explode(";", $membrasens_0)[4] * 1;
+			$data["volt_membrasens_0_0"] = explode(";", $membrasens_0)[5] * 1;
+			$data["volt_membrasens_0_1"] = explode(";", $membrasens_0)[6] * 1;
+			$data["volt_membrasens_0_2"] = explode(";", $membrasens_0)[7] * 1;
+			$data["volt_membrasens_0_3"] = explode(";", $membrasens_0)[8] * 1;
+			$data["temp_membrasens_0_0"] = explode(";", $membrasens_0)[9] * 1;
+			$data["temp_membrasens_0_1"] = explode(";", $membrasens_0)[10] * 1;
+			$data["temp_membrasens_0_2"] = explode(";", $membrasens_0)[11] * 1;
+			$data["temp_membrasens_0_3"] = explode(";", $membrasens_0)[12] * 1;
+			$data["con_membrasens_1_0"] = explode(";", $membrasens_1)[1] * 1;
+			$data["con_membrasens_1_1"] = explode(";", $membrasens_1)[2] * 1;
+			$data["con_membrasens_1_2"] = explode(";", $membrasens_1)[3] * 1;
+			$data["con_membrasens_1_3"] = explode(";", $membrasens_1)[4] * 1;
+			$data["volt_membrasens_1_0"] = explode(";", $membrasens_1)[5] * 1;
+			$data["volt_membrasens_1_1"] = explode(";", $membrasens_1)[6] * 1;
+			$data["volt_membrasens_1_2"] = explode(";", $membrasens_1)[7] * 1;
+			$data["volt_membrasens_1_3"] = explode(";", $membrasens_1)[8] * 1;
+			$data["temp_membrasens_1_0"] = explode(";", $membrasens_1)[9] * 1;
+			$data["temp_membrasens_1_1"] = explode(";", $membrasens_1)[10] * 1;
+			$data["temp_membrasens_1_2"] = explode(";", $membrasens_1)[11] * 1;
+			$data["temp_membrasens_1_3"] = explode(";", $membrasens_1)[12] * 1;
+		}
 		foreach ($semeatechs as $semeatech) {
 			$data["con_semeatech"][$semeatech->sensor_reader_id] = explode(";", $semeatech->value)[4] * 1;
 			$data["volt_semeatech"][$semeatech->sensor_reader_id] = explode(";", $semeatech->value)[2] * 1;
