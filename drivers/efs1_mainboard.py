@@ -78,9 +78,9 @@ def getSensorValue(mode):
     try:
         while retval.find(end_string_sensor[mode]) == -1:
             ser.write(bytes(sensor_mode[mode] + "#",'utf-8'))
-            time.sleep(0.1)
-            # retval = ser.readline().decode('utf-8').strip('/r/n')
-            retval = ser.readline().decode('utf-8')
+            # time.sleep(0.1)
+            retval = ser.readline().decode('utf-8').strip('\r\n')
+            # retval = ser.readline().decode('utf-8')
     except Exception as e:
         None
         
