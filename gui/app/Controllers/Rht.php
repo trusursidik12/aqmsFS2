@@ -47,7 +47,7 @@ class Rht extends BaseController
 		$psu = @$this->sensor_values->where("value LIKE '%FS2_PSU%'")->findAll()[0]->value;
 		$is_motherboard = @$this->configuration->where(["name" => "is_motherboard"])->findAll()[0]->content;
 		if ($is_motherboard == "1") {
-			$membrasens_0 = @$this->sensor_values->where("value LIKE '%FMEMBRASENS_PPM%'")->findAll()[0]->value;
+			$membrasens_0 = @$this->sensor_values->where("value LIKE '%MEMBRASENS_PPM%'")->findAll()[0]->value;
 			$membrasens_1 = @$this->sensor_values->where("value LIKE '%MEMBRASENS_TEMP%'")->findAll()[0]->value;
 		} else {
 			$membrasens_0 = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[0]->value;
