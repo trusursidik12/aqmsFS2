@@ -132,7 +132,14 @@ class Rht extends BaseController
 	public function savingSetSpan($board, $port, $span)
 	{
 		if ($board != "semeatech") {
-			$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
+			$is_motherboard = @$this->configuration->where(["name" => "is_motherboard"])->findAll()[0]->content;
+			if ($is_motherboard == "1") {
+				$sensor_reader_id = @$this->sensor_values->where("value LIKE '%MEMBRASENS_PPM%'")->findAll()[$board]->sensor_reader_id;
+				if ($board > 0) $port += 4;
+			} else {
+				$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
+			}
+
 			if ($sensor_reader_id > 0) {
 				$configuration_id = @$this->configurations->where('name', 'setSpan')->first()->id;
 				if ($configuration_id > 0)
