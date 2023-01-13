@@ -344,15 +344,15 @@ String getPM1(){
   String retval = "";
   Serial2.begin(9600);
   Serial2.setTimeout(100);
-  delay(50);
+  delay(200);
   if (Serial2.available() > 0) {
-    retval = Serial2.readStringUntil('*');
-    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0){
+    retval = Serial2.readStringUntil('\n');
+	retval.replace("\n","");
+	retval.replace("\r","");
+    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM1 = retval;
     }
   }
-  currentPM1.replace("\n","");
-  currentPM1.replace("\r","");
   
   return currentPM1;
 }
@@ -361,15 +361,15 @@ String getPM2(){
   String retval = "";
   Serial3.begin(9600);
   Serial3.setTimeout(100);
-  delay(50);
+  delay(200);
   if (Serial3.available() > 0) {
-    retval = Serial3.readStringUntil('*');
-    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0){
+    retval = Serial3.readStringUntil('\n');
+	retval.replace("\r","");
+	retval.replace("\n","");
+    if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM2 = retval;
     }
   }
-  currentPM2.replace("\r","");
-  currentPM2.replace("\n","");
   
   return currentPM2;
 }
