@@ -77,6 +77,16 @@ void loop() {
       Serial.println("MEMBRASENS_TEMP;" + getMEMBRASENS_TEMP() + "END_MEMBRASENS_TEMP");
     }
     
+    if(command.equals("data.membrasens.zero")){
+		setMEMBRASENS_ZERO();
+    }
+	
+	if(command.substring(0,21).equals("data.membrasens.span.")){
+	  int port = command.substring(21,command.indexOf(".",22)).toInt();
+	  int span = command.substring(command.lastIndexOf(".") + 1,command.length()).toInt();
+	  // setMEMBRASENS_SPAN(port,span);
+    }
+    
     if(command.equals("data.pm.1")){
       Serial.println("PM1;" + getPM1() + ";END_PM1");
     }
@@ -194,9 +204,6 @@ String getMEMBRASENS_PPM() {
     u.j = ((unsigned long)data[7] << 16 | data[6]); board0[3] = u.f;
   
     for(i=0; i<4; i++){    
-      // if (board0[i] < 0) {
-        // board0[i] = board0[i] / 10000;
-      // }
       str_return = str_return + String(board0[i],6) + ";";
     }
     delay(10);
@@ -215,10 +222,7 @@ String getMEMBRASENS_PPM() {
     u.j = ((unsigned long)data[5] << 16 | data[4]); board1[2] = u.f;
     u.j = ((unsigned long)data[7] << 16 | data[6]); board1[3] = u.f;
   
-  for(i=0; i<4; i++){    
-      // if (board1[i] < 0) {
-        // board1[i] = board1[i] / 10000;
-      // }
+    for(i=0; i<4; i++){    
       str_return = str_return + String(board1[i],6) + ";";
     }
     delay(10);
@@ -256,9 +260,6 @@ String getMEMBRASENS_TEMP() {
     u.j = ((unsigned long)data[7] << 16 | data[6]); board0[3] = u.f;
   
     for(i=0; i<4; i++){    
-      if (board0[i] < 0) {
-        board0[i] = board0[i] / 10000;
-      }
       str_return = str_return + String(board0[i],6) + ";";
     }
     delay(10);
@@ -277,10 +278,7 @@ String getMEMBRASENS_TEMP() {
     u.j = ((unsigned long)data[5] << 16 | data[4]); board1[2] = u.f;
     u.j = ((unsigned long)data[7] << 16 | data[6]); board1[3] = u.f;
   
-  for(i=0; i<4; i++){    
-      if (board1[i] < 0) {
-        board1[i] = board1[i] / 10000;
-      }
+    for(i=0; i<4; i++){    
       str_return = str_return + String(board1[i],6) + ";";
     }
     delay(10);
@@ -289,6 +287,55 @@ String getMEMBRASENS_TEMP() {
   Serial1.end();
   
   return str_return;
+}
+
+void setMEMBRASENS_ZERO() {
+  uint16_t values[4];
+  for (int i = 0; i < 4; ++i) {
+    values[i] = 0;
+  }
+  Serial1.begin(19200, SERIAL_8E1);
+  node.begin(1, Serial1);
+  delay(50);
+  node.writeMultipleRegisters(1200, values);
+  delay(1000);
+  node.writeMultipleRegisters(1220, values);
+  delay(1000);
+  
+  node.begin(2, Serial1);
+  delay(50);
+  node.writeMultipleRegisters(1200, values);
+  delay(1000);
+  node.writeMultipleRegisters(1220, values);
+  delay(1000);
+  Serial1.end();  
+}
+
+void setMEMBRASENS_SPAN(int port, int span) {
+  int spanAddress = 1230;
+  uint16_t values[4];
+  uint16_t spanvalues[2];
+  Serial1.begin(19200, SERIAL_8E1);
+  if(port < 4){
+	node.begin(1, Serial1);
+  } else {
+	node.begin(2, Serial1);
+	port = port - 4;
+  }
+  spanAddress = spanAddress + (2*port);
+  
+  for (int i = 0; i < 4; ++i) {
+    values[i] = 0;
+  }
+  delay(50);
+  node.writeMultipleRegisters(1200, values);
+  delay(1000);
+  node.writeMultipleRegisters(spanAddress, span);
+  delay(1000);
+  node.writeMultipleRegisters(1210, values);
+  delay(1000);
+  
+  Serial1.end();  
 }
 
 String getINA219() {
@@ -348,8 +395,6 @@ String getPM1(){
     delay(100);
     retval = Serial2.readStringUntil('\n');
     delay(100);
-	//retval.replace("\n","");
-	//retval.replace("\r","");
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM1 = retval;
     }
@@ -369,8 +414,6 @@ String getPM2(){
     delay(100);
     retval = Serial3.readStringUntil('\n');
     delay(100);
-	//retval.replace("\r","");
-	//retval.replace("\n","");
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM2 = retval;
     }

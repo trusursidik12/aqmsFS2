@@ -2,6 +2,7 @@ from __future__ import print_function
 import sys
 import serial
 import time
+import datetime
 import db_connect
 
 is_SENSOR_connect = False
@@ -10,6 +11,10 @@ current_state = 0
 current_speed = 0
 sensor_mode = [""] * 10
 end_string_sensor = [""] * 10
+
+is_zero_calibrating = False
+zerocal_finished_at = ""
+
 
 sensor_mode[0] = "data.membrasens.ppm"
 sensor_mode[1] = "data.membrasens.temp"
@@ -130,12 +135,114 @@ def pump_speed():
     data = ser.readline().decode('utf-8').strip('/r/n')
 
 
+def membrasens_zero():
+    global is_zero_calibrating
+    try:        
+        print("Zeroing...")
+        is_zero_calibrating = False
+        print("data.membrasens.zero#")
+        ser.write(bytes("data.membrasens.zero#",'utf-8'))
+                
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'calibrator_name'")
+        calibrator_name = mycursor.fetchone()[0]
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_started_at'")
+        zerocal_started_at = mycursor.fetchone()[0]
+        mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+        zerocal_finished_at = mycursor.fetchone()[0]
+        mycursor.execute("SELECT value FROM sensor_values WHERE sensor_reader_id = '" + sys.argv[1] + "' AND pin=0")
+        value = mycursor.fetchone()[0]
+        
+        mycursor.execute("INSERT INTO calibrations (calibrator_name,started_at,finished_at,sensor_reader_id,value) VALUES ('" + calibrator_name + "','" + zerocal_started_at + "','" + zerocal_finished_at + "','" + sys.argv[1] + "','" + value + "')")
+        mydb.commit()
+        
+        mycursor.execute("UPDATE configurations SET content = '0' WHERE name LIKE 'is_zerocal'")
+        mydb.commit()
+        mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'zerocal_started_at'")
+        mydb.commit()
+        mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'zerocal_finished_at'")
+        mydb.commit()
+        
+        return True
+        
+    except Exception as e:
+        print("Error zeroing")
+        print(e)
+        return None
+
+def membrasens_span():
+    try:
+        try:
+            mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'setSpan'")
+            setSpan = mycursor.fetchone()[0]        
+        except Exception as e4:
+            setSpan = "";
+            print("setSpan configurations not found")
+
+        setSpans = setSpan.split(";")
+        
+        if(str(setSpans[0]) == str(sys.argv[1])):        
+            port = int(setSpans[1])
+            span = int(setSpans[2])
+            
+            mycursor.execute("UPDATE configurations SET content = '' WHERE name LIKE 'setSpan'")
+            mydb.commit()
+            
+            print("Spaning...")
+            print("Port : " + str(port))
+            print("Span Concentration: " + str(span))
+            print("data.membrasens.span." + str(port) + "." + str(span) + "#")
+            ser.write(bytes("data.membrasens.span." + str(port) + "." + str(span) + "#",'utf-8'))
+            time.sleep(1)
+        
+    except Exception as e:
+        print("Error membrasens_span")
+        print(e)
+        return None
+
 try:
     while True:
-        if ser is not None:            
+        if ser is not None:
             pump_switch()
             pump_speed()
-            update_all_sensor()                
+            update_all_sensor()
+            membrasens_span();
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
+                is_zerocal = mycursor.fetchone()[0]
+            except Exception as e4:
+                is_zerocal = "0"
+                print("is_zerocal configurations not found")
+                
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
+                zerocal_finished_at = mycursor.fetchone()[0]
+            except Exception as e4:
+                zerocal_finished_at = "";
+                print("zerocal_finished_at configurations not found")
+            
+            try:
+                mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_valve_calibrator'")
+                is_valve_calibrator = str(mycursor.fetchone()[0])
+            except Exception as e4:
+                is_valve_calibrator = "0";
+                print("is_valve_calibrator configurations not found")
+                
+            if(int(is_valve_calibrator) == 1 and int(is_zerocal) == 1 and zerocal_finished_at != ""):
+                is_zero_calibrating = True
+                    
+            if(int(is_valve_calibrator) == 0 and int(is_zerocal) == 1):
+                is_zero_calibrating = True
+                
+            if(is_zero_calibrating == True):
+                try:
+                    currenttime = datetime.datetime.now()
+                    if(zerocal_finished_at <= str(currenttime)[0:19] or zerocal_finished_at == ""):
+                        membrasens_zero()
+                        time.sleep(1)
+                        
+                except Exception as e3:
+                    print(e3)
+                    print("error zero calibrating")
         else:
             try:
                 mycursor.execute(
