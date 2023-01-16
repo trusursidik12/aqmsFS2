@@ -135,7 +135,10 @@ class Rht extends BaseController
 			$is_motherboard = @$this->configuration->where(["name" => "is_motherboard"])->findAll()[0]->content;
 			if ($is_motherboard == "1") {
 				$sensor_reader_id = @$this->sensor_values->where("value LIKE '%MEMBRASENS_PPM%'")->findAll()[$board]->sensor_reader_id;
-				if ($board == "1") $port += 4;
+				if ($board == "1") {
+					$board == "0";
+					$port += 4;
+				}
 			} else {
 				$sensor_reader_id = @$this->sensor_values->where("value LIKE '%FS2_MEMBRASENS%'")->findAll()[$board]->sensor_reader_id;
 			}
