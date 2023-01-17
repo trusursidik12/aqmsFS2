@@ -133,6 +133,8 @@ void loop() {
     }
   
     if(command.substring(0,11).equals("pump.state.")){
+      softStartPump(0,currentPumpState);
+	  delay(6000);
       softStartPump(currentPumpSpeed,command.substring(11,command.length()).toInt());
     }
   
