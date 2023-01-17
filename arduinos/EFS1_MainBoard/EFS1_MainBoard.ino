@@ -48,6 +48,7 @@ void setup() {
   
   // softStartPump(100,0);
   isStreamingAllData = 0;
+  
 }
 
 void(* resetFunc) (void) = 0;
@@ -78,13 +79,17 @@ void loop() {
     }
     
     if(command.equals("data.membrasens.zero")){
+		Serial.println("MEMBRASENS_PPM;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_PPM");
 		setMEMBRASENS_ZERO();
+		Serial.println("MEMBRASENS_ZERO;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_ZERO");
     }
 	
 	if(command.substring(0,21).equals("data.membrasens.span.")){
 	  int port = command.substring(21,command.indexOf(".",22)).toInt();
 	  int span = command.substring(command.lastIndexOf(".") + 1,command.length()).toInt();
-	  // setMEMBRASENS_SPAN(port,span);
+	  Serial.println("MEMBRASENS_PPM;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_PPM");
+	  setMEMBRASENS_SPAN(port,span);
+	  Serial.println("MEMBRASENS_SPAN;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_SPAN");
     }
     
     if(command.equals("data.pm.1")){
@@ -289,53 +294,86 @@ String getMEMBRASENS_TEMP() {
   return str_return;
 }
 
-void setMEMBRASENS_ZERO() {
-  uint16_t values[4];
-  for (int i = 0; i < 4; ++i) {
-    values[i] = 0;
-  }
+void setMEMBRASENS_ZERO() {  
   Serial1.begin(19200, SERIAL_8E1);
-  node.begin(1, Serial1);
-  delay(50);
-  node.writeMultipleRegisters(1200, values);
+  byte zeroing_bytes_01[] = {0x01, 0x10, 0x04, 0xB0, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFA, 0xC0};
+  byte zeroing_bytes_02[] = {0x01, 0x10, 0x04, 0xC4, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4A, 0x70};
+  byte zeroing_bytes_11[] = {0x02, 0x10, 0x04, 0xB0, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB9, 0xC1};
+  byte zeroing_bytes_12[] = {0x02, 0x10, 0x04, 0xC4, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x71};
+  Serial1.write(zeroing_bytes_01, sizeof(zeroing_bytes_01));
   delay(1000);
-  node.writeMultipleRegisters(1220, values);
+  Serial1.write(zeroing_bytes_02, sizeof(zeroing_bytes_02));
   delay(1000);
-  
-  node.begin(2, Serial1);
-  delay(50);
-  node.writeMultipleRegisters(1200, values);
+  Serial1.write(zeroing_bytes_11, sizeof(zeroing_bytes_11));
   delay(1000);
-  node.writeMultipleRegisters(1220, values);
-  delay(1000);
+  Serial1.write(zeroing_bytes_12, sizeof(zeroing_bytes_12));
+  delay(3000);
   Serial1.end();  
 }
 
 void setMEMBRASENS_SPAN(int port, int span) {
-  int spanAddress = 1230;
-  uint16_t values[4];
-  uint16_t spanvalues[2];
-  Serial1.begin(19200, SERIAL_8E1);
-  if(port < 4){
-	node.begin(1, Serial1);
+  if(span > 0 && span < 11){
+    int spanAddress = 1230;
+    int board;
+    if(port < 4){
+	  board = 0;
+    } else {
+	  port = port - 4;
+	  board = 1;
+    }
+    
+    byte port_bytes[] = {0xCE, 0xD0, 0xD2, 0XD4};
+    byte board_bytes[] = {0x01, 0x02};
+    byte span_bytes1[] = {0x00, 0x3F, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x41, 0x41, 0x41};
+    byte span_bytes2[] = {0x00, 0x80, 0x00, 0x40, 0x80, 0xA0, 0xC0, 0xE0, 0x00, 0x10, 0x20};
+    
+    spanAddress = spanAddress + (2*port);
+    
+    Serial1.begin(19200, SERIAL_8E1);
+    
+	byte span_start_bytes[] = {board_bytes[board], 0x10, 0x04, 0xB0, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	byte span_end_bytes[] = {board_bytes[board], 0x10, 0x04, 0xBA, 0x00, 0x04, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    byte span_bytes[] = {board_bytes[board], 0x10, 0x04, port_bytes[port], 0x00, 0x02, 0x04, 0x00, 0x00, span_bytes1[span], span_bytes2[span]};
+	
+	uint16_t crc = calcCRC(span_start_bytes, sizeof(span_start_bytes));
+    Serial1.write(span_start_bytes, sizeof(span_start_bytes));
+	Serial1.write(lowByte(crc));
+    Serial1.write(highByte(crc));
+    delay(1000);
+	
+	crc = calcCRC(span_bytes, sizeof(span_bytes));
+    Serial1.write(span_bytes, sizeof(span_bytes));
+	Serial1.write(lowByte(crc));
+    Serial1.write(highByte(crc));
+    delay(1000);
+	
+	crc = calcCRC(span_end_bytes, sizeof(span_end_bytes));
+    Serial1.write(span_end_bytes, sizeof(span_end_bytes));
+	Serial1.write(lowByte(crc));
+    Serial1.write(highByte(crc));
+    delay(1000);
+    Serial1.end();	
   } else {
-	node.begin(2, Serial1);
-	port = port - 4;
+	Serial.println("MEMBRASENS_SPAN;ERROR;SPAN RANGE =>  1-10;END_MEMBRASENS_SPAN");
   }
-  spanAddress = spanAddress + (2*port);
-  
-  for (int i = 0; i < 4; ++i) {
-    values[i] = 0;
+}
+
+uint16_t calcCRC(byte *data, byte panjang)
+{
+  int i;
+  uint16_t crc = 0xFFFF;
+  for (byte p = 0; p < panjang; p++)
+  {
+    crc ^= data[p];
+    for (i = 0; i < 8; ++i)
+    {
+      if (crc & 1)
+        crc = (crc >> 1) ^ 0xA001;
+      else
+        crc = (crc >> 1);
+    }
   }
-  delay(50);
-  node.writeMultipleRegisters(1200, values);
-  delay(1000);
-  node.writeMultipleRegisters(spanAddress, span);
-  delay(1000);
-  node.writeMultipleRegisters(1210, values);
-  delay(1000);
-  
-  Serial1.end();  
+  return crc;
 }
 
 String getINA219() {
