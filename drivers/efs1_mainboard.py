@@ -14,6 +14,7 @@ end_string_sensor = [""] * 10
 
 is_zero_calibrating = False
 zerocal_finished_at = ""
+all_sensor_counter = 0
 
 
 sensor_mode[0] = "data.membrasens.ppm"
@@ -94,6 +95,17 @@ def getSensorValue(mode):
     
 def update_all_sensor():
     for mode in range(9): #ubah ke 10 jika menggunakan SENTEC
+        try:
+            value = getSensorValue(mode)
+            # print(value)
+            update_sensor_value(str(sys.argv[1]), mode, value)
+        except Exception as e:
+            None
+            
+        time.sleep(0.1)
+
+def update_priority_sensor():
+    for mode in [0,2,3]:
         try:
             value = getSensorValue(mode)
             # print(value)
@@ -204,7 +216,14 @@ try:
         if ser is not None:
             pump_switch()
             pump_speed()
-            update_all_sensor()
+            if(all_sensor_counter == 0):
+                update_all_sensor()
+            else:
+                update_priority_sensor()
+                
+            all_sensor_counter++
+            if(all_sensor_counter > 4):
+                all_sensor_counter = 0
             membrasens_span();
             try:
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")

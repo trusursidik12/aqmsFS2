@@ -18,7 +18,7 @@ DHT dht(DHTPIN, DHTTYPE);
 Adafruit_BME680 bme;
 ModbusMaster node;
 
-int currentPumpState, currentPumpSpeed, isStreamingAllData;
+int currentPumpState, currentPumpSpeed, tempPumpSpeed, isStreamingAllData;
 String command;
 String currentPM1 = "";
 String currentPM2 = "";
@@ -133,9 +133,10 @@ void loop() {
     }
   
     if(command.substring(0,11).equals("pump.state.")){
+	  tempPumpSpeed = currentPumpSpeed;
       softStartPump(0,currentPumpState);
 	  delay(6000);
-      softStartPump(currentPumpSpeed,command.substring(11,command.length()).toInt());
+      softStartPump(tempPumpSpeed,command.substring(11,command.length()).toInt());
     }
   
     command="";
