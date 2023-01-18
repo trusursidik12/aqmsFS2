@@ -222,7 +222,7 @@ try:
                 update_priority_sensor()
                 
             all_sensor_counter = all_sensor_counter + 1
-            if(all_sensor_counter > 4):
+            if(all_sensor_counter > 9):
                 all_sensor_counter = 0
             membrasens_span();
             try:

@@ -134,9 +134,9 @@ void loop() {
   
     if(command.substring(0,11).equals("pump.state.")){
 	  tempPumpSpeed = currentPumpSpeed;
-      softStartPump(0,currentPumpState);
+      softStartPump(0,command.substring(11,command.length()).toInt());
 	  delay(6000);
-      softStartPump(tempPumpSpeed,command.substring(11,command.length()).toInt());
+      softStartPump(tempPumpSpeed,currentPumpState);
     }
   
     command="";
@@ -435,9 +435,10 @@ String getPM1(){
   if (Serial2.available() > 0) {
     delay(100);
     retval = Serial2.readStringUntil('\n');
-    delay(100);
+    delay(400);
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM1 = retval;
+      delay(500);
     }
 	currentPM1.replace("\n","");
     currentPM1.replace("\r","");
@@ -454,9 +455,10 @@ String getPM2(){
   if (Serial3.available() > 0) {
     delay(100);
     retval = Serial3.readStringUntil('\n');
-    delay(100);
+    delay(400);
     if(retval.indexOf(",") > 0 && retval.indexOf("+") > 0 && retval.substring(0,4).equals("000.")){
       currentPM2 = retval;
+      delay(500);
     }
 	currentPM2.replace("\n","");
     currentPM2.replace("\r","");
