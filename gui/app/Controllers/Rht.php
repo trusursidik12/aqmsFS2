@@ -83,14 +83,14 @@ class Rht extends BaseController
 			$data["con_membrasens_1_1"] = explode(";", $membrasens_0)[6] * 1;
 			$data["con_membrasens_1_2"] = explode(";", $membrasens_0)[7] * 1;
 			$data["con_membrasens_1_3"] = explode(";", $membrasens_0)[8] * 1;
-			$data["temp_membrasens_0_0"] = round(explode(";", $membrasens_1)[1] * 1, 1);
-			$data["temp_membrasens_0_1"] = round(explode(";", $membrasens_1)[2] * 1, 1);
-			$data["temp_membrasens_0_2"] = round(explode(";", $membrasens_1)[3] * 1, 1);
-			$data["temp_membrasens_0_3"] = round(explode(";", $membrasens_1)[4] * 1, 1);
-			$data["temp_membrasens_1_0"] = round(explode(";", $membrasens_1)[5] * 1, 1);
-			$data["temp_membrasens_1_1"] = round(explode(";", $membrasens_1)[6] * 1, 1);
-			$data["temp_membrasens_1_2"] = round(explode(";", $membrasens_1)[7] * 1, 1);
-			$data["temp_membrasens_1_3"] = round(explode(";", $membrasens_1)[8] * 1, 1);
+			$data["temp_membrasens_0_0"] = @round(explode(";", $membrasens_1)[1] * 1, 1);
+			$data["temp_membrasens_0_1"] = @round(explode(";", $membrasens_1)[2] * 1, 1);
+			$data["temp_membrasens_0_2"] = @round(explode(";", $membrasens_1)[3] * 1, 1);
+			$data["temp_membrasens_0_3"] = @round(explode(";", $membrasens_1)[4] * 1, 1);
+			$data["temp_membrasens_1_0"] = @round(explode(";", $membrasens_1)[5] * 1, 1);
+			$data["temp_membrasens_1_1"] = @round(explode(";", $membrasens_1)[6] * 1, 1);
+			$data["temp_membrasens_1_2"] = @round(explode(";", $membrasens_1)[7] * 1, 1);
+			$data["temp_membrasens_1_3"] = @round(explode(";", $membrasens_1)[8] * 1, 1);
 		} else {
 			$data["con_membrasens_0_0"] = explode(";", $membrasens_0)[1] * 1;
 			$data["con_membrasens_0_1"] = explode(";", $membrasens_0)[2] * 1;

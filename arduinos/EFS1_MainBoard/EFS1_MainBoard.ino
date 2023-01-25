@@ -75,11 +75,26 @@ void loop() {
 	  Serial.println("MEMBRASENS_SPAN;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_SPAN");
     }
 	
-	if(command.equals("data.semeatech.all")){
-	  for(byte addr=0x10;addr<=0x14;addr++){
-        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + "");
+	if(command.substring(0,15).equals("data.semeatech.")){
+	  int addr_num = command.substring(15,command.length()).toInt();
+	  Serial.println("SEMEATECH START;");
+	  byte addr = 0x10;
+	  int i = 0;
+	  while(i < addr_num){
+        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END;");
+		i++;
+		addr++;
 	  }
-    }
+	  Serial.println("SEMEATECH FINISH;");
+	}
+	
+	// if(command.equals("data.semeatech.all")){
+	  // Serial.println("SEMEATECH START;");
+	  // for(byte addr=0x10;addr<=0x14;addr++){
+        // Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END");
+	  // }
+	  // Serial.println("SEMEATECH FINISH;");
+    // }
     
     if(command.equals("data.pm.1")){
       Serial.println("PM1;" + getPM1() + ";END_PM1");
@@ -421,8 +436,8 @@ String getSemeaTech(byte devicecode) {
 	  // Serial.println("");
 	  String mg = String((int(buf[6]) * 16777216) + (int(buf[7]) * 65536) + (int(buf[8]) * 256) + int(buf[9]));
 	  String ppb = String((int(buf[10]) * 16777216) + (int(buf[11]) * 65536) + (int(buf[12]) * 256) + int(buf[13]));
-	  String temp = String((int(buf[14]) * 256) + int(buf[15]));
-	  String hum = String((int(buf[16]) * 256) + int(buf[17]));
+	  String temp = String((((int(buf[14]) * 256) + int(buf[15])) / 100.0),2);
+	  String hum = String((((int(buf[16]) * 256) + int(buf[17])) / 100.0),2);
 	  Serial1.end();
 	  return sensor_type + ";" + mg + ";" + ppb + ";" + temp + ";" + hum + ";"; 
 	} else {
