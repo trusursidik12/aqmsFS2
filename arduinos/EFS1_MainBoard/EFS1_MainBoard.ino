@@ -4,19 +4,17 @@
 #include <SPI.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME680.h>
-#include <SoftwareSerial.h>
 
 #define Pump 7
 #define SwitchPump 5
-#define rxPin 10
-#define txPin 11
 
 Adafruit_INA219 ina219;
 Adafruit_BME680 bme;
 ModbusMaster node;
-SoftwareSerial ser_semeatech =  SoftwareSerial(rxPin, txPin);
 
 int currentPumpState, currentPumpSpeed, tempPumpSpeed, isStreamingAllData;
+bool bme_is_begin = false;
+bool ina219_is_begin = false;
 String command;
 String currentPM1 = "";
 String currentPM2 = "";
@@ -24,32 +22,16 @@ String currentPM2 = "";
 void setup() {
   Serial.begin(9600);
   Serial.setTimeout(500);
-  ser_semeatech.begin(115200);
-  pinMode(rxPin, INPUT);
-  pinMode(txPin, OUTPUT);
-  ina219.begin();
-  bme.begin(0x77);
-  if (! bme.performReading()) {
-    bme.begin(0x76);
-  }
-  if (! bme.performReading()) {
-    Serial.println("BME Error!");
-  }
-
+    
   pinMode(Pump, OUTPUT);
   pinMode(SwitchPump, OUTPUT);
 
   digitalWrite(SwitchPump,HIGH);
   delay(1000);
   digitalWrite(SwitchPump,LOW);
-  bme.setTemperatureOversampling(BME680_OS_8X);
-  bme.setHumidityOversampling(BME680_OS_2X);
-  bme.setPressureOversampling(BME680_OS_4X);
-  bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
-  
   // softStartPump(100,0);
   isStreamingAllData = 0;
-  
+  Serial.println("Ready");
 }
 
 void(* resetFunc) (void) = 0;
@@ -371,6 +353,8 @@ String getSemeaTech(byte devicecode) {
   int rlen = 0;
   String sensor_type = "";
   String types[41];
+  Serial1.begin(115200, SERIAL_8N1);
+  Serial1.setTimeout(500);
   
   types[2] = "CO";
   types[3] = "O2";
@@ -403,33 +387,27 @@ String getSemeaTech(byte devicecode) {
   byte command_bytes[] = {0x3A, devicecode, 0x03, 0x00, 0x00, 0x06, 0x00, 0x00};
   
   uint16_t crc = calcCRC(sensortype_bytes, sizeof(sensortype_bytes));
-  ser_semeatech.write(sensortype_bytes, sizeof(sensortype_bytes));
-  ser_semeatech.write(lowByte(crc));
-  ser_semeatech.write(highByte(crc));
-  int c_timeout = 0;
-  while(!ser_semeatech.available()){
-    c_timeout++;
-	if(c_timeout > 100) break;
-  }
-  if(ser_semeatech.available() > 0) {
-    rlen = ser_semeatech.readBytes(buf, 6);
+  Serial1.write(sensortype_bytes, sizeof(sensortype_bytes));
+  Serial1.write(lowByte(crc));
+  Serial1.write(highByte(crc));
+  
+  delay(100);
+  if(Serial1.available() > 0) {
+    rlen = Serial1.readBytes(buf, 6);
 	if(rlen == 6 && buf[0] == 58){
 	  sensor_type = types[int(buf[3])];
 	}
   }
-  delay(500);
+  delay(100);
   
   crc = calcCRC(command_bytes, sizeof(command_bytes));
-  ser_semeatech.write(command_bytes, sizeof(command_bytes));
-  ser_semeatech.write(lowByte(crc));
-  ser_semeatech.write(highByte(crc));
-  c_timeout = 0;
-  while(!ser_semeatech.available()){
-    c_timeout++;
-	if(c_timeout > 100) break;
-  }
-  if(ser_semeatech.available() > 0) {
-    rlen = ser_semeatech.readBytes(buf, 20);
+  Serial1.write(command_bytes, sizeof(command_bytes));
+  Serial1.write(lowByte(crc));
+  Serial1.write(highByte(crc));
+  
+  delay(100);
+  if(Serial1.available() > 0) {
+    rlen = Serial1.readBytes(buf, 20);
 	if(rlen == 20 && buf[0] == 58){
 	  // for(int i=0 ;i<rlen;i++){
 	  	// Serial.print(buf[i]);
@@ -443,13 +421,16 @@ String getSemeaTech(byte devicecode) {
 	  // Serial.println("");
 	  String mg = String((int(buf[6]) * 16777216) + (int(buf[7]) * 65536) + (int(buf[8]) * 256) + int(buf[9]));
 	  String ppb = String((int(buf[10]) * 16777216) + (int(buf[11]) * 65536) + (int(buf[12]) * 256) + int(buf[13]));
-	  String temp = String(((int(buf[14]) * 256) + int(buf[15])) / 100,2);
-	  String hum = String(((int(buf[16]) * 256) + int(buf[17])) / 100,2);
+	  String temp = String((int(buf[14]) * 256) + int(buf[15]));
+	  String hum = String((int(buf[16]) * 256) + int(buf[17]));
+	  Serial1.end();
 	  return sensor_type + ";" + mg + ";" + ppb + ";" + temp + ";" + hum + ";"; 
 	} else {
+      Serial1.end();
 	  return "ERROR;";
 	}
   }
+  Serial1.end();
   return "NONE;";
 }
 
@@ -473,6 +454,10 @@ uint16_t calcCRC(byte *data, byte panjang)
 
 String getINA219() {
   float busVoltage,current,power;
+  if(!ina219_is_begin){
+	ina219.begin();
+    ina219_is_begin = true;
+  }
   busVoltage = ina219.getBusVoltage_V();
   current = ina219.getCurrent_mA();
   power = busVoltage * (current / 1000);
@@ -481,6 +466,27 @@ String getINA219() {
 
 String getBME() {
   String str_return = "";
+  if(!bme_is_begin){
+    bme.begin(0x77);
+    if (! bme.performReading()) {
+      bme.begin(0x76);
+    } else {
+      bme_is_begin = true;
+    }
+    if (! bme.performReading()) {
+      Serial.println("BME Error!");
+    } else {
+      bme_is_begin = true;
+    }
+	
+    bme.setTemperatureOversampling(BME680_OS_8X);
+    bme.setHumidityOversampling(BME680_OS_2X);
+    bme.setPressureOversampling(BME680_OS_4X);
+    bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
+  }
+  
+  
+  
   if (! bme.performReading()) {
     return "0.00;0.00;0.00;";
   }
