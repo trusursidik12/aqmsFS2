@@ -1,22 +1,20 @@
 #include <ModbusMaster.h>
 #include <Wire.h>
 #include <Adafruit_INA219.h>
-#include <DHT.h>
 #include <SPI.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME680.h>
+#include <SoftwareSerial.h>
 
 #define Pump 7
 #define SwitchPump 5
-#define Offset 0
-#define WindSensorPin 3
-#define DHTPIN 2
-#define DHTTYPE DHT22
+#define rxPin 10
+#define txPin 11
 
 Adafruit_INA219 ina219;
-DHT dht(DHTPIN, DHTTYPE);
 Adafruit_BME680 bme;
 ModbusMaster node;
+SoftwareSerial ser_semeatech =  SoftwareSerial(rxPin, txPin);
 
 int currentPumpState, currentPumpSpeed, tempPumpSpeed, isStreamingAllData;
 String command;
@@ -26,8 +24,10 @@ String currentPM2 = "";
 void setup() {
   Serial.begin(9600);
   Serial.setTimeout(500);
+  ser_semeatech.begin(115200);
+  pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
   ina219.begin();
-  dht.begin();
   bme.begin(0x77);
   if (! bme.performReading()) {
     bme.begin(0x76);
@@ -38,9 +38,10 @@ void setup() {
 
   pinMode(Pump, OUTPUT);
   pinMode(SwitchPump, OUTPUT);
-  pinMode(WindSensorPin, INPUT);
 
-
+  digitalWrite(SwitchPump,HIGH);
+  delay(1000);
+  digitalWrite(SwitchPump,LOW);
   bme.setTemperatureOversampling(BME680_OS_8X);
   bme.setHumidityOversampling(BME680_OS_2X);
   bme.setPressureOversampling(BME680_OS_4X);
@@ -91,6 +92,12 @@ void loop() {
 	  setMEMBRASENS_SPAN(port,span);
 	  Serial.println("MEMBRASENS_SPAN;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_SPAN");
     }
+	
+	if(command.equals("data.semeatech.all")){
+	  for(byte addr=0x10;addr<=0x14;addr++){
+        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + "");
+	  }
+    }
     
     if(command.equals("data.pm.1")){
       Serial.println("PM1;" + getPM1() + ";END_PM1");
@@ -102,10 +109,6 @@ void loop() {
     
     if(command.equals("data.ina219")){
       Serial.println("INA219;" + getINA219() + "END_INA219");
-    }
-    
-    if(command.equals("data.dht")){
-      Serial.println("DHT;" + getDHT() + "END_DHT");
     }
     
     if(command.equals("data.bme")){
@@ -151,10 +154,12 @@ void showAllData(){
   Serial.println("BEGIN");
   Serial.println("MEMBRASENS_PPM;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_PPM");
   Serial.println("MEMBRASENS_TEMP;" + getMEMBRASENS_TEMP() + "END_MEMBRASENS_TEMP");
+  for(byte addr=0x10;addr<=0x14;addr++){
+	Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + "");
+  }
   Serial.println("PM1;" + getPM1() + ";END_PM1");
   Serial.println("PM2;" + getPM2() + ";END_PM2");
   Serial.println("INA219;" + getINA219() + "END_INA219");
-  Serial.println("DHT;" + getDHT() + "END_DHT");
   Serial.println("BME;" + getBME() + "END_BME");
   Serial.println("SENTEC;" + getSENTEC() + "END_SENTEC");
   Serial.println("PRESSURE;" + getPRESSURE() + "END_PRESSURE");
@@ -361,6 +366,93 @@ void setMEMBRASENS_SPAN(int port, int span) {
   }
 }
 
+String getSemeaTech(byte devicecode) {  
+  byte buf[20];
+  int rlen = 0;
+  String sensor_type = "";
+  String types[41];
+  
+  types[2] = "CO";
+  types[3] = "O2";
+  types[4] = "H2";
+  types[5] = "CH4";
+  types[7] = "CO2";
+  types[8] = "O3";
+  types[9] = "H2S";
+  types[10] = "SO2";
+  types[11] = "NH3";
+  types[12] = "CL2";
+  types[13] = "ETO";
+  types[14] = "HCL";
+  types[15] = "PH3";
+  types[17] = "HCN";
+  types[19] = "HF";
+  types[21] = "NO";
+  types[22] = "NO2";
+  types[23] = "NOX";
+  types[24] = "CLO2";
+  types[31] = "THT";
+  types[32] = "C2H2";
+  types[33] = "C2H4";
+  types[34] = "CH2O";
+  types[39] = "CH3SH";
+  types[40] = "C2H3CL";
+
+  
+  byte sensortype_bytes[] = {0x3A, devicecode, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00};
+  byte command_bytes[] = {0x3A, devicecode, 0x03, 0x00, 0x00, 0x06, 0x00, 0x00};
+  
+  uint16_t crc = calcCRC(sensortype_bytes, sizeof(sensortype_bytes));
+  ser_semeatech.write(sensortype_bytes, sizeof(sensortype_bytes));
+  ser_semeatech.write(lowByte(crc));
+  ser_semeatech.write(highByte(crc));
+  int c_timeout = 0;
+  while(!ser_semeatech.available()){
+    c_timeout++;
+	if(c_timeout > 100) break;
+  }
+  if(ser_semeatech.available() > 0) {
+    rlen = ser_semeatech.readBytes(buf, 6);
+	if(rlen == 6 && buf[0] == 58){
+	  sensor_type = types[int(buf[3])];
+	}
+  }
+  delay(500);
+  
+  crc = calcCRC(command_bytes, sizeof(command_bytes));
+  ser_semeatech.write(command_bytes, sizeof(command_bytes));
+  ser_semeatech.write(lowByte(crc));
+  ser_semeatech.write(highByte(crc));
+  c_timeout = 0;
+  while(!ser_semeatech.available()){
+    c_timeout++;
+	if(c_timeout > 100) break;
+  }
+  if(ser_semeatech.available() > 0) {
+    rlen = ser_semeatech.readBytes(buf, 20);
+	if(rlen == 20 && buf[0] == 58){
+	  // for(int i=0 ;i<rlen;i++){
+	  	// Serial.print(buf[i]);
+	  	// Serial.print("\t");
+	  // }
+	  // Serial.println("");
+	  // for(int i=0 ;i<rlen;i++){
+	  	// Serial.print(String(buf[i],HEX));
+	  	// Serial.print("\t");
+	  // }
+	  // Serial.println("");
+	  String mg = String((int(buf[6]) * 16777216) + (int(buf[7]) * 65536) + (int(buf[8]) * 256) + int(buf[9]));
+	  String ppb = String((int(buf[10]) * 16777216) + (int(buf[11]) * 65536) + (int(buf[12]) * 256) + int(buf[13]));
+	  String temp = String(((int(buf[14]) * 256) + int(buf[15])) / 100,2);
+	  String hum = String(((int(buf[16]) * 256) + int(buf[17])) / 100,2);
+	  return sensor_type + ";" + mg + ";" + ppb + ";" + temp + ";" + hum + ";"; 
+	} else {
+	  return "ERROR;";
+	}
+  }
+  return "NONE;";
+}
+
 uint16_t calcCRC(byte *data, byte panjang)
 {
   int i;
@@ -385,13 +477,6 @@ String getINA219() {
   current = ina219.getCurrent_mA();
   power = busVoltage * (current / 1000);
   return String(busVoltage,2) + ";" + String(current,2) + ";" + String(power,2) + ";";
-}
-
-String getDHT() {
-  float Humidity,Temperature;
-  Humidity = dht.readHumidity();
-  Temperature = dht.readTemperature();
-  return String(Humidity,2) + ";" + String(Temperature,2) + ";";
 }
 
 String getBME() {
