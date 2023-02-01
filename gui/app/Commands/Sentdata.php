@@ -126,6 +126,7 @@ class Sentdata extends BaseCommand
 							"cache-control: no-cache",
 							"content-type: application/json"
 						),
+						CURLOPT_SSL_VERIFYPEER => 0, //skip SSL Verification
 					));
 
 					$response = curl_exec($curl);
