@@ -75,12 +75,42 @@ void loop() {
 	  Serial.println("MEMBRASENS_SPAN;" + getMEMBRASENS_PPM() + "END_MEMBRASENS_SPAN");
     }
 	
-	if(command.equals("data.semeatech.all")){
-	  for(byte addr=0x10;addr<=0x14;addr++){
-        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + "");
+	if(command.substring(0,15).equals("data.semeatech.")){
+	  int addr_num = command.substring(15,command.length()).toInt();
+	  Serial.println("SEMEATECH START;");
+	  byte addr = 0x10;
+	  int i = 0;
+	  while(i < addr_num){
+        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END;");
+		i++;
+		addr++;
 	  }
+	  Serial.println("SEMEATECH FINISH;");
+	}
+	
+	if(command.substring(0,20).equals("data.semeatech.zero.")){
+	  int addr_num = command.substring(20,command.length()).toInt();
+	  Serial.println("SEMEATECH ZERO START;");
+	  byte addr = 0x10;
+	  int i = 0;
+	  while(i < addr_num){
+        Serial.println("ZERO SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END ZERO;");
+		setSemeaTechZero(addr);		
+        Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END;");
+		i++;
+		addr++;
+	  }
+	  Serial.println("SEMEATECH ZERO FINISH;");
     }
-    
+	
+	if(command.substring(0,20).equals("data.semeatech.span.")){
+	  int addr = command.substring(20,command.indexOf(".",21)).toInt();
+	  int span = command.substring(command.lastIndexOf(".") + 1,command.length()).toInt();
+	  Serial.println("SPAN SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END SPAN;");
+	  setSemeaTechSpan(addr,span);		
+      Serial.println("SEMEATECH 0x" + String(addr,HEX) + ";" + getSemeaTech(addr) + "SEMEATECH 0x" + String(addr,HEX) + " END;");
+    }
+	    
     if(command.equals("data.pm.1")){
       Serial.println("PM1;" + getPM1() + ";END_PM1");
     }
@@ -387,18 +417,27 @@ String getSemeaTech(byte devicecode) {
   byte command_bytes[] = {0x3A, devicecode, 0x03, 0x00, 0x00, 0x06, 0x00, 0x00};
   
   uint16_t crc = calcCRC(sensortype_bytes, sizeof(sensortype_bytes));
-  Serial1.write(sensortype_bytes, sizeof(sensortype_bytes));
-  Serial1.write(lowByte(crc));
-  Serial1.write(highByte(crc));
   
-  delay(100);
-  if(Serial1.available() > 0) {
-    rlen = Serial1.readBytes(buf, 6);
-	if(rlen == 6 && buf[0] == 58){
-	  sensor_type = types[int(buf[3])];
+  int try_sensortype = 0;
+  while(try_sensortype < 5){
+    Serial1.write(sensortype_bytes, sizeof(sensortype_bytes));
+    Serial1.write(lowByte(crc));
+    Serial1.write(highByte(crc));
+    
+    delay(100);
+    if(Serial1.available() > 0) {
+      rlen = Serial1.readBytes(buf, 6);
+	  if(rlen == 6 && buf[0] == 58){
+	    sensor_type = types[int(buf[3])];
+	  }
+    }
+    delay(100);
+	if(sensor_type.equals("")){
+	  try_sensortype++;
+	} else {
+	  try_sensortype = 5;
 	}
   }
-  delay(100);
   
   crc = calcCRC(command_bytes, sizeof(command_bytes));
   Serial1.write(command_bytes, sizeof(command_bytes));
@@ -421,13 +460,83 @@ String getSemeaTech(byte devicecode) {
 	  // Serial.println("");
 	  String mg = String((int(buf[6]) * 16777216) + (int(buf[7]) * 65536) + (int(buf[8]) * 256) + int(buf[9]));
 	  String ppb = String((int(buf[10]) * 16777216) + (int(buf[11]) * 65536) + (int(buf[12]) * 256) + int(buf[13]));
-	  String temp = String((int(buf[14]) * 256) + int(buf[15]));
-	  String hum = String((int(buf[16]) * 256) + int(buf[17]));
+	  String temp = String((((int(buf[14]) * 256) + int(buf[15])) / 100.0),2);
+	  String hum = String((((int(buf[16]) * 256) + int(buf[17])) / 100.0),2);
 	  Serial1.end();
 	  return sensor_type + ";" + mg + ";" + ppb + ";" + temp + ";" + hum + ";"; 
 	} else {
       Serial1.end();
 	  return "ERROR;";
+	}
+  }
+  Serial1.end();
+  return "NONE;";
+}
+void setSemeaTechZero(byte devicecode){
+  byte buf[20];
+  int rlen = 0;
+  Serial1.begin(115200, SERIAL_8N1);
+  Serial1.setTimeout(500);
+  byte command_bytes[] = {0x3A, devicecode, 0x07, 0x00, 0x00, 0x01, 0x00, 0x00};
+  uint16_t crc = calcCRC(command_bytes, sizeof(command_bytes));
+  Serial1.write(command_bytes, sizeof(command_bytes));
+  Serial1.write(lowByte(crc));
+  Serial1.write(highByte(crc));
+  delay(100);
+  if(Serial1.available() > 0) {
+    rlen = Serial1.readBytes(buf, 10);
+	if(rlen == 10 && buf[1] == devicecode){
+	  // for(int i=0 ;i<rlen;i++){
+	  	// Serial.print(String(buf[i],HEX));
+	  	// Serial.print("\t");
+	  // }
+	  // Serial.println("");
+	  Serial.print("Zeroing ");
+	  Serial.print("0x" + String(devicecode,HEX));
+	  Serial.println(" Success");
+	} else {
+      Serial1.end();
+	  Serial.println ("ERROR;");
+	}
+  }
+  Serial1.end();
+  return "NONE;";
+}
+
+void setSemeaTechSpan(byte devicecode, int span){
+  byte buf[20];
+  int rlen = 0;
+  Serial1.begin(115200, SERIAL_8N1);
+  Serial1.setTimeout(500);
+  bool checkspan = true;
+  byte command_bytes[] = {0x3A, devicecode, 0x09, 0x00, 0x00, 0x01, 0x00, span};
+  uint16_t crc = calcCRC(command_bytes, sizeof(command_bytes));
+  Serial1.write(command_bytes, sizeof(command_bytes));
+  Serial1.write(lowByte(crc));
+  Serial1.write(highByte(crc));
+  delay(100);
+  if(Serial1.available() > 0) {
+    rlen = Serial1.readBytes(buf, 6);
+	if(rlen == 6 && buf[0] == 58 && buf[3] == 1){
+		Serial.println("Span Proccess, please wait!!");
+		while (checkspan){
+			delay(100);
+			rlen = Serial1.readBytes(buf, 6);
+			if(rlen == 6 && buf[0] == 58){
+				Serial.print("Span ");
+				Serial.print("0x" + String(devicecode,HEX));
+				if(buf[3] == 0){
+				  Serial.println(" Success");
+				}
+				if(buf[3] == 2){
+				  Serial.println(" Failed");
+				}
+				checkspan=false;
+			}
+		}
+	} else {
+      Serial1.end();
+	  Serial.println ("ERROR;");
 	}
   }
   Serial1.end();

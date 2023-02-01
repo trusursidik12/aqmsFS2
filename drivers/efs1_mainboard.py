@@ -16,27 +16,6 @@ is_zero_calibrating = False
 zerocal_finished_at = ""
 all_sensor_counter = 0
 
-
-sensor_mode[0] = "data.membrasens.ppm"
-sensor_mode[1] = "data.membrasens.temp"
-sensor_mode[2] = "data.pm.1"
-sensor_mode[3] = "data.pm.2"
-sensor_mode[4] = "data.ina219"
-sensor_mode[5] = "data.bme"
-sensor_mode[6] = "data.pressure"
-sensor_mode[7] = "data.pump"
-# sensor_mode[8] = "data.sentec"
-
-end_string_sensor[0] = "END_MEMBRASENS_PPM"
-end_string_sensor[1] = "END_MEMBRASENS_TEMP"
-end_string_sensor[2] = "END_PM1"
-end_string_sensor[3] = "END_PM2"
-end_string_sensor[4] = "END_INA219"
-end_string_sensor[5] = "END_BME"
-end_string_sensor[6] = "END_PRESSURE"
-end_string_sensor[7] = "END_PUMP"
-# end_string_sensor[8] = "END_SENTEC"
-
 try:
     mydb = db_connect.connecting()
     mycursor = mydb.cursor()
@@ -46,6 +25,8 @@ try:
     sensor_reader = mycursor.fetchone()
 except Exception as e:
     print("[X]  SENSOR Module ID: " + str(sys.argv[1]) + " " + e)
+    
+
 
 
 def update_sensor_value(sensor_reader_id, pin, value):
@@ -72,47 +53,63 @@ try:
     mycursor.execute(
         "SELECT sensor_code,baud_rate FROM sensor_readers WHERE id = '" + sys.argv[1] + "'")
     sensor_reader = mycursor.fetchone()
-    ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=5)
+    ser = serial.Serial(sensor_reader[0], sensor_reader[1], timeout=0.5)
+    retval = ""
+    try:
+        while retval.find("Ready") == -1:
+            retval = ser.readline().decode('utf-8').strip('\r\n')
+    except Exception as e:
+        None
+    
     print("[V] MAINBOARD " + sensor_reader[0] + " CONNECTED")
 except Exception as e:
     ser = None
-
-def getSensorValue(mode):
-    retval = ""
-    try:
-        while retval.find(end_string_sensor[mode]) == -1:
-            ser.write(bytes(sensor_mode[mode] + "#",'utf-8'))
-            # time.sleep(0.1)
-            retval = ser.readline().decode('utf-8').strip('\r\n')
-            # retval = ser.readline().decode('utf-8')
-    except Exception as e:
-        None
+    
+def update_sensor(mode = ""):
+    i_timeout = 0
+    if(mode == "priority"):
+        mycursor.execute("SELECT id,command, prefix_return FROM motherboard WHERE is_enable=1 AND is_priority=1;")
+    else:
+        mycursor.execute("SELECT id,command, prefix_return FROM motherboard WHERE is_enable=1;")
         
-    return retval
-    
-    
-def update_all_sensor():
-    for mode in range(9): #ubah ke 10 jika menggunakan SENTEC
+    motherboards = mycursor.fetchall()
+    for motherboard in motherboards:
+        print(motherboard[1])
+        retval = ""
         try:
-            value = getSensorValue(mode)
-            # print(value)
-            update_sensor_value(str(sys.argv[1]), mode, value)
+            ser.write(bytes(motherboard[1] + "#",'utf-8'))
+            time.sleep(0.1)
+            while retval.find(motherboard[2]) == -1:
+                retval = retval + ser.readline().decode('utf-8').strip('\r\n')
+                i_timeout = i_timeout + 1
+                if(i_timeout > 50):
+                    i_timeout = 0
+                    break
+            
+            if(motherboard[1].find("semeatech") == -1):
+                update_sensor_value(str(sys.argv[1]), motherboard[0], retval)
+            else:
+                retval = retval.replace("SEMEATECH START;","")
+                retval = retval.replace("SEMEATECH FINISH;","")
+                retvals = retval.split("END;")
+                i = 16
+                for value in retvals:
+                    if(value != ""):
+                        values = value.split(";")
+                        if(values[1] == "NONE"):
+                           sensor_value = "SEMEATECH;;0;0;0;0;0;END;"
+                        else:
+                           sensor_value = "SEMEATECH;" + str(values[1]) + ";" + str(values[2]) + ";" + str(values[3]) + ";" + str(int(values[3])/1000.00) + ";" + str(values[4]) + ";" + str(values[5]) + ";END;"
+                        
+                        update_sensor_value(str(sys.argv[1]), i, sensor_value)
+                        
+                    
+                    i = i + 1
         except Exception as e:
             None
             
         time.sleep(0.1)
-
-def update_priority_sensor():
-    for mode in [0,2,3]:
-        try:
-            value = getSensorValue(mode)
-            # print(value)
-            update_sensor_value(str(sys.argv[1]), mode, value)
-        except Exception as e:
-            None
-            
-        time.sleep(0.1)
-        
+                
 def pump_switch():
     global current_state
     try:
@@ -215,13 +212,14 @@ try:
             pump_switch()
             pump_speed()
             if(all_sensor_counter == 0):
-                update_all_sensor()
+                update_sensor("")
             else:
-                update_priority_sensor()
+                update_sensor("priority")
                 
             all_sensor_counter = all_sensor_counter + 1
             if(all_sensor_counter > 9):
                 all_sensor_counter = 0
+            
             membrasens_span();
             try:
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'is_zerocal'")
@@ -231,6 +229,7 @@ try:
                 print("is_zerocal configurations not found")
                 
             try:
+                # print("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
                 mycursor.execute("SELECT content FROM configurations WHERE name LIKE 'zerocal_finished_at'")
                 zerocal_finished_at = mycursor.fetchone()[0]
             except Exception as e4:
@@ -243,6 +242,9 @@ try:
             except Exception as e4:
                 is_valve_calibrator = "0";
                 print("is_valve_calibrator configurations not found")
+                
+            if(is_zerocal == ""):
+                is_zerocal = 0
                 
             if(int(is_valve_calibrator) == 1 and int(is_zerocal) == 1 and zerocal_finished_at != ""):
                 is_zero_calibrating = True
@@ -260,6 +262,7 @@ try:
                 except Exception as e3:
                     print(e3)
                     print("error zero calibrating")
+                    
         else:
             try:
                 mycursor.execute(
