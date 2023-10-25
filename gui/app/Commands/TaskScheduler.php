@@ -87,7 +87,9 @@ class TaskScheduler extends BaseCommand
 				if ($counter >= 60) {
 					$counter = -1;
 					$id_stasiun = @$this->configurations->where(["name" => "id_stasiun"])->first()->content;
-					for ($parameter_id = 1; $parameter_id < 6; $parameter_id++) {
+					$parameter_ids = [1, 2, 3, 4, 5, 12, 14];
+					foreach ($parameter_ids as $parameter_id) {
+						// for ($parameter_id = 1; $parameter_id < 6; $parameter_id++) {
 						if (!isset($is_anomaly[$parameter_id])) $is_anomaly[$parameter_id] = true;
 						foreach ($this->measurement_logs->where("parameter_id", $parameter_id)->orderBy("id DESC")->findAll(20) as $key => $measurement_log) {
 							if ($key == 0) { //cek timestamp pertama
